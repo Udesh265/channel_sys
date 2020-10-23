@@ -2,6 +2,5 @@
 
 @section('content')
 
-<new-user-component :user_id="{{Auth::user()->id}}" />
-
+<add-job-component></add-job-component>
 @endsection

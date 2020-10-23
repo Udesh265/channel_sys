@@ -30,7 +30,9 @@
 
             <!-- START: Card Data-->
             <div id="app" class="pb-5">
+
                 @yield('content')
+
             </div>
 
             <!-- END: Card DATA-->

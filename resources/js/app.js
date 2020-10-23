@@ -14,6 +14,19 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 window.Form = Form;
 
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+
+let routes = [
+    { path: '/newuser', component: require('./components/NewUserComponent.vue') },
+    { path: '/bar', component: require('./components/RolePermissionComponent.vue') }
+  ]
+
+const router = new VueRouter({
+  routes // short for `routes: routes`
+});
+
+
 
 //Moment JS
 import moment from 'moment';
@@ -72,7 +85,8 @@ Vue.component('permission-component', require('./components/PermissionComponent.
 Vue.component('role-based-permission', require('./components/RolePermissionComponent.vue').default);
 Vue.component('new-user-component' , require('./components/NewUserComponent.vue').default);
 Vue.component('profile-view-component', require('./components/ProfileComponent.vue').default);
-
+Vue.component('add-employee-component', require('./components/employee/AddEmployeeComponent.vue').default);
+Vue.component('add-job-component', require('./components/employee/AddJobTypeComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -81,4 +95,5 @@ Vue.component('profile-view-component', require('./components/ProfileComponent.v
 
 const app = new Vue({
     el: '#app',
+    router
 });

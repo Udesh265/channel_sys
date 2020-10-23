@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
+
 <div class="row">
+    <router-view></router-view>
     <div class="col-12  mt-3">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">

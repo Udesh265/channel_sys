@@ -30,3 +30,6 @@ Route::prefix('user')->group(function () {
     Route::patch('update/profile/picture/{id}', 'API\ApiUserController@update_profile_pic')->name('user.profile.pic.update');
 });
 Route::apiResource('user', 'API\ApiUserController');
+
+Route::apiResource('employee','API\ApiEmployeeController');
+Route::apiResource('jobtype','API\ApiJobTypeController');

@@ -22,10 +22,17 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    
+
     Route::get('user/profile' , 'UserController@profile')->name('user.show.profile');
     Route::resource('user', 'UserController');
     Route::resource('permission', 'PermissionController');
-    
+
+    Route::resource('employee', 'EmployeeController');
+
+    Route::resource('jobtype', 'JobTypeController');
+
+
+
+
 });
 
