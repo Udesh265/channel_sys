@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Employee;
 use App\Http\Controllers\Controller;
+use App\JobType;
 use Illuminate\Http\Request;
 
 class ApiEmployeeController extends Controller
@@ -14,7 +16,20 @@ class ApiEmployeeController extends Controller
      */
     public function index()
     {
+        $emplist = Employee::with('job')->get();
 
+        return response()->json($emplist,200);
+
+     }
+
+    public function job_list()
+    {
+
+        $job = JobType::all();
+        if (is_null($job)) {
+            return response()->json(['msg' => 'Faild'], 400);
+        }
+        return response()->json($job, 200);
     }
 
     /**
@@ -35,7 +50,24 @@ class ApiEmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $temp = $request->job_id;
+        $job = JobType::find($temp);
+        $employee = new Employee();
+
+        $employee->first_name = $request->first_name;
+        $employee->last_name = $request->last_name;
+        $employee->address = $request->address;
+        $employee->email = $request->email;
+        $employee->nic = $request->nic;
+        $employee->mobile = $request->mobile;
+
+        $employee->job_type_id = $job->id;
+       $empsave =  $employee->save();
+
+       if(is_null($empsave)){
+        return  response()->json(['msg' => 'Something Wrong !!'],400);
+       }
+       return response()->json(['msg' => 'Employee Added Success'],200);
     }
 
     /**

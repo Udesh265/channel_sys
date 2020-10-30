@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Employee;
 use App\User;
 use App\Photo;
 use Illuminate\Http\Request;
@@ -29,6 +30,31 @@ class ApiUserController extends Controller
         //
     }
 
+    public function assign_emp(Request $request){
+
+        // return $request;
+
+        $emp = Employee::find($request->emp_id);
+
+        $user = User::create([
+           'username' => $request->username,
+            'email' => $request->email,
+            'password' => $request->password,
+            'is_active' => 1,
+        ]);
+
+        $emp->user_id = $user->id;
+        $emp->save();
+
+        if(is_null($emp)){
+            return response()->json(['msg' => 'faild'],400);
+        }
+            return response()->json(['msg' => 'Successfully assign user'],200);
+
+
+
+
+    }
     /**
      * Show the form for creating a new resource.
      *

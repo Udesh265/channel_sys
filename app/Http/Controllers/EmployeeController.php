@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\JobType;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -23,6 +24,8 @@ class EmployeeController extends Controller
         return view('page.employee.index', compact('page_name', 'breadcrums', 'page_option'));
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,9 +40,7 @@ class EmployeeController extends Controller
             ['name' => 'Create', 'url' => '#'],
         ];
 
-        return view('page.employee.create', compact('page_na
-        me', 'breadcrums', 'page_option'));
-
+        return view('page.employee.create', compact('page_name', 'breadcrums', 'page_option'));
     }
 
     /**

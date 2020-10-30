@@ -17,7 +17,7 @@ class ApiJobTypeController extends Controller
      */
     public function index()
     {
-        $job_list = JobType::all();
+        $job_list = JobType::select('id','name')->orderByDesc('id')->get();
 
         if(is_null($job_list)){
             return response()->json(['msg' => 'faild'],400);
@@ -93,6 +93,12 @@ class ApiJobTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $del_job = JobType::find($id);
+        return $del_job->delete();
+
+        if(is_null($del_job)){
+            return response()->json(['msg' => 'faild'],400);
+        }
+            return response()->json(['msg' => 'Successfully Deleted'],200);
     }
 }

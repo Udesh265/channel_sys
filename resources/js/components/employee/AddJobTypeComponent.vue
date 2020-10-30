@@ -33,11 +33,10 @@
             <td scope="row">{{ job.id }}</td>
             <td>{{ job.name }}</td>
             <td>
-              <a style="cursor: pointer"
+              <a style="cursor: pointer" href="#" @click="del_job(job.id)"
                 ><i class="fa fa-trash text-danger mx-1"></i
               ></a>
             </td>
-
           </tr>
           <tr>
             <td scope="row"></td>
@@ -59,6 +58,7 @@ export default {
   data() {
       return {
           form: new Form({
+              id:"",
               name:"",
           }),
 
@@ -72,6 +72,7 @@ export default {
            .post('/api/jobtype')
            .then((response) => {
                if(response.status == 200){
+                  this.form.reset();
                    this.get_job_list();
 
                }
@@ -93,7 +94,21 @@ export default {
           .catch((error) => {
               console.log(error);
           });
-      }
+      },
+
+      del_job: function(id){
+          axios
+          .delete('/api/jobtype/' + id)
+          .then((response) => {
+              if(response.status == 200){
+                  this.response = response.data;
+                  this.get_job_list();
+              }
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+      },
   },
 };
 </script>

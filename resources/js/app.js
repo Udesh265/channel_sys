@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+
 //vForms
 import { Form, HasError, AlertError } from 'vform';
 Vue.component(HasError.name, HasError)

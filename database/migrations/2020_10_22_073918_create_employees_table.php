@@ -21,7 +21,8 @@ class CreateEmployeesTable extends Migration
             $table->string('email');
             $table->string('nic');
             $table->integer('mobile');
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
+            $table->integer('job_type_id');
 
             $table->timestamps();
         });

@@ -28,8 +28,13 @@ Route::get('permissions/role/{id}', 'API\ApiPermissionController@permission_per_
 Route::prefix('user')->group(function () {
     Route::get('profile', 'API\ApiUserController@profile')->name('user.profile');
     Route::patch('update/profile/picture/{id}', 'API\ApiUserController@update_profile_pic')->name('user.profile.pic.update');
+    Route::post('assign','API\ApiUserController@assign_emp')->name('user.assign.emp');
 });
 Route::apiResource('user', 'API\ApiUserController');
 
 Route::apiResource('employee','API\ApiEmployeeController');
+
+Route::get('joblist','API\ApiEmployeeController@job_list');
+
 Route::apiResource('jobtype','API\ApiJobTypeController');
+
