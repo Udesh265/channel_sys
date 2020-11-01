@@ -89,6 +89,7 @@
             class="card-header d-flex justify-content-between align-items-center"
           >
             <h4 class="card-title">Assign User</h4>
+            <input type="text" placeholder="Ex: Type Name or NIC Press Enter" class="form-control col-4" v-model="search_keyword" @keypress.enter="search_all_emp">
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -97,7 +98,8 @@
                   <tr>
                     <th width="10%" scope="col"></th>
                     <th width="20%" scope="col">Employee Name</th>
-                    <th width="60%" scope="col">NIC</th>
+                    <th width="40%" scope="col">NIC</th>
+                    <th width="20%" scope="col">Status</th>
                     <th width="10%" scope="col">Action</th>
                   </tr>
                 </thead>
@@ -106,6 +108,7 @@
                     <th scope="row">{{ emp.id }}</th>
                     <td>{{ emp.first_name }}</td>
                     <td>{{ emp.nic }}</td>
+                     <td>{{ emp.user_id == null ? 'Not Assigned' : 'Assigned'}}</td>
                     <td style="text-align: center">
                       <a style="cursor: pointer" @click="assign_user(emp.id)"
                         ><i class="fa fa-eye text-success mx-1"></i
@@ -288,6 +291,7 @@ export default {
         mobile: "",
         job_id: "",
       }),
+      search_keyword:"",
 
       jobdata: {},
 
@@ -355,6 +359,18 @@ export default {
           console.log(error);
         });
     },
+    search_all_emp: function(){
+        axios
+        .get('/api/employee/search/' + this.search_keyword)
+        .then((response) => {
+            this.empdata = response.data;
+        })
+        .catch((error) => {
+
+            console.log(error);
+        });
+    },
+
 
     // create user model methods
     assign_user: function (id) {

@@ -3593,6 +3593,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.getAllRoles();
@@ -3614,6 +3617,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         mobile: "",
         job_id: ""
       }),
+      search_keyword: "",
       jobdata: {},
       empdata: {},
       // Create model data
@@ -3669,6 +3673,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (response.status == 200) {
           _this3.empdata = response.data;
         }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    search_all_emp: function search_all_emp() {
+      var _this4 = this;
+
+      axios.get('/api/employee/search/' + this.search_keyword).then(function (response) {
+        _this4.empdata = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3809,7 +3822,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return submitForm;
     }(),
     uploadFile: function uploadFile(event) {
-      var _this4 = this;
+      var _this5 = this;
 
       var file = event.target.files[0];
       this.img_name = file.name;
@@ -3817,7 +3830,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var reader = new FileReader();
 
       reader.onloadend = function (file) {
-        _this4.form.photo.file = reader.result;
+        _this5.form.photo.file = reader.result;
       };
 
       reader.readAsDataURL(file);
@@ -68530,12 +68543,55 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(0),
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-header d-flex justify-content-between align-items-center"
+            },
+            [
+              _c("h4", { staticClass: "card-title" }, [_vm._v("Assign User")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search_keyword,
+                    expression: "search_keyword"
+                  }
+                ],
+                staticClass: "form-control col-4",
+                attrs: {
+                  type: "text",
+                  placeholder: "Ex: Type Name or NIC Press Enter"
+                },
+                domProps: { value: _vm.search_keyword },
+                on: {
+                  keypress: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.search_all_emp($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search_keyword = $event.target.value
+                  }
+                }
+              })
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "table-responsive" }, [
               _c("table", { staticClass: "table table-hover" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -68548,6 +68604,14 @@ var render = function() {
                       _c("td", [_vm._v(_vm._s(emp.first_name))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(emp.nic))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(
+                            emp.user_id == null ? "Not Assigned" : "Assigned"
+                          )
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("td", { staticStyle: { "text-align": "center" } }, [
                         _c(
@@ -68599,7 +68663,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -68751,7 +68815,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _vm._m(3),
+                                _vm._m(2),
                                 _vm._v(" "),
                                 _c("input", {
                                   directives: [
@@ -68963,19 +69027,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-header d-flex justify-content-between align-items-center"
-      },
-      [_c("h4", { staticClass: "card-title" }, [_vm._v("Assign User")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { attrs: { width: "10%", scope: "col" } }),
@@ -68984,7 +69035,9 @@ var staticRenderFns = [
           _vm._v("Employee Name")
         ]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "60%", scope: "col" } }, [_vm._v("NIC")]),
+        _c("th", { attrs: { width: "40%", scope: "col" } }, [_vm._v("NIC")]),
+        _vm._v(" "),
+        _c("th", { attrs: { width: "20%", scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "10%", scope: "col" } }, [_vm._v("Action")])
       ])

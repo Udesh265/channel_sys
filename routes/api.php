@@ -32,9 +32,16 @@ Route::prefix('user')->group(function () {
 });
 Route::apiResource('user', 'API\ApiUserController');
 
+Route::group(['prefix' => 'employee'], function () {
+
+    Route::get('search/{keyword}','API\ApiEmployeeController@search_all_emp');
+});
+
 Route::apiResource('employee','API\ApiEmployeeController');
 
 Route::get('joblist','API\ApiEmployeeController@job_list');
 
 Route::apiResource('jobtype','API\ApiJobTypeController');
+
+
 

@@ -6,6 +6,7 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\JobType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ApiEmployeeController extends Controller
 {
@@ -16,11 +17,21 @@ class ApiEmployeeController extends Controller
      */
     public function index()
     {
-        $emplist = Employee::with('job')->get();
+        $date = Carbon::today();
+        $emplist = Employee::with('job')->whereDate('updated_at',$date)->get();
 
-        return response()->json($emplist,200);
+       return response()->json($emplist,200);
 
      }
+
+    public function search_all_emp($keyword){
+
+        $emp = Employee::where('first_name','like', '%'.$keyword. '%')->orWhere('nic','like','%'.$keyword.'%')->get();
+
+            return response()->json($emp,200);
+
+
+    }
 
     public function job_list()
     {
