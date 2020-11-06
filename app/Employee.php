@@ -16,7 +16,8 @@ class Employee extends Model
         'email',
         'nic',
         'mobile',
-        'user_id'
+        'user_id',
+        'status',
     ];
 
     public function user()

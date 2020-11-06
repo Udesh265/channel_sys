@@ -88,6 +88,7 @@ Vue.component('new-user-component' , require('./components/NewUserComponent.vue'
 Vue.component('profile-view-component', require('./components/ProfileComponent.vue').default);
 Vue.component('add-employee-component', require('./components/employee/AddEmployeeComponent.vue').default);
 Vue.component('add-job-component', require('./components/employee/AddJobTypeComponent.vue').default);
+Vue.component('manage-emp-component', require('./components/employee/ManageEmployeeComponent').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

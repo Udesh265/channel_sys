@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', 'UserController');
     Route::resource('permission', 'PermissionController');
 
+    Route::get('emp_manage','EmployeeController@manage_emp')->name('employee.manage_emp');
     Route::resource('employee', 'EmployeeController');
 
     Route::resource('jobtype', 'JobTypeController');

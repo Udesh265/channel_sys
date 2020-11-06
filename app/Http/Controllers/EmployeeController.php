@@ -24,6 +24,19 @@ class EmployeeController extends Controller
         return view('page.employee.index', compact('page_name', 'breadcrums', 'page_option'));
     }
 
+    public function manage_emp(){
+
+        $page_option = ['main' => 'employee', 'sub' => 'employee_manage'];
+        $page_name = "Manage Employee";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'Employees', 'url' => '#'],
+        ];
+
+        return view('page.employee.manage_emp', compact('page_name', 'breadcrums', 'page_option'));
+
+    }
+
 
 
     /**

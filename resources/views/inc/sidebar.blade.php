@@ -43,8 +43,8 @@
                             <li class="{{ $page_option['sub'] === 'employee_create' ? 'active' : '' }}"><a
                                     href="{{ route('employee.create') }}">Add Employee</a>
                             </li>
-                            <li class="{{ $page_option['sub'] === 'permission_index' ? 'active' : '' }}"><a
-                                    href="{{ route('permission.index') }}">Manage</a>
+                            <li class="{{ $page_option['sub'] === 'employee_manage' ? 'active' : '' }}"><a
+                                    href="{{ route('employee.manage_emp') }}">Manage</a>
                             </li>
                             <li class="{{ $page_option['sub'] === 'jobtype_create' ? 'active' : '' }}"><a
                                     href="{{ route('jobtype.create') }}">Job Type</a>

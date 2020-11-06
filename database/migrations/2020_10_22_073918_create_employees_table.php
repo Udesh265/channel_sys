@@ -23,6 +23,7 @@ class CreateEmployeesTable extends Migration
             $table->integer('mobile');
             $table->integer('user_id')->nullable();
             $table->integer('job_type_id');
+            $table->integer('status');
 
             $table->timestamps();
         });

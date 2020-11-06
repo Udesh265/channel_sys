@@ -28,10 +28,15 @@ class ApiEmployeeController extends Controller
 
         $emp = Employee::where('first_name','like', '%'.$keyword. '%')->orWhere('nic','like','%'.$keyword.'%')->get();
 
-            return response()->json($emp,200);
-
+        return response()->json($emp,200);
 
     }
+     public function all_emp_data(){
+
+        $emp = Employee::where('status',1)->get();
+        return response()->json($emp,200);
+
+     }
 
     public function job_list()
     {
@@ -71,7 +76,7 @@ class ApiEmployeeController extends Controller
         $employee->email = $request->email;
         $employee->nic = $request->nic;
         $employee->mobile = $request->mobile;
-
+        $employee->status = '1';
         $employee->job_type_id = $job->id;
        $empsave =  $employee->save();
 
@@ -113,6 +118,15 @@ class ApiEmployeeController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function del_emp(Request $request, $id){
+         $emp = Employee::find($id);
+        // $emp = update($request->where(['status' => '0']));
+
+        $emp->update(['status' => '0']);
+
+
     }
 
     /**
