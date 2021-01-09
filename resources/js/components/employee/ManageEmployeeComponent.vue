@@ -43,7 +43,7 @@
                     <a style="cursor: pointer"
                       ><i class="fa fa-eye text-success mx-1"></i
                     ></a>
-                    <a style="cursor: pointer" @click="update_emp(emp.id)"
+                    <a style="cursor: pointer" @click="update_emp(emp)"
                       ><i class="fa fa-edit text-success mx-1"></i
                     ></a>
                     <a style="cursor: pointer" @click="emp_del(emp.id)"
@@ -61,14 +61,14 @@
     <!-- Update Employee model start -->
     <!-- Modal -->
     <div
-      class="modal fade"
+      class="modal fade bd-example-modal-lg"
       id="modelId"
       tabindex="-1"
       role="dialog"
       aria-labelledby="modelTitleId"
       aria-hidden="true"
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Modal title</h5>
@@ -81,16 +81,92 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">Body</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save</button>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <img class="card-img-top" src="holder.js/100x180/" alt="" />
+                  <div class="card-body">
+                    <form>
+                      <div class="form-group row">
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                          <label for="form-control">First Name:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="form.first_name"
+                          />
+                        </div>
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                          <label for="form-control">Last Name:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="form.last_name"
+                          />
+                        </div>
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                          <label for="form-control">NIC:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="form.nic"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group mt-3 row">
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                          <label for="form-control">Email:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="form.email"
+                          />
+                        </div>
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                          <label for="form-control">Mobile:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="form.mobile"
+                          />
+                        </div>
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                          <label for="form-control">Job Type:</label>
+                          <select
+                            class="form-control"
+                            id="exampleFormControlSelect1"
+                            v-model="form.job_id"
+                          >
+                            <option
+                              v-for="(job, index) in jobdata"
+                              :key="index"
+                              :value="job.id"
+                            >
+                              {{ job.name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group mt-3 row">
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                          <label for="form-control">Adddress:</label>
+                          <textarea
+                            class="form-control"
+                            rows="3"
+                            v-model="form.address"
+                          ></textarea>
+                        </div>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary btn-lg">
+                        Add Employee
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -108,16 +184,19 @@ export default {
   },
   data() {
     return {
-      search_keyword: "",
+      form: new Form({
+        id: "",
+        first_name: "",
+        last_name: "",
+        address: "",
+        email: "",
+        nic: "",
+        mobile: "",
+        job_id: "",
+      }),
 
-      id: "",
-      first_name: "",
-      last_name: "",
-      address: "",
-      email: "",
-      nic: "",
-      mobile: "",
-      job_id: "",
+      search_keyword: "",
+      jobdata: {},
       emp_data: {},
       all_emp_data: {},
     };
@@ -182,11 +261,24 @@ export default {
         });
     },
 
-    update_emp: function(id){
-
-        $("#modelId").modal("show");
+    get_job_list: function () {
+      axios
+        .get("/api/jobtype")
+        .then((response) => {
+          if (response.status == 200) {
+            this.jobdata = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
+
+    update_emp: function (id) {
+      $("#modelId").modal("show");
+      this.form.fill(id);
+    },
   },
 };
 </script>
