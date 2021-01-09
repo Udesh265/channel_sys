@@ -377,8 +377,8 @@ export default {
       // console.log(id);
       this.mform.emp_id = id;
       $("#modelId").modal("show");
-
     },
+
     mform_submit: async function () {
       try {
         const response = await this.mform.post("/api/user/assign");
