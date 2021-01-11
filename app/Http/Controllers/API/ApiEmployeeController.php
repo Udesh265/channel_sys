@@ -115,10 +115,28 @@ class ApiEmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_emp(Request $request, $id)
     {
-        //
+
+        $employee =  Employee::find($id);
+
+        $employee = $request->first_name;
+        $employee = $request->last_name;
+        $employee= $request->address;
+        $employee = $request->email;
+        $employee = $request->nic;
+        $employee = $request->mobile;
+        $employee = $request->job_type_id;
+
+         $emp =  $employee->save();
+
+       if(is_null($emp)){
+        return  response()->json(['msg' => 'Something Wrong !!'],400);
+       }
+       return response()->json(['msg' => ' Success'],200);
     }
+
+
 
     public function del_emp(Request $request, $id){
          $emp = Employee::find($id);

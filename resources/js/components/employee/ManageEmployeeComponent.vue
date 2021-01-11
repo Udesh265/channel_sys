@@ -43,7 +43,7 @@
                     <a style="cursor: pointer"
                       ><i class="fa fa-eye text-success mx-1"></i
                     ></a>
-                    <a style="cursor: pointer" @click="update_emp(emp)"
+                    <a style="cursor: pointer" @click="update_emp_load_modal(emp)"
                       ><i class="fa fa-edit text-success mx-1"></i
                     ></a>
                     <a style="cursor: pointer" @click="emp_del(emp.id)"
@@ -136,7 +136,7 @@
                           <select
                             class="form-control"
                             id="exampleFormControlSelect1"
-                            v-model="form.job_id"
+                            v-model="form.job_type_id"
                           >
                             <option
                               v-for="(job, index) in jobdata"
@@ -159,8 +159,12 @@
                         </div>
                       </div>
 
-                      <button type="submit" class="btn btn-primary btn-lg">
-                        Add Employee
+                      <button
+
+                        @click="update_emp(id)"
+                        class="btn btn-primary btn-lg"
+                      >
+                        Update
                       </button>
                     </form>
                   </div>
@@ -177,9 +181,11 @@
 
 <script>
 export default {
-  created() {},
+  created() {
+    this.get_job_list();
+  },
   mounted() {
-    //   this.get_all_emp();
+    this.get_all_emp();
     //this.emp_del();
   },
   data() {
@@ -192,7 +198,7 @@ export default {
         email: "",
         nic: "",
         mobile: "",
-        job_id: "",
+        job_type_id: "",
       }),
 
       search_keyword: "",
@@ -274,12 +280,63 @@ export default {
         });
     },
 
-
-    update_emp: function (id) {
+    update_emp_load_modal: function (id) {
       $("#modelId").modal("show");
       this.form.fill(id);
     },
-  },
+
+    // update_emp: function(id){
+    //   swal
+    //     .fire({
+    //       title: "Are you sure?",
+    //       text: "You won't be able to revert this!",
+    //       icon: "warning",
+    //       showCancelButton: true,
+    //       confirmButtonColor: "#3085d6",
+    //       cancelButtonColor: "#d33",
+    //       confirmButtonText: "Yes, Update it!",
+    //     })
+    //     .then((result) => {
+    //       if (result.isConfirmed) {
+    //         axios
+    //           .patch("/api/employee/update/" + id)
+    //           .then((response) => {
+    //             if (response.status == 200) {
+    //               swal.fire(
+    //                 "Updated!",
+    //                 "Your file has been Updated.",
+    //                 "success"
+    //               );
+    //               this.get_all_emp();
+    //             }
+    //           })
+    //           .catch((error) => {
+    //             console.log(error);
+    //           });
+    //       }
+    //     });
+    // },
+
+
+    update_emp: function(id){
+
+            axios
+              .patch("/api/employee/update/" + id)
+              .then((response) => {
+                if (response.status == 200) {
+                    return(msg);
+                  this.get_all_emp();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+
+    },
+
+
+  }
+
 };
 </script>
 

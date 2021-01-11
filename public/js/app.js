@@ -4143,10 +4143,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {},
-  mounted: function mounted() {//   this.get_all_emp();
-    //this.emp_del();
+  created: function created() {
+    this.get_job_list();
+  },
+  mounted: function mounted() {
+    this.get_all_emp(); //this.emp_del();
   },
   data: function data() {
     return {
@@ -4158,7 +4164,7 @@ __webpack_require__.r(__webpack_exports__);
         email: "",
         nic: "",
         mobile: "",
-        job_id: ""
+        job_type_id: ""
       }),
       search_keyword: "",
       jobdata: {},
@@ -4226,9 +4232,53 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    update_emp: function update_emp(id) {
+    update_emp_load_modal: function update_emp_load_modal(id) {
       $("#modelId").modal("show");
       this.form.fill(id);
+    },
+    // update_emp: function(id){
+    //   swal
+    //     .fire({
+    //       title: "Are you sure?",
+    //       text: "You won't be able to revert this!",
+    //       icon: "warning",
+    //       showCancelButton: true,
+    //       confirmButtonColor: "#3085d6",
+    //       cancelButtonColor: "#d33",
+    //       confirmButtonText: "Yes, Update it!",
+    //     })
+    //     .then((result) => {
+    //       if (result.isConfirmed) {
+    //         axios
+    //           .patch("/api/employee/update/" + id)
+    //           .then((response) => {
+    //             if (response.status == 200) {
+    //               swal.fire(
+    //                 "Updated!",
+    //                 "Your file has been Updated.",
+    //                 "success"
+    //               );
+    //               this.get_all_emp();
+    //             }
+    //           })
+    //           .catch((error) => {
+    //             console.log(error);
+    //           });
+    //       }
+    //     });
+    // },
+    update_emp: function update_emp(id) {
+      var _this5 = this;
+
+      axios.patch("/api/employee/update/" + id).then(function (response) {
+        if (response.status == 200) {
+          return msg;
+
+          _this5.get_all_emp();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -69617,7 +69667,7 @@ var render = function() {
                           staticStyle: { cursor: "pointer" },
                           on: {
                             click: function($event) {
-                              return _vm.update_emp(emp)
+                              return _vm.update_emp_load_modal(emp)
                             }
                           }
                         },
@@ -69896,8 +69946,8 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.form.job_id,
-                                        expression: "form.job_id"
+                                        value: _vm.form.job_type_id,
+                                        expression: "form.job_type_id"
                                       }
                                     ],
                                     staticClass: "form-control",
@@ -69917,7 +69967,7 @@ var render = function() {
                                           })
                                         _vm.$set(
                                           _vm.form,
-                                          "job_id",
+                                          "job_type_id",
                                           $event.target.multiple
                                             ? $$selectedVal
                                             : $$selectedVal[0]
@@ -69991,11 +70041,15 @@ var render = function() {
                             "button",
                             {
                               staticClass: "btn btn-primary btn-lg",
-                              attrs: { type: "submit" }
+                              on: {
+                                click: function($event) {
+                                  return _vm.update_emp(_vm.id)
+                                }
+                              }
                             },
                             [
                               _vm._v(
-                                "\n                      Add Employee\n                    "
+                                "\n                      Update\n                    "
                               )
                             ]
                           )
