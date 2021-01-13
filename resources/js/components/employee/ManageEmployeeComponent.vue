@@ -204,44 +204,44 @@
                   <img class="card-img-top" src="holder.js/100x180/" alt="" />
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-4">Profile Picture</div>
-                      <div class="col-8" >
-                        <div class="row">
+                      <div class="col-3">Profile Picture</div>
+                      <div class="col-9" >
+                        <div class="row mt-2">
                           <div class="col-3">First Name</div>
                           <div class="col-1">:</div>
-                          <div class="col-4">{{ one_emp_data.first_name }}</div>
+                          <div class="col-5">{{ one_emp_data.first_name }}</div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                           <div class="col-3">Last Name</div>
                           <div class="col-1">:</div>
-                          <div class="col-4">{{ one_emp_data.last_name }}</div>
+                          <div class="col-5">{{ one_emp_data.last_name }}</div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                           <div class="col-3">NIC</div>
                           <div class="col-1">:</div>
-                          <div class="col-4">{{ one_emp_data.nic }}</div>
+                          <div class="col-5">{{ one_emp_data.nic }}</div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                           <div class="col-3">Email</div>
                           <div class="col-1">:</div>
-                          <div class="col-4">{{ one_emp_data.email }}</div>
+                          <div class="col-5">{{ one_emp_data.email }}</div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                           <div class="col-3">Mobile</div>
                           <div class="col-1">:</div>
-                          <div class="col-4">{{ one_emp_data.mobile }}</div>
+                          <div class="col-5">{{ one_emp_data.mobile }}</div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                           <div class="col-3">Job Role</div>
                           <div class="col-1">:</div>
-                          <div class="col-4">
-                            {{ one_emp_data.job.name }}
+                          <div class="col-5">
+                            {{ one_emp_data.nic }}
                           </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                           <div class="col-3">Address</div>
                           <div class="col-1">:</div>
-                          <div class="col-4">{{ one_emp_data.address }}</div>
+                          <div class="col-5">{{ one_emp_data.address }}</div>
                         </div>
                       </div>
                     </div>

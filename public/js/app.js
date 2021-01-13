@@ -70197,12 +70197,12 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "card-body" }, [
                         _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-4" }, [
+                          _c("div", { staticClass: "col-3" }, [
                             _vm._v("Profile Picture")
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-8" }, [
-                            _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-9" }, [
+                            _c("div", { staticClass: "row mt-2" }, [
                               _c("div", { staticClass: "col-3" }, [
                                 _vm._v("First Name")
                               ]),
@@ -70211,12 +70211,12 @@ var render = function() {
                                 _vm._v(":")
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4" }, [
+                              _c("div", { staticClass: "col-5" }, [
                                 _vm._v(_vm._s(_vm.one_emp_data.first_name))
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "row mt-2" }, [
                               _c("div", { staticClass: "col-3" }, [
                                 _vm._v("Last Name")
                               ]),
@@ -70225,12 +70225,12 @@ var render = function() {
                                 _vm._v(":")
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4" }, [
+                              _c("div", { staticClass: "col-5" }, [
                                 _vm._v(_vm._s(_vm.one_emp_data.last_name))
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "row mt-2" }, [
                               _c("div", { staticClass: "col-3" }, [
                                 _vm._v("NIC")
                               ]),
@@ -70239,12 +70239,12 @@ var render = function() {
                                 _vm._v(":")
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4" }, [
+                              _c("div", { staticClass: "col-5" }, [
                                 _vm._v(_vm._s(_vm.one_emp_data.nic))
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "row mt-2" }, [
                               _c("div", { staticClass: "col-3" }, [
                                 _vm._v("Email")
                               ]),
@@ -70253,12 +70253,12 @@ var render = function() {
                                 _vm._v(":")
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4" }, [
+                              _c("div", { staticClass: "col-5" }, [
                                 _vm._v(_vm._s(_vm.one_emp_data.email))
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "row mt-2" }, [
                               _c("div", { staticClass: "col-3" }, [
                                 _vm._v("Mobile")
                               ]),
@@ -70267,12 +70267,12 @@ var render = function() {
                                 _vm._v(":")
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4" }, [
+                              _c("div", { staticClass: "col-5" }, [
                                 _vm._v(_vm._s(_vm.one_emp_data.mobile))
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "row mt-2" }, [
                               _c("div", { staticClass: "col-3" }, [
                                 _vm._v("Job Role")
                               ]),
@@ -70281,16 +70281,16 @@ var render = function() {
                                 _vm._v(":")
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4" }, [
+                              _c("div", { staticClass: "col-5" }, [
                                 _vm._v(
                                   "\n                          " +
-                                    _vm._s(_vm.one_emp_data.job.name) +
+                                    _vm._s(_vm.one_emp_data.nic) +
                                     "\n                        "
                                 )
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "row mt-2" }, [
                               _c("div", { staticClass: "col-3" }, [
                                 _vm._v("Address")
                               ]),
@@ -70299,7 +70299,7 @@ var render = function() {
                                 _vm._v(":")
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4" }, [
+                              _c("div", { staticClass: "col-5" }, [
                                 _vm._v(_vm._s(_vm.one_emp_data.address))
                               ])
                             ])
