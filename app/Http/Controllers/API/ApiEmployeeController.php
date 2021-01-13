@@ -6,6 +6,7 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\JobType;
 use Illuminate\Http\Request;
+use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Carbon;
 
 class ApiEmployeeController extends Controller
@@ -36,6 +37,16 @@ class ApiEmployeeController extends Controller
         $emp = Employee::where('status',1)->get();
         return response()->json($emp,200);
 
+     }
+
+     public function get_one_employee($id){
+
+        $emp = Employee::with('job')->find($id);
+
+        if(is_null($emp)){
+            return response()->json(["msg","not found"],400);
+        }
+        return response()->json($emp,200);
      }
 
     public function job_list()
@@ -120,17 +131,11 @@ class ApiEmployeeController extends Controller
 
         $employee =  Employee::find($id);
 
-        $employee = $request->first_name;
-        $employee = $request->last_name;
-        $employee= $request->address;
-        $employee = $request->email;
-        $employee = $request->nic;
-        $employee = $request->mobile;
-        $employee = $request->job_type_id;
+        if(is_null($employee)) return response()->json(['msg' => 'Unable to locate employye'], 404);
 
-         $emp =  $employee->save();
+        $employee->update($request->all());
 
-       if(is_null($emp)){
+       if(is_null($employee)){
         return  response()->json(['msg' => 'Something Wrong !!'],400);
        }
        return response()->json(['msg' => ' Success'],200);

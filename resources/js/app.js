@@ -15,19 +15,6 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 window.Form = Form;
 
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
-
-let routes = [
-    { path: '/newuser', component: require('./components/NewUserComponent.vue') },
-    { path: '/bar', component: require('./components/RolePermissionComponent.vue') }
-  ]
-
-const router = new VueRouter({
-  routes // short for `routes: routes`
-});
-
-
 
 //Moment JS
 import moment from 'moment';
@@ -97,5 +84,4 @@ Vue.component('manage-emp-component', require('./components/employee/ManageEmplo
 
 const app = new Vue({
     el: '#app',
-    router
 });

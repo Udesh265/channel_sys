@@ -40,10 +40,12 @@
                   <td>{{ emp.nic }}</td>
                   <td>{{ emp.mobile }}</td>
                   <td>
-                    <a style="cursor: pointer"
+                    <a style="cursor: pointer" @click="get_one_employee(emp.id)"
                       ><i class="fa fa-eye text-success mx-1"></i
                     ></a>
-                    <a style="cursor: pointer" @click="update_emp_load_modal(emp)"
+                    <a
+                      style="cursor: pointer"
+                      @click="update_emp_load_modal(emp)"
                       ><i class="fa fa-edit text-success mx-1"></i
                     ></a>
                     <a style="cursor: pointer" @click="emp_del(emp.id)"
@@ -71,7 +73,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
+            <h5 class="modal-title">Edit Employee</h5>
             <button
               type="button"
               class="close"
@@ -87,7 +89,7 @@
                 <div class="card">
                   <img class="card-img-top" src="holder.js/100x180/" alt="" />
                   <div class="card-body">
-                    <form>
+                    <form @submit.prevent="update_emp()">
                       <div class="form-group row">
                         <div class="col-sm-4 col-lg-4 col-md-4">
                           <label for="form-control">First Name:</label>
@@ -159,11 +161,7 @@
                         </div>
                       </div>
 
-                      <button
-
-                        @click="update_emp(id)"
-                        class="btn btn-primary btn-lg"
-                      >
+                      <button type="submit" class="btn btn-primary btn-lg">
                         Update
                       </button>
                     </form>
@@ -176,6 +174,86 @@
       </div>
     </div>
     <!-- End Update employee model  -->
+
+    <!-- View employee details -->
+    <div
+      class="modal fade bd-example-modal-lg"
+      id="modelId1"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Employee Profile</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <img class="card-img-top" src="holder.js/100x180/" alt="" />
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-4">Profile Picture</div>
+                      <div class="col-8" >
+                        <div class="row">
+                          <div class="col-3">First Name</div>
+                          <div class="col-1">:</div>
+                          <div class="col-4">{{ one_emp_data.first_name }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-3">Last Name</div>
+                          <div class="col-1">:</div>
+                          <div class="col-4">{{ one_emp_data.last_name }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-3">NIC</div>
+                          <div class="col-1">:</div>
+                          <div class="col-4">{{ one_emp_data.nic }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-3">Email</div>
+                          <div class="col-1">:</div>
+                          <div class="col-4">{{ one_emp_data.email }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-3">Mobile</div>
+                          <div class="col-1">:</div>
+                          <div class="col-4">{{ one_emp_data.mobile }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-3">Job Role</div>
+                          <div class="col-1">:</div>
+                          <div class="col-4">
+                            {{ one_emp_data.job.name }}
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-3">Address</div>
+                          <div class="col-1">:</div>
+                          <div class="col-4">{{ one_emp_data.address }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View End Employee details madal -->
   </div>
 </template>
 
@@ -205,6 +283,7 @@ export default {
       jobdata: {},
       emp_data: {},
       all_emp_data: {},
+      one_emp_data: {},
     };
   },
   methods: {
@@ -280,63 +359,59 @@ export default {
         });
     },
 
+    get_one_employee: function (id) {
+      $("#modelId1").modal("show");
+
+      axios
+        .get("/api/employee/getone/" + id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.one_emp_data = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     update_emp_load_modal: function (id) {
       $("#modelId").modal("show");
       this.form.fill(id);
     },
 
-    // update_emp: function(id){
-    //   swal
-    //     .fire({
-    //       title: "Are you sure?",
-    //       text: "You won't be able to revert this!",
-    //       icon: "warning",
-    //       showCancelButton: true,
-    //       confirmButtonColor: "#3085d6",
-    //       cancelButtonColor: "#d33",
-    //       confirmButtonText: "Yes, Update it!",
-    //     })
-    //     .then((result) => {
-    //       if (result.isConfirmed) {
-    //         axios
-    //           .patch("/api/employee/update/" + id)
-    //           .then((response) => {
-    //             if (response.status == 200) {
-    //               swal.fire(
-    //                 "Updated!",
-    //                 "Your file has been Updated.",
-    //                 "success"
-    //               );
-    //               this.get_all_emp();
-    //             }
-    //           })
-    //           .catch((error) => {
-    //             console.log(error);
-    //           });
-    //       }
-    //     });
-    // },
-
-
-    update_emp: function(id){
-
-            axios
-              .patch("/api/employee/update/" + id)
+    update_emp: function () {
+      swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, update it!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.form
+              .patch("/api/employee/update/" + this.form.id)
               .then((response) => {
                 if (response.status == 200) {
-                    return(msg);
+                  swal.fire(
+                    "Updated!",
+                    "Your file has been Updated.",
+                    "success"
+                  );
                   this.get_all_emp();
+                  $("#modelId").modal("hide");
                 }
               })
               .catch((error) => {
                 console.log(error);
               });
-
+          }
+        });
     },
-
-
-  }
-
+  },
 };
 </script>
 

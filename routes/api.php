@@ -38,6 +38,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('all','API\ApiEmployeeController@all_emp_data');
     Route::patch('del/{id}','API\ApiEmployeeController@del_emp');
     Route::patch('update/{id}','API\ApiEmployeeController@update_emp');
+    Route::get('getone/{id}','API\ApiEmployeeController@get_one_employee');
     // Route:get('');
 
 });
