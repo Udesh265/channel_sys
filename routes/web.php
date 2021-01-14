@@ -32,6 +32,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('jobtype', 'JobTypeController');
 
+    Route::get('patient/add_patient','PatientController@add_patient')->name('patient.add_patient');
+    Route::get('patient/manage','PatientController@manage_patient')->name('patient.manage_patient');
+
 
 
 

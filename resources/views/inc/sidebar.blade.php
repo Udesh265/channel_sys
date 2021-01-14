@@ -64,6 +64,35 @@
                     </li>
                 </ul>
             </li>
+            <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Patient Management</a>
+                <ul>
+                    <li class="dropdown {{ $page_option['main'] === 'patient' ? 'active' : '' }}"><a href="#"><i
+                                class="fas fa-sitemap"></i>Patient</a>
+                        <ul class="sub-menu">
+                            <li class="{{ $page_option['sub'] === 'add_patient' ? 'active' : '' }}"><a
+                                    href="{{ route('patient.add_patient') }}">Add Patient</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'patient_manage' ? 'active' : '' }}"><a
+                                    href="{{ route('patient.manage_patient') }}">Manage</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'jobtype_create' ? 'active' : '' }}"><a
+                                    href="{{ route('jobtype.create') }}">Job Type</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
+                                class="fas fa-user-tie"></i>Attendence</a>
+                        <ul class="sub-menu">
+                            <li class="{{ $page_option['sub'] === 'user_create' ? 'active' : '' }}"><a
+                                    href="{{ route('user.create') }}">View</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'user_index' ? 'active' : '' }}"><a
+                                    href="{{ route('user.index') }}">Manage</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <!-- END: Menu-->
         <ol class="breadcrumb bg-transparent align-self-center m-0 p-0 ml-auto">
