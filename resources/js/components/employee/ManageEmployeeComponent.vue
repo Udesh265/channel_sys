@@ -40,7 +40,7 @@
                   <td>{{ emp.nic }}</td>
                   <td>{{ emp.mobile }}</td>
                   <td>
-                    <a style="cursor: pointer" @click="get_one_employee(emp.id)"
+                    <a style="cursor: pointer" @click="get_one_employee(emp)"
                       ><i class="fa fa-eye text-success mx-1"></i
                     ></a>
                     <a
@@ -205,7 +205,7 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-3">Profile Picture</div>
-                      <div class="col-9" >
+                      <div class="col-9">
                         <div class="row mt-2">
                           <div class="col-3">First Name</div>
                           <div class="col-1">:</div>
@@ -234,8 +234,11 @@
                         <div class="row mt-2">
                           <div class="col-3">Job Role</div>
                           <div class="col-1">:</div>
-                          <div class="col-5">
-                            {{ one_emp_data.nic }}
+                          <div
+                            v-if="one_emp_data.hasOwnProperty('job')"
+                            class="col-5"
+                          >
+                            {{ one_emp_data.job.name }}
                           </div>
                         </div>
                         <div class="row mt-2">
@@ -359,24 +362,25 @@ export default {
         });
     },
 
-    get_one_employee: function (id) {
+    get_one_employee: function (emp) {
+      this.one_emp_data = emp;
       $("#modelId1").modal("show");
+   //   axios
+      //     .get("/api/employee/getone/" + id)
+      //     .then((response) => {
+      //       if (response.status == 200) {
 
-      axios
-        .get("/api/employee/getone/" + id)
-        .then((response) => {
-          if (response.status == 200) {
-            this.one_emp_data = response.data;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      //   }
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+
+   // });
     },
 
-    update_emp_load_modal: function (id) {
+    update_emp_load_modal: function (emp_data) {
       $("#modelId").modal("show");
-      this.form.fill(id);
+      this.form.fill(emp_data);
     },
 
     update_emp: function () {

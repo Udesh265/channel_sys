@@ -4225,6 +4225,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_job_list();
@@ -4311,24 +4314,24 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    get_one_employee: function get_one_employee(id) {
-      var _this5 = this;
-
-      $("#modelId1").modal("show");
-      axios.get("/api/employee/getone/" + id).then(function (response) {
-        if (response.status == 200) {
-          _this5.one_emp_data = response.data;
-        }
-      })["catch"](function (error) {
-        console.log(error);
-      });
+    get_one_employee: function get_one_employee(emp) {
+      this.one_emp_data = emp;
+      $("#modelId1").modal("show"); //   axios
+      //     .get("/api/employee/getone/" + id)
+      //     .then((response) => {
+      //       if (response.status == 200) {
+      //   }
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
     },
-    update_emp_load_modal: function update_emp_load_modal(id) {
+    update_emp_load_modal: function update_emp_load_modal(emp_data) {
       $("#modelId").modal("show");
-      this.form.fill(id);
+      this.form.fill(emp_data);
     },
     update_emp: function update_emp() {
-      var _this6 = this;
+      var _this5 = this;
 
       swal.fire({
         title: "Are you sure?",
@@ -4340,11 +4343,11 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Yes, update it!"
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this6.form.patch("/api/employee/update/" + _this6.form.id).then(function (response) {
+          _this5.form.patch("/api/employee/update/" + _this5.form.id).then(function (response) {
             if (response.status == 200) {
               swal.fire("Updated!", "Your file has been Updated.", "success");
 
-              _this6.get_all_emp();
+              _this5.get_all_emp();
 
               $("#modelId").modal("hide");
             }
@@ -69739,7 +69742,7 @@ var render = function() {
                           staticStyle: { cursor: "pointer" },
                           on: {
                             click: function($event) {
-                              return _vm.get_one_employee(emp.id)
+                              return _vm.get_one_employee(emp)
                             }
                           }
                         },
@@ -70281,13 +70284,15 @@ var render = function() {
                                 _vm._v(":")
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-5" }, [
-                                _vm._v(
-                                  "\n                          " +
-                                    _vm._s(_vm.one_emp_data.nic) +
-                                    "\n                        "
-                                )
-                              ])
+                              _vm.one_emp_data.hasOwnProperty("job")
+                                ? _c("div", { staticClass: "col-5" }, [
+                                    _vm._v(
+                                      "\n                          " +
+                                        _vm._s(_vm.one_emp_data.job.name) +
+                                        "\n                        "
+                                    )
+                                  ])
+                                : _vm._e()
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "row mt-2" }, [

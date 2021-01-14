@@ -27,14 +27,14 @@ class ApiEmployeeController extends Controller
 
     public function search_all_emp($keyword){
 
-        $emp = Employee::where('first_name','like', '%'.$keyword. '%')->orWhere('nic','like','%'.$keyword.'%')->get();
+        $emp = Employee::with('job')->where('first_name','like', '%'.$keyword. '%')->orWhere('nic','like','%'.$keyword.'%')->get();
 
         return response()->json($emp,200);
 
     }
      public function all_emp_data(){
 
-        $emp = Employee::where('status',1)->get();
+        $emp = Employee::with('job')->where('status',1)->get();
         return response()->json($emp,200);
 
      }
