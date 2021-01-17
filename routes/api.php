@@ -47,6 +47,7 @@ Route::group(['prefix' => 'patient'], function () {
 
     Route::post('addpatient','API\ApiPatientController@add_patient');
     Route::get('get_all','API\ApiPatientController@get_all_patient');
+    Route::post('assign/user/{patient_id}','API\ApiPatientController@assign_user');
 
 });
 

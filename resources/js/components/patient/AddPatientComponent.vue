@@ -66,13 +66,13 @@
               class="card-header d-flex justify-content-between align-items-center"
             >
               <h4 class="card-title">Allow System Access For Pateints</h4>
-              <input
+              <!-- <input
                 type="text"
                 placeholder="Ex: Type Name or NIC Press Enter"
                 class="form-control col-4"
                 v-model="search_keyword"
                 @keypress.enter="search_all_emp"
-              />
+              /> -->
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -140,7 +140,7 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-12">
-                <form @submit.prevent="mform_submit">
+                <form @submit.prevent="submitUpdate()">
                   <div class="form-row">
                     <div class="col-md-4 mb-3">
                       <label for="validationDefault03">Role</label>
@@ -220,22 +220,10 @@
                     </div>
                   </div>
                   <div class="form-row pt-3">
-                    <div class="col-md-4">
-                      <label for="validationDefault05"
-                        >Profile Pic (600px X 600px Recommended)</label
-                      >
-                      <div class="custom-file overflow-hidden mb-5">
-                        <input
-                          id="customFile1"
-                          @change="uploadFile"
-                          type="file"
-                          name="Photo"
-                          class="custom-file-input"
-                        />
-                        <label for="customFile1" class="custom-file-label">{{
-                          img_name
-                        }}</label>
-                      </div>
+                    <div class="col-md-4 mb-3">
+                     <file-dialog @output="(files) => {
+                        this.mform.photo = files;
+                         }" />
                     </div>
                   </div>
 
@@ -260,8 +248,10 @@
 
 <script>
 export default {
+    props: ['user_id'],
   created() {
     this.get_patient_list();
+    this.getAllRoles();
   },
   mounted() {},
   data() {
@@ -280,18 +270,15 @@ export default {
       patient_data: {},
 
       mform: new Form({
+        user_id: "",
         role_id: "",
-        emp_id: "",
         username: "",
         email: "",
         password: "",
         password_confirmation: "",
-        photo: {
-          name: "",
-          file: "",
-        },
+        photo: {},
       }),
-      role_list: "",
+      role_list: {},
     };
   },
   methods: {
@@ -321,13 +308,37 @@ export default {
           console.log(error);
         });
     },
-    assign_user: function () {
 
-         $("#assign_user_model").modal("show");
-
+    getAllRoles: async function () {
+      try {
+        const response = await axios.get("/api/role/get/user/" + this.user_id);
+        if (response.status == 200) {
+          this.role_list = response.data;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
 
-
+    assign_user: function (id) {
+      this.mform.user_id = id;
+      $("#assign_user_model").modal("show");
+    },
+    submitUpdate: async function () {
+      try {
+        const response = await this.mform.post(`/api/patient/assign/user/${this.mform.user_id}`
+        );
+        if (response.status == 200) {
+              $("#assign_user_model").modal("hide");
+              this.mform.clear();
+              this.mform.reset();
+               this.get_patient_list();
+          console.log("Success message");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
   },
 };
 </script>

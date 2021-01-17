@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Patient;
+use App\User;
 use Illuminate\Http\Request;
 
 class ApiPatientController extends Controller
@@ -42,6 +43,33 @@ class ApiPatientController extends Controller
              return response()->json(["msg","error"],400);
          }
         return response()->json($patient,200);
+    }
+
+    public function assign_user(Request $request, $id)
+    {
+        // $input = $request->all();
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => $request->password,
+            'is_active' => 1,
+        ]);
+
+        if(is_null($user)) return response()->json(['msg' => 'Failed to create user, rolling back'], 400);
+
+        $patient = Patient::find($id);
+        if(is_null($patient)) return response()->json(['msg' => 'Unable to locate patient!'],404 );
+
+        $patient->update(
+            [
+                'user_id' => $user->id,
+
+            ]
+        );
+
+        if($patient) return response()->json(['msg' => 'successfully assigned user!'], 200);
+
+        return response()->json(['msg' => 'Failed to assign user!'], 400);
     }
 
 

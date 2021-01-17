@@ -15,6 +15,10 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 window.Form = Form;
 
+//File64
+import File64 from 'vue-file64';
+Vue.component('file-dialog', File64);
+
 
 //Moment JS
 import moment from 'moment';

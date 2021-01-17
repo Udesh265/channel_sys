@@ -16,5 +16,6 @@ class Patient extends Model
         'age',
         'p_type',
         'status',
+        'user_id'
     ];
 }
