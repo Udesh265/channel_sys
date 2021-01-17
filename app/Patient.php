@@ -14,5 +14,7 @@ class Patient extends Model
         'mobile',
         'email',
         'age',
+        'p_type',
+        'status',
     ];
 }

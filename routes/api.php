@@ -43,6 +43,13 @@ Route::group(['prefix' => 'employee'], function () {
 
 });
 
+Route::group(['prefix' => 'patient'], function () {
+
+    Route::post('addpatient','API\ApiPatientController@add_patient');
+    Route::get('get_all','API\ApiPatientController@get_all_patient');
+
+});
+
 Route::apiResource('employee','API\ApiEmployeeController');
 
 Route::get('joblist','API\ApiEmployeeController@job_list');
