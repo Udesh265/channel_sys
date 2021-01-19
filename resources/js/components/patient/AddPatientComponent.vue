@@ -8,36 +8,43 @@
             <div class="form-group row">
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Full Name:</label>
-                <input type="text" class="form-control" v-model="form.name" />
+                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name" />
+                 <has-error :form="form" field="name"></has-error>
               </div>
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">NIC:</label>
-                <input type="text" class="form-control" v-model="form.nic" />
+                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('nic') }" v-model="form.nic" />
+                <has-error :form="form" field="nic"></has-error>
               </div>
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Email</label>
-                <input type="text" class="form-control" v-model="form.email" />
+                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }" v-model="form.email" />
+                <has-error :form="form" field="email"></has-error>
               </div>
             </div>
             <div class="form-group mt-3 row">
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Mobile:</label>
-                <input type="text" class="form-control" v-model="form.mobile" />
+                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('mobile') }" v-model="form.mobile" />
+                <has-error :form="form" field="mobile"></has-error>
               </div>
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Age:</label>
-                <input type="text" class="form-control" v-model="form.age" />
+                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('age') }"  v-model="form.age" />
+                 <has-error :form="form" field="age"></has-error>
               </div>
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Patient Type:</label>
                 <select
                   class="form-control"
                   id="exampleFormControlSelect1"
+                  :class="{ 'is-invalid': form.errors.has('p_type') }"
                   v-model="form.p_type"
                 >
                   <option value="Regular">Regular</option>
                   <option value="Registered">Registered</option>
                 </select>
+                <has-error :form="form" field="p_type"></has-error>
               </div>
             </div>
             <div class="form-group mt-3 row">
@@ -79,7 +86,7 @@
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th width="10%" scope="col"></th>
+                      <th width="10%" scope="col">#</th>
                       <th width="20%" scope="col">Patients Name</th>
                       <th width="40%" scope="col">NIC</th>
                       <th width="20%" scope="col">Status</th>
@@ -253,7 +260,9 @@ export default {
     this.get_patient_list();
     this.getAllRoles();
   },
-  mounted() {},
+  mounted() {
+      this.get_patient_list();
+  },
   data() {
     return {
       form: new Form({
@@ -289,6 +298,7 @@ export default {
           if (response.status == 200) {
             swal.fire("Success!", "Patient Added Successfully", "success");
             this.form.reset();
+            this.get_patient_list();
           }
         })
         .catch((error) => {
@@ -329,6 +339,7 @@ export default {
         const response = await this.mform.post(`/api/patient/assign/user/${this.mform.user_id}`
         );
         if (response.status == 200) {
+               swal.fire("Success!", "Access Granted", "success");
               $("#assign_user_model").modal("hide");
               this.mform.clear();
               this.mform.reset();
