@@ -109,6 +109,18 @@ class ApiPatientController extends Controller
         return response()->json(['msg' => 'Failed to assign user!'], 400);
     }
 
+        public function delete_patient(Request $request, $id){
+
+            $patient = Patient::find($id);
+            $patient->update(['status'=>'0']);
+
+            if(is_null($patient)){
+                return response()->json(['msg'=>'error'],400);
+            }
+            return response()->json(['msg'=>'success'],200);
+
+        }
+
 
     public function index()
     {
@@ -167,7 +179,16 @@ class ApiPatientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $patient =  Patient::find($id);
+
+        if(is_null($patient)) return response()->json(['msg' => 'Unable to locate patient'], 404);
+
+        $patient->update($request->all());
+
+       if(is_null($patient)){
+        return  response()->json(['msg' => 'Something Wrong !!'],400);
+       }
+       return response()->json(['msg' => ' Success'],200);
     }
 
     /**
@@ -178,6 +199,6 @@ class ApiPatientController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

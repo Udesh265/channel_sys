@@ -5050,6 +5050,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {},
   mounted: function mounted() {
@@ -5103,6 +5105,46 @@ __webpack_require__.r(__webpack_exports__);
     load_update_patient: function load_update_patient(id) {
       $("#load_update_p_data").modal("show");
       this.form.fill(id);
+    },
+    update_patient: function update_patient() {
+      var _this3 = this;
+
+      swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this3.form.patch("/api/patient/update/" + _this3.form.id).then(function (response) {
+            if (response.status == 200) {
+              swal.fire("Updated!", "Your file has been Updated.", "success");
+
+              _this3.get_patient_list();
+
+              $("#load_update_p_data").modal("hide");
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    },
+    delete_patient: function delete_patient() {
+      var _this4 = this;
+
+      this.form.patch("/api/patient/del/" + this.form.id).then(function (response) {
+        if (response == 200) {
+          swal.fire("Deleted!", "Your file has been Deleted.", "success");
+
+          _this4.get_patient_list();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -72454,7 +72496,7 @@ var render = function() {
                           staticStyle: { cursor: "pointer" },
                           on: {
                             click: function($event) {
-                              return _vm.delete_patient()
+                              return _vm.delete_patient(patient.id)
                             }
                           }
                         },
@@ -72651,6 +72693,7 @@ var render = function() {
                         on: {
                           submit: function($event) {
                             $event.preventDefault()
+                            return _vm.update_patient()
                           }
                         }
                       },
@@ -72994,7 +73037,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                  Add Patient\n                "
+                              "\n                  Update Patient\n                "
                             )
                           ]
                         )

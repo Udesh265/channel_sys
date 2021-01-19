@@ -38,10 +38,12 @@
                       @click="get_patient_profile(patient)"
                       ><i class="fa fa-eye text-success mx-1"></i
                     ></a>
-                    <a style="cursor: pointer" @click="load_update_patient(patient)"
+                    <a
+                      style="cursor: pointer"
+                      @click="load_update_patient(patient)"
                       ><i class="fa fa-edit text-success mx-1"></i
                     ></a>
-                    <a style="cursor: pointer" @click="delete_patient()"
+                    <a style="cursor: pointer" @click="delete_patient(patient.id)"
                       ><i class="fa fa-trash text-danger mx-1"></i
                     ></a>
                   </td>
@@ -156,7 +158,7 @@
             <div class="card">
               <img class="card-img-top" src="holder.js/100x180/" alt="" />
               <div class="card-body">
-                <form action="" @submit.prevent="">
+                <form action="" @submit.prevent="update_patient()">
                   <div class="form-group row">
                     <div class="col-sm-4 col-lg-4 col-md-4">
                       <label for="form-control">Full Name:</label>
@@ -236,7 +238,7 @@
                   </div>
 
                   <button type="submit" class="btn btn-primary btn-lg">
-                    Add Patient
+                    Update Patient
                   </button>
                 </form>
               </div>
@@ -305,11 +307,57 @@ export default {
       $("#modal_profile").modal("show");
     },
 
-    load_update_patient: function(id){
-        $("#load_update_p_data").modal("show");
-        this.form.fill(id);
+    load_update_patient: function (id) {
+      $("#load_update_p_data").modal("show");
+      this.form.fill(id);
     },
 
+    update_patient: function () {
+      swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, update it!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.form
+              .patch("/api/patient/update/" + this.form.id)
+              .then((response) => {
+                if (response.status == 200) {
+                  swal.fire(
+                    "Updated!",
+                    "Your file has been Updated.",
+                    "success"
+                  );
+                  this.get_patient_list();
+                  $("#load_update_p_data").modal("hide");
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+    },
+
+    delete_patient: function () {
+      this.form
+        .patch("/api/patient/del/" + this.form.id)
+        .then((response) => {
+          if (response == 200) {
+            swal.fire("Deleted!", "Your file has been Deleted.", "success");
+            this.get_patient_list();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
