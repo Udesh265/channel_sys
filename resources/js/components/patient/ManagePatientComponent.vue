@@ -36,15 +36,17 @@
                     <a
                       style="cursor: pointer"
                       @click="get_patient_profile(patient)"
-                      ><i class="fa fa-eye text-success mx-1"></i
+                      ><i class="fa fa-eye text-success icon-button mx-1"></i
                     ></a>
                     <a
                       style="cursor: pointer"
                       @click="load_update_patient(patient)"
-                      ><i class="fa fa-edit text-success mx-1"></i
+                      ><i class="fa fa-edit text-success icon-button mx-1"></i
                     ></a>
-                    <a style="cursor: pointer" @click="delete_patient(patient.id)"
-                      ><i class="fa fa-trash text-danger mx-1"></i
+                    <a
+                      style="cursor: pointer"
+                      @click="delete_patient(patient.id)"
+                      ><i class="fa fa-trash text-danger icon-button mx-1"></i
                     ></a>
                   </td>
                 </tr>
@@ -345,11 +347,11 @@ export default {
         });
     },
 
-    delete_patient: function () {
-      this.form
-        .patch("/api/patient/del/" + this.form.id)
+    delete_patient: function (id) {
+      axios
+        .patch(`/api/patient/del/${id}`)
         .then((response) => {
-          if (response == 200) {
+          if (response.status == 200) {
             swal.fire("Deleted!", "Your file has been Deleted.", "success");
             this.get_patient_list();
           }

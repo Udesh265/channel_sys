@@ -19,11 +19,21 @@ window.Form = Form;
 import File64 from 'vue-file64';
 Vue.component('file-dialog', File64);
 
+// Vue Simple Calender
+import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
+Vue.component("calendar-view", CalendarView);
+Vue.component("calendar-view-header", CalendarViewHeader);
 
 //Moment JS
 import moment from 'moment';
+window.moment = moment;
+
 Vue.filter('myDate', function (date) {
     return moment(date).format("MMM Do YYYY");
+});
+
+Vue.filter("calenderDate", function(date) {
+    return moment(date).format("YYYY-MM-DD");
 });
 
 Vue.filter('currency', function (amount) {

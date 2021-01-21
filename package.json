@@ -30,6 +30,7 @@
         "sweetalert2": "^9.17.2",
         "vform": "^1.0.1",
         "vue-file64": "^1.0.2",
-        "vue-router": "^3.4.7"
+        "vue-router": "^3.4.7",
+        "vue-simple-calendar": "^5.0.0"
     }
 }

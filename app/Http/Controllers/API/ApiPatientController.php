@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Patient;
 use App\User;
@@ -75,6 +76,7 @@ class ApiPatientController extends Controller
 
     public function assign_user(Request $request, $id)
     {
+        // return $request;
         // $input = $request->all();
         $validated_data = $request->validate(
             [
@@ -93,6 +95,8 @@ class ApiPatientController extends Controller
         ]);
 
         if(is_null($user)) return response()->json(['msg' => 'Failed to create user, rolling back'], 400);
+        $role = Role::find($validated_data['role_id']);
+        $user->syncRoles($role);
 
         $patient = Patient::find($id);
         if(is_null($patient)) return response()->json(['msg' => 'Unable to locate patient!'],404 );
@@ -109,7 +113,8 @@ class ApiPatientController extends Controller
         return response()->json(['msg' => 'Failed to assign user!'], 400);
     }
 
-        public function delete_patient(Request $request, $id){
+        public function delete_patient($id){
+
 
             $patient = Patient::find($id);
             $patient->update(['status'=>'0']);
