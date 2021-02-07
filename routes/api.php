@@ -52,7 +52,10 @@ Route::group(['prefix' => 'patient'], function () {
     Route::patch('update/{id}','API\ApiPatientController@update');
     Route::patch('del/{id}','API\ApiPatientController@delete_patient');
 
+});
 
+Route::group(['prefix' => 'doctor'], function () {
+   Route::post('addspeciality','API\AddSpecialityController@add_speciality');
 });
 
 Route::apiResource('employee','API\ApiEmployeeController');

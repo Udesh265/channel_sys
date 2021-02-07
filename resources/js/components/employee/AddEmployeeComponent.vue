@@ -62,6 +62,40 @@
                   </select>
                 </div>
               </div>
+              <div v-if="form.job_id == 1">
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                  <label for="form-control"> <h6>For Doctors:</h6> </label>
+                </div>
+                <div class="form-group mt-2 row">
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <label for="form-control"> Speciality:</label>
+                    <select class="form-control">
+                      <option>V.p</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <label for="form-control">Working Hopspital:</label>
+                    <input class="form-control" type="text" />
+                  </div>
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <label for="form-control"> Type:</label>
+                    <select
+                      id="exampleFormControlSelect1"
+                      v-model="form.doc_type"
+                      class="form-control"
+                    >
+                      <option value="1">Permenent Doctors</option>
+                      <option value="2">Visiting Doctors</option>
+                    </select>
+                  </div>
+                </div>
+                <div v-if="form.doc_type == 2" class="form-group mt-2 row">
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <label for="form-control">Charge per patient:</label>
+                    <input class="form-control" type="text" />
+                  </div>
+                </div>
+              </div>
               <div class="form-group mt-3 row">
                 <div class="col-sm-4 col-lg-4 col-md-4">
                   <label for="form-control">Adddress:</label>
@@ -89,7 +123,13 @@
             class="card-header d-flex justify-content-between align-items-center"
           >
             <h4 class="card-title">Assign User</h4>
-            <input type="text" placeholder="Ex: Type Name or NIC Press Enter" class="form-control col-4" v-model="search_keyword" @keypress.enter="search_all_emp">
+            <input
+              type="text"
+              placeholder="Ex: Type Name or NIC Press Enter"
+              class="form-control col-4"
+              v-model="search_keyword"
+              @keypress.enter="search_all_emp"
+            />
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -108,7 +148,9 @@
                     <th scope="row">{{ emp.id }}</th>
                     <td>{{ emp.first_name }}</td>
                     <td>{{ emp.nic }}</td>
-                     <td>{{ emp.user_id == null ? 'Not Assigned' : 'Assigned'}}</td>
+                    <td>
+                      {{ emp.user_id == null ? "Not Assigned" : "Assigned" }}
+                    </td>
                     <td style="text-align: center">
                       <a style="cursor: pointer" @click="assign_user(emp.id)"
                         ><i class="fa fa-eye text-success mx-1"></i
@@ -124,7 +166,6 @@
     </div>
 
     <!-- Assign User Model  -->
-
 
     <div
       class="modal fade"
@@ -291,7 +332,7 @@ export default {
         mobile: "",
         job_id: "",
       }),
-      search_keyword:"",
+      search_keyword: "",
 
       jobdata: {},
 
@@ -359,18 +400,16 @@ export default {
           console.log(error);
         });
     },
-    search_all_emp: function(){
-        axios
-        .get('/api/employee/search/' + this.search_keyword)
+    search_all_emp: function () {
+      axios
+        .get("/api/employee/search/" + this.search_keyword)
         .then((response) => {
-            this.empdata = response.data;
+          this.empdata = response.data;
         })
         .catch((error) => {
-
-            console.log(error);
+          console.log(error);
         });
     },
-
 
     // create user model methods
     assign_user: function (id) {

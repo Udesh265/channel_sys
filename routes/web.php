@@ -35,6 +35,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('patient/add_patient','PatientController@add_patient')->name('patient.add_patient');
     Route::get('patient/manage','PatientController@manage_patient')->name('patient.manage_patient');
 
+    Route::get('schedule/add_schedule','ScheduleController@add_schedule')->name('schedule.add_schedule');
+
+    Route::get('doctor/add_speciality','AddSpecialityController@add_speciality')->name('doctor.speciality');
 
 
 

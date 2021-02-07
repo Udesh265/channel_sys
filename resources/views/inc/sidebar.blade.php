@@ -5,8 +5,8 @@
         <ul id="side-menu" class="sidebar-menu">
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Dashboard</a>
                 <ul>
-                    <li class="{{ $page_option['sub'] === 'dash' ? 'active' : '' }}"><a href="{{ route('home') }}"><i
-                                class="fa fa-rocket"></i> Dashboard</a></li>
+                    <li class="{{ $page_option['sub'] === 'dash' ? 'active' : '' }}"><a
+                            href="{{ route('home') }}"><i class="fa fa-rocket"></i> Dashboard</a></li>
                     <li><a href="index-account.html"><i class="icon-layers"></i> My Account</a></li>
                 </ul>
             </li>
@@ -51,6 +51,21 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="dropdown {{ $page_option['main'] === 'doctor' ? 'active' : '' }}"><a href="#"><i
+                                class="fas fa-sitemap"></i>Doctors</a>
+                        <ul class="sub-menu">
+
+                            <li class="{{ $page_option['sub'] === 'employee_manage' ? 'active' : '' }}"><a
+                                    href="{{ route('employee.manage_emp') }}">Manage</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
+                                href="{{ route('doctor.speciality') }}">Add Speciality</a>
+                        </li>
+                            <li class="{{ $page_option['sub'] === 'jobtype_create' ? 'active' : '' }}"><a
+                                    href="{{ route('jobtype.create') }}">Job Type</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
                                 class="fas fa-user-tie"></i>Attendence</a>
                         <ul class="sub-menu">
@@ -78,6 +93,18 @@
                             <li class="{{ $page_option['sub'] === 'jobtype_create' ? 'active' : '' }}"><a
                                     href="{{ route('jobtype.create') }}">Job Type</a>
                             </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown {{ $page_option['main'] === 'schedule' ? 'active' : '' }}"><a href="#"><i
+                                class="fas fa-sitemap"></i>Schedule</a>
+                        <ul class="sub-menu">
+                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
+                                    href="{{ route('schedule.add_schedule') }}">Add Schedule</a>
+                            </li>
+                            {{-- <li class="{{ $page_option['sub'] === 'patient_manage' ? 'active' : '' }}"><a
+                                    href="{{ route('schedule.manage') }}">Manage</a>
+                            </li> --}}
+
                         </ul>
                     </li>
                     <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
