@@ -81,7 +81,7 @@
                   </div>
                   <div class="col-sm-4 col-lg-4 col-md-4">
                     <label for="form-control">Working Hopspital:</label>
-                    <input class="form-control" type="text" />
+                    <input v-model="form.hospital" class="form-control" type="text" />
                   </div>
                   <div class="col-sm-4 col-lg-4 col-md-4">
                     <label for="form-control"> Type:</label>
@@ -98,7 +98,7 @@
                 <div v-if="form.doc_type == 2" class="form-group mt-2 row">
                   <div class="col-sm-4 col-lg-4 col-md-4">
                     <label for="form-control">Charge per patient:</label>
-                    <input class="form-control" type="text" />
+                    <input v-model="form.charge_pp" class="form-control" type="text" />
                   </div>
                 </div>
               </div>
@@ -339,6 +339,9 @@ export default {
         mobile: "",
         job_id: "",
         spec_id: "",
+        hospital:"",
+        doc_type:"",
+        charge_pp: "",
       }),
       search_keyword: "",
 

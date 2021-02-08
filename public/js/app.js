@@ -3813,7 +3813,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         nic: "",
         mobile: "",
         job_id: "",
-        spec_id: ""
+        spec_id: "",
+        hospital: "",
+        doc_type: "",
+        charge_pp: ""
       }),
       search_keyword: "",
       jobdata: {},
@@ -70469,7 +70472,41 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _vm._m(1),
+                        _c(
+                          "div",
+                          { staticClass: "col-sm-4 col-lg-4 col-md-4" },
+                          [
+                            _c("label", { attrs: { for: "form-control" } }, [
+                              _vm._v("Working Hopspital:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.hospital,
+                                  expression: "form.hospital"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.form.hospital },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "hospital",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]
+                        ),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -70529,7 +70566,43 @@ var render = function() {
                       _vm._v(" "),
                       _vm.form.doc_type == 2
                         ? _c("div", { staticClass: "form-group mt-2 row" }, [
-                            _vm._m(2)
+                            _c(
+                              "div",
+                              { staticClass: "col-sm-4 col-lg-4 col-md-4" },
+                              [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Charge per patient:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.form.charge_pp,
+                                      expression: "form.charge_pp"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.form.charge_pp },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.form,
+                                        "charge_pp",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -70631,7 +70704,7 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "table-responsive" }, [
               _c("table", { staticClass: "table table-hover" }, [
-                _vm._m(3),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -70705,7 +70778,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(4),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -70857,7 +70930,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _vm._m(5),
+                                _vm._m(3),
                                 _vm._v(" "),
                                 _c("input", {
                                   directives: [
@@ -71073,30 +71146,6 @@ var staticRenderFns = [
       _c("label", { attrs: { for: "form-control" } }, [
         _c("h6", [_vm._v("For Doctors:")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-4 col-lg-4 col-md-4" }, [
-      _c("label", { attrs: { for: "form-control" } }, [
-        _vm._v("Working Hopspital:")
-      ]),
-      _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-4 col-lg-4 col-md-4" }, [
-      _c("label", { attrs: { for: "form-control" } }, [
-        _vm._v("Charge per patient:")
-      ]),
-      _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
     ])
   },
   function() {
