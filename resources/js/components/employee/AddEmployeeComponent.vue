@@ -69,8 +69,14 @@
                 <div class="form-group mt-2 row">
                   <div class="col-sm-4 col-lg-4 col-md-4">
                     <label for="form-control"> Speciality:</label>
-                    <select class="form-control">
-                      <option>V.p</option>
+                    <select v-model="form.spec_id" class="form-control">
+                      <option
+                        v-for="(spec, index) in spec_data"
+                        :key="index"
+                        :value="spec.id"
+                      >
+                      {{ spec.name }}
+                      </option>
                     </select>
                   </div>
                   <div class="col-sm-4 col-lg-4 col-md-4">
@@ -313,6 +319,7 @@
 export default {
   created() {
     this.getAllRoles();
+    this.get_spec();
   },
   props: ["user_id"],
 
@@ -331,12 +338,15 @@ export default {
         nic: "",
         mobile: "",
         job_id: "",
+        spec_id: "",
       }),
       search_keyword: "",
 
       jobdata: {},
 
       empdata: {},
+
+      spec_data: {},
 
       // Create model data
       img_name: "Choose File",
@@ -473,6 +483,19 @@ export default {
       };
 
       reader.readAsDataURL(file);
+    },
+
+    get_spec: function () {
+      axios
+        .get("/api/doctor/get_spec")
+        .then((response) => {
+          if (response.status == 200) {
+            this.spec_data = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

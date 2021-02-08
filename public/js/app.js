@@ -3362,22 +3362,92 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {},
+  created: function created() {
+    this.get_spec();
+  },
   mounted: function mounted() {},
   data: function data() {
     return {
       form: new Form({
         id: "",
         name: ""
-      })
+      }),
+      spec_data: {}
     };
   },
   methods: {
     add_speciality: function add_speciality() {
+      var _this = this;
+
       this.form.post("/api/doctor/addspeciality").then(function (response) {
         if (response.status == 200) {
           swal.fire(response.data.msg);
+
+          _this.get_spec();
+
+          _this.form.reset();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_spec: function get_spec() {
+      var _this2 = this;
+
+      axios.get("/api/doctor/get_spec").then(function (response) {
+        if (response.status == 200) {
+          _this2.spec_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    delete_spec: function delete_spec(id) {
+      var _this3 = this;
+
+      axios["delete"]("/api/doctor/del/".concat(id)).then(function (response) {
+        if (response.status == 200) {
+          _this3.get_spec();
         }
       })["catch"](function (error) {
         console.log(error);
@@ -3716,9 +3786,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.getAllRoles();
+    this.get_spec();
   },
   props: ["user_id"],
   mounted: function mounted() {
@@ -3735,11 +3812,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         email: "",
         nic: "",
         mobile: "",
-        job_id: ""
+        job_id: "",
+        spec_id: ""
       }),
       search_keyword: "",
       jobdata: {},
       empdata: {},
+      spec_data: {},
       // Create model data
       img_name: "Choose File",
       submit_disabled: false,
@@ -3954,6 +4033,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
 
       reader.readAsDataURL(file);
+    },
+    get_spec: function get_spec() {
+      var _this6 = this;
+
+      axios.get("/api/doctor/get_spec").then(function (response) {
+        if (response.status == 200) {
+          _this6.spec_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -69942,7 +70032,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-6" }, [
+    _c("div", { staticClass: "col-12" }, [
       _c("div", { staticClass: "card" }, [
         _c("img", {
           staticClass: "card-img-top",
@@ -69962,39 +70052,77 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "form-control" } }, [
-                  _vm._v("Job Type")
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "form-control" } }, [
+                      _vm._v("Job Type")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.name,
+                          expression: "form.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { placeholder: "Example:Doctor", type: "text" },
+                      domProps: { value: _vm.form.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.form.name,
-                      expression: "form.name"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { placeholder: "Example:Doctor", type: "text" },
-                  domProps: { value: _vm.form.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.form, "name", $event.target.value)
-                    }
-                  }
-                })
+                _vm._m(0)
               ]),
               _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-                [_vm._v("Add Speciality")]
-              )
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c("table", { staticClass: "table table-hover" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.spec_data, function(spec, index) {
+                        return _c("tr", { key: index }, [
+                          _c("td", [_vm._v(_vm._s(spec.name))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticStyle: { cursor: "pointer" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.delete_spec(spec.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass:
+                                    "fa fa-trash text-danger icon-button mx-1"
+                                })
+                              ]
+                            )
+                          ])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                ])
+              ])
             ]
           )
         ])
@@ -70002,7 +70130,39 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "form-control" } }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary form-control mt-2",
+            attrs: { type: "submit" }
+          },
+          [_vm._v("\n                  Add Speciality\n                ")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Doctor Speciality Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -70250,9 +70410,66 @@ var render = function() {
                       _vm._m(0),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group mt-2 row" }, [
-                        _vm._m(1),
+                        _c(
+                          "div",
+                          { staticClass: "col-sm-4 col-lg-4 col-md-4" },
+                          [
+                            _c("label", { attrs: { for: "form-control" } }, [
+                              _vm._v(" Speciality:")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.spec_id,
+                                    expression: "form.spec_id"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "spec_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              _vm._l(_vm.spec_data, function(spec, index) {
+                                return _c(
+                                  "option",
+                                  { key: index, domProps: { value: spec.id } },
+                                  [
+                                    _vm._v(
+                                      "\n                    " +
+                                        _vm._s(spec.name) +
+                                        "\n                    "
+                                    )
+                                  ]
+                                )
+                              }),
+                              0
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
-                        _vm._m(2),
+                        _vm._m(1),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -70312,7 +70529,7 @@ var render = function() {
                       _vm._v(" "),
                       _vm.form.doc_type == 2
                         ? _c("div", { staticClass: "form-group mt-2 row" }, [
-                            _vm._m(3)
+                            _vm._m(2)
                           ])
                         : _vm._e()
                     ])
@@ -70414,7 +70631,7 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "table-responsive" }, [
               _c("table", { staticClass: "table table-hover" }, [
-                _vm._m(4),
+                _vm._m(3),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -70488,7 +70705,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(5),
+              _vm._m(4),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -70640,7 +70857,7 @@ var render = function() {
                               "div",
                               { staticClass: "input-group" },
                               [
-                                _vm._m(6),
+                                _vm._m(5),
                                 _vm._v(" "),
                                 _c("input", {
                                   directives: [
@@ -70855,18 +71072,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-sm-4 col-lg-4 col-md-4" }, [
       _c("label", { attrs: { for: "form-control" } }, [
         _c("h6", [_vm._v("For Doctors:")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-4 col-lg-4 col-md-4" }, [
-      _c("label", { attrs: { for: "form-control" } }, [_vm._v(" Speciality:")]),
-      _vm._v(" "),
-      _c("select", { staticClass: "form-control" }, [
-        _c("option", [_vm._v("V.p")])
       ])
     ])
   },
