@@ -8,9 +8,21 @@ class Doctor extends Model
 {
     protected $fillable = [
         'id',
-        'spec',
+        'add_speciality_id',
+        'employee_id',
         'hospital',
         'doc_type',
         'charge_pp',
     ];
+
+    public function speciality()
+    {
+        return $this->belongsTo(AddSpeciality::class);
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
 }

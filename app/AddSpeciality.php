@@ -11,4 +11,9 @@ class AddSpeciality extends Model
         'name'
     ];
 
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
+    }
+
 }

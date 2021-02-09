@@ -15,10 +15,12 @@ class CreateDoctorsTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-            $table->string('spec');
+            $table->unsignedBigInteger('add_speciality_id');
+            $table->unsignedBigInteger('employee_id');
             $table->string('hospital');
             $table->string('doc_type');
             $table->float('charge_pp');
+
             $table->timestamps();
         });
     }

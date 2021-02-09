@@ -29,4 +29,9 @@ class Employee extends Model
     {
         return $this->belongsTo(JobType::class, 'job_type_id');
     }
+
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
+    }
 }

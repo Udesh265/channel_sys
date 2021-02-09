@@ -8,6 +8,7 @@ use App\JobType;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class ApiEmployeeController extends Controller
 {
@@ -77,6 +78,8 @@ class ApiEmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $input = $request->all();
+
         $temp = $request->job_id;
         $job = JobType::find($temp);
         $employee = new Employee();
@@ -90,6 +93,22 @@ class ApiEmployeeController extends Controller
         $employee->status = '1';
         $employee->job_type_id = $job->id;
        $empsave =  $employee->save();
+
+       if($input['doc_type'])
+       {
+        //    Log::info($input);
+
+           $employee->doctor()->create([
+            'add_speciality_id' => $input['spec_id'],
+            'hospital' => $input['hospital'],
+            'doc_type' => $input['doc_type'],
+            'charge_pp' => $input['charge_pp']
+           ]);
+
+
+
+       }
+
 
        if(is_null($empsave)){
         return  response()->json(['msg' => 'Something Wrong !!'],400);
