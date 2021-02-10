@@ -58,6 +58,7 @@ Route::group(['prefix' => 'doctor'], function () {
    Route::post('addspeciality','API\AddSpecialityController@add_speciality');
    Route::get('get_spec','API\AddSpecialityController@get_spec');
    Route::delete('del/{id}','API\AddSpecialityController@del_spec');
+   Route::get('get_doc_list/{spec_id}','API\ApiDoctorController@get_doc_list_by_spec_id');
 });
 
 Route::apiResource('employee','API\ApiEmployeeController');

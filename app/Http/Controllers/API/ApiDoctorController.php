@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\AddSpeciality;
+use App\Doctor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ApiDoctorController extends Controller
 {
@@ -12,6 +15,20 @@ class ApiDoctorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function get_doc_list_by_spec_id($spec_id)
+    {
+
+        // Log::info($spec_id);
+
+        $data = Doctor::with('employee')->whereAddSpecialityId($spec_id)->get();
+
+        if (is_null($data)) {
+            return response()->json(['msg' => 'error'], 400);
+        }
+        return response()->json($data, 200);
+    }
+
     public function index()
     {
         //

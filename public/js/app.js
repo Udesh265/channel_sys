@@ -5381,7 +5381,141 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    this.get_spec();
+  },
+  mounted: function mounted() {
+    this.get_doc_list();
+  },
+  data: function data() {
+    return {
+      form: new Form({
+        spec_id: "",
+        name: ""
+      }),
+      spec_data: {},
+      doc_data: {},
+      // calnder
+      showDate: new Date(),
+      items: [{
+        id: 1,
+        title: "Doctor Name",
+        classes: "bg-event",
+        startDate: "2021-01-03"
+      }, {
+        id: 2,
+        title: "Doctor aPP 2",
+        classes: "bg-event",
+        startDate: "2021-01-03"
+      }]
+    };
+  },
+  methods: {
+    get_spec: function get_spec() {
+      var _this = this;
+
+      axios.get("/api/doctor/get_spec").then(function (response) {
+        if (response.status == 200) {
+          _this.spec_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_doc_list: function get_doc_list() {
+      var _this2 = this;
+
+      axios.get("/api/doctor/get_doc_list/" + this.form.spec_id).then(function (response) {
+        console.log(response);
+
+        if (response.status == 200) {
+          _this2.doc_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    calenderClicked: function calenderClicked(date) {
+      var newDate = this.$options.filters.calenderDate(date);
+      console.log(newDate);
+    },
+    setShowDate: function setShowDate(d) {
+      this.showDate = d;
+    }
+  }
+});
 
 /***/ }),
 
@@ -73710,9 +73844,193 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c("div", { staticClass: "card" }, [
+      _c("img", {
+        staticClass: "card-img-top",
+        attrs: { src: "holder.js/100x180/", alt: "" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-6" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "form-control" } }, [
+                _vm._v("Speciality")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.spec_id,
+                      expression: "form.spec_id"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.form,
+                          "spec_id",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      _vm.get_doc_list
+                    ]
+                  }
+                },
+                _vm._l(_vm.spec_data, function(spec, index) {
+                  return _c(
+                    "option",
+                    { key: index, domProps: { value: spec.id } },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(spec.name) +
+                          "\n              "
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-6" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "form-control" } }, [
+                _vm._v("Doctor Name")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.name,
+                      expression: "form.name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "name",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.doc_data, function(doc, index) {
+                  return _c(
+                    "option",
+                    { key: index, domProps: { value: doc.id } },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(doc.employee.first_name) +
+                          "\n              "
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { attrs: { for: "form-control" } }, [
+                  _vm._v("Add Date & Time")
+                ]),
+                _vm._v(" "),
+                _c("calendar-view", {
+                  staticClass: "theme-default",
+                  staticStyle: { height: "80vh" },
+                  attrs: {
+                    startingDayOfWeek: 1,
+                    "show-date": _vm.showDate,
+                    items: _vm.items
+                  },
+                  on: {
+                    "click-date": function(date) {
+                      _vm.calenderClicked(date)
+                    }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "header",
+                      fn: function(t) {
+                        return _c("calendar-view-header", {
+                          attrs: { "header-props": t.headerProps },
+                          on: { input: _vm.setShowDate }
+                        })
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "button" } },
+          [_vm._v("\n            Create Schedule\n          ")]
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

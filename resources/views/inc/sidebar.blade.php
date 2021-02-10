@@ -51,21 +51,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown {{ $page_option['main'] === 'doctor' ? 'active' : '' }}"><a href="#"><i
-                                class="fas fa-sitemap"></i>Doctors</a>
-                        <ul class="sub-menu">
 
-                            <li class="{{ $page_option['sub'] === 'employee_manage' ? 'active' : '' }}"><a
-                                    href="{{ route('employee.manage_emp') }}">Manage</a>
-                            </li>
-                            <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
-                                href="{{ route('doctor.speciality') }}">Add Speciality</a>
-                        </li>
-                            <li class="{{ $page_option['sub'] === 'jobtype_create' ? 'active' : '' }}"><a
-                                    href="{{ route('jobtype.create') }}">Job Type</a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
                                 class="fas fa-user-tie"></i>Attendence</a>
                         <ul class="sub-menu">
@@ -95,18 +81,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown {{ $page_option['main'] === 'schedule' ? 'active' : '' }}"><a href="#"><i
-                                class="fas fa-sitemap"></i>Schedule</a>
-                        <ul class="sub-menu">
-                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
-                                    href="{{ route('schedule.add_schedule') }}">Add Schedule</a>
-                            </li>
-                            {{-- <li class="{{ $page_option['sub'] === 'patient_manage' ? 'active' : '' }}"><a
-                                    href="{{ route('schedule.manage') }}">Manage</a>
-                            </li> --}}
 
-                        </ul>
-                    </li>
                     <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
                                 class="fas fa-user-tie"></i>Attendence</a>
                         <ul class="sub-menu">
@@ -120,6 +95,41 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Schedule Management</a>
+                <ul>
+                    <li class="dropdown {{ $page_option['main'] === 'schedule' ? 'active' : '' }}"><a href="#"><i
+                                class="fas fa-sitemap"></i>Schedule</a>
+                        <ul class="sub-menu">
+                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
+                                    href="{{ route('schedule.add_schedule') }}">Add Schedule</a>
+                            </li>
+                            {{-- <li class="{{ $page_option['sub'] === 'patient_manage' ? 'active' : '' }}"><a
+                            href="{{ route('schedule.manage') }}">Manage</a>
+                    </li> --}}
+
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Doctors Management</a>
+                <ul>
+                    <li class="dropdown {{ $page_option['main'] === 'doctor' ? 'active' : '' }}"><a href="#"><i
+                                class="fas fa-sitemap"></i>Doctors</a>
+                        <ul class="sub-menu">
+
+                            <li class="{{ $page_option['sub'] === 'employee_manage' ? 'active' : '' }}"><a
+                                    href="{{ route('employee.manage_emp') }}">Manage</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
+                                    href="{{ route('doctor.speciality') }}">Add Speciality</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
         <!-- END: Menu-->
         <ol class="breadcrumb bg-transparent align-self-center m-0 p-0 ml-auto">
