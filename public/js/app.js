@@ -5452,12 +5452,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_spec();
   },
   mounted: function mounted() {
     this.get_doc_list();
+    this.get_schedule();
   },
   data: function data() {
     return {
@@ -5468,51 +5519,112 @@ __webpack_require__.r(__webpack_exports__);
       spec_data: {},
       doc_data: {},
       // calnder
+      s_form: new Form({
+        employee_id: "",
+        startDate: "",
+        time: ""
+      }),
       showDate: new Date(),
-      items: [{
-        id: 1,
-        title: "Doctor Name",
-        classes: "bg-event",
-        startDate: "2021-01-03"
-      }, {
-        id: 2,
-        title: "Doctor aPP 2",
-        classes: "bg-event",
-        startDate: "2021-01-03"
-      }]
+      items: []
     };
   },
   methods: {
-    get_spec: function get_spec() {
+    create_schedule: function create_schedule() {
       var _this = this;
+
+      this.s_form.post("/api/schedule/save").then(function (response) {
+        if (response.status == 200) {
+          _this.items = response.data.map(function (item) {
+            return {
+              id: item.id,
+              startDate: item.startDate,
+              classes: "bg-event",
+              title: "Scheduled"
+            };
+          });
+          $("#s_model").modal("hide");
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_schedule: function get_schedule() {
+      var _this2 = this;
+
+      axios.get("/api/schedule/get/" + this.s_form.employee_id).then(function (response) {
+        if (response.status == 200) {
+          _this2.items = response.data.map(function (item) {
+            return {
+              id: item.id,
+              startDate: item.startDate,
+              classes: "bg-event",
+              title: "Scheduled"
+            };
+          });
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_spec: function get_spec() {
+      var _this3 = this;
 
       axios.get("/api/doctor/get_spec").then(function (response) {
         if (response.status == 200) {
-          _this.spec_data = response.data;
+          _this3.spec_data = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
       });
     },
     get_doc_list: function get_doc_list() {
-      var _this2 = this;
+      var _this4 = this;
 
       axios.get("/api/doctor/get_doc_list/" + this.form.spec_id).then(function (response) {
         console.log(response);
 
         if (response.status == 200) {
-          _this2.doc_data = response.data;
+          _this4.doc_data = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
       });
     },
     calenderClicked: function calenderClicked(date) {
-      var newDate = this.$options.filters.calenderDate(date);
-      console.log(newDate);
+      var newDate = this.$options.filters.calenderDate(date); //   console.log(newDate);
+
+      this.s_form.startDate = newDate;
+
+      if (this.s_form.employee_id) {
+        $("#s_model").modal("show");
+      }
     },
     setShowDate: function setShowDate(d) {
       this.showDate = d;
+    },
+    remove_item: function remove_item(data) {
+      var _this5 = this;
+
+      var id = data.id;
+      swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios["delete"]("/api/schedule/del/" + id).then(function (response) {
+            if (response.status == 200) {
+              _this5.get_schedule();
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
     }
   }
 });
@@ -73925,35 +74037,38 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.form.name,
-                      expression: "form.name"
+                      value: _vm.s_form.employee_id,
+                      expression: "s_form.employee_id"
                     }
                   ],
                   staticClass: "form-control",
                   on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.form,
-                        "name",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.s_form,
+                          "employee_id",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      _vm.get_schedule
+                    ]
                   }
                 },
                 _vm._l(_vm.doc_data, function(doc, index) {
                   return _c(
                     "option",
-                    { key: index, domProps: { value: doc.id } },
+                    { key: index, domProps: { value: doc.employee.id } },
                     [
                       _vm._v(
                         "\n                " +
@@ -73983,6 +74098,7 @@ var render = function() {
                   staticClass: "theme-default",
                   staticStyle: { height: "80vh" },
                   attrs: {
+                    showTimes: true,
                     startingDayOfWeek: 1,
                     "show-date": _vm.showDate,
                     items: _vm.items
@@ -73990,6 +74106,9 @@ var render = function() {
                   on: {
                     "click-date": function(date) {
                       _vm.calenderClicked(date)
+                    },
+                    "click-item": function(calendarItem) {
+                      _vm.remove_item(calendarItem)
                     }
                   },
                   scopedSlots: _vm._u([
@@ -74008,29 +74127,105 @@ var render = function() {
               1
             )
           ])
-        ]),
-        _vm._v(" "),
-        _vm._m(0)
+        ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "s_model",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "container-fluid" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-md-6 m-auto text-center" },
+                      [
+                        _c("label", { attrs: { for: "form-control" } }, [
+                          _vm._v("Pick Time")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.s_form.time,
+                              expression: "s_form.time"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.s_form.errors.has("time")
+                          },
+                          attrs: { type: "time" },
+                          domProps: { value: _vm.s_form.time },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.s_form, "time", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.s_form, field: "time" }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer text-center" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("\n            Close\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.create_schedule }
+                  },
+                  [_vm._v("\n            Save\n          ")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "button" } },
-          [_vm._v("\n            Create Schedule\n          ")]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

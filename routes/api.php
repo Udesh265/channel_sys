@@ -61,6 +61,12 @@ Route::group(['prefix' => 'doctor'], function () {
    Route::get('get_doc_list/{spec_id}','API\ApiDoctorController@get_doc_list_by_spec_id');
 });
 
+Route::group(['prefix' => 'schedule'], function () {
+   Route::post('save','API\ApiScheduleController@store');
+   Route::get('get/{employee_id}','API\ApiScheduleController@get_schedule');
+   Route::delete('del/{id}','API\ApiScheduleController@destroy');
+});
+
 Route::apiResource('employee','API\ApiEmployeeController');
 
 Route::get('joblist','API\ApiEmployeeController@job_list');

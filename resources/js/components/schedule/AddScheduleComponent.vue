@@ -25,11 +25,15 @@
           <div class="col-6">
             <div class="form-group">
               <label for="form-control">Doctor Name</label>
-              <select v-model="form.name" class="form-control">
+              <select
+                v-model="s_form.employee_id"
+                @change="get_schedule"
+                class="form-control"
+              >
                 <option
                   v-for="(doc, index) in doc_data"
                   :key="index"
-                  :value="doc.id"
+                  :value="doc.employee.id"
                 >
                   {{ doc.employee.first_name }}
                 </option>
@@ -42,9 +46,15 @@
             <div class="form-group">
               <label for="form-control">Add Date & Time</label>
               <calendar-view
+                :showTimes="true"
                 @click-date="
                   (date) => {
                     calenderClicked(date);
+                  }
+                "
+                @click-item="
+                  (calendarItem) => {
+                    remove_item(calendarItem);
                   }
                 "
                 class="theme-default"
@@ -63,10 +73,50 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-12">
-            <button type="button" class="btn btn-primary">
-              Create Schedule
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="s_model"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-6 m-auto text-center">
+                  <label for="form-control">Pick Time</label>
+                  <input
+                    v-model="s_form.time"
+                    class="form-control"
+                    :class="{ 'is-invalid': s_form.errors.has('time') }"
+                    type="time"
+                  />
+                  <has-error :form="s_form" field="time"></has-error>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer text-center">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              @click="create_schedule"
+              class="btn btn-primary"
+            >
+              Save
             </button>
           </div>
         </div>
@@ -82,6 +132,7 @@ export default {
   },
   mounted() {
     this.get_doc_list();
+    this.get_schedule();
   },
   data() {
     return {
@@ -93,24 +144,58 @@ export default {
       doc_data: {},
 
       // calnder
+
+      s_form: new Form({
+        employee_id: "",
+        startDate: "",
+        time: "",
+      }),
+
       showDate: new Date(),
-      items: [
-        {
-          id: 1,
-          title: "Doctor Name",
-          classes: "bg-event",
-          startDate: "2021-01-03",
-        },
-        {
-          id: 2,
-          title: "Doctor aPP 2",
-          classes: "bg-event",
-          startDate: "2021-01-03",
-        },
-      ],
+      items: [],
     };
   },
   methods: {
+    create_schedule: function () {
+      this.s_form
+        .post("/api/schedule/save")
+        .then((response) => {
+          if (response.status == 200) {
+            this.items = response.data.map((item) => {
+              return {
+                id: item.id,
+                startDate: item.startDate,
+                classes: "bg-event",
+                title: "Scheduled",
+              };
+            });
+            $("#s_model").modal("hide");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    get_schedule: function () {
+      axios
+        .get("/api/schedule/get/" + this.s_form.employee_id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.items = response.data.map((item) => {
+              return {
+                id: item.id,
+                startDate: item.startDate,
+                classes: "bg-event",
+                title: "Scheduled",
+              };
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     get_spec: function () {
       axios
         .get("/api/doctor/get_spec")
@@ -139,10 +224,42 @@ export default {
 
     calenderClicked(date) {
       let newDate = this.$options.filters.calenderDate(date);
-      console.log(newDate);
+      //   console.log(newDate);
+      this.s_form.startDate = newDate;
+      if (this.s_form.employee_id) {
+        $("#s_model").modal("show");
+      }
     },
     setShowDate(d) {
       this.showDate = d;
+    },
+
+    remove_item: function (data) {
+      let id = data.id;
+      swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .delete("/api/schedule/del/" + id)
+              .then((response) => {
+                if (response.status == 200) {
+                  this.get_schedule();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
     },
   },
 };
@@ -150,3 +267,4 @@ export default {
 
 <style>
 </style>
+
