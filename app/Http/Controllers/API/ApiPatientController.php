@@ -127,6 +127,24 @@ class ApiPatientController extends Controller
         }
 
 
+        /* Online patient Registraion controllers */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function index()
     {
         //

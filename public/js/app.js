@@ -5003,6 +5003,263 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["user_id"],
+  created: function created() {
+    this.get_patient_list();
+    this.getAllRoles();
+  },
+  mounted: function mounted() {
+    this.get_patient_list();
+  },
+  data: function data() {
+    return {
+      form: new Form({
+        id: "",
+        name: "",
+        nic: "",
+        address: "",
+        mobile: "",
+        email: "",
+        age: "",
+        p_type: "",
+        status: ""
+      }),
+      patient_data: {},
+      mform: new Form({
+        user_id: "",
+        role_id: "",
+        username: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        photo: {}
+      }),
+      role_list: {}
+    };
+  },
+  methods: {
+    add_patient: function add_patient() {
+      var _this = this;
+
+      this.form.post("/api/patient/addpatient").then(function (response) {
+        if (response.status == 200) {
+          swal.fire("Success!", "Patient Added Successfully", "success");
+
+          _this.form.reset();
+
+          _this.get_patient_list();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    submitUpdate: function () {
+      var _submitUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return this.mform.post("/api/patient/assign/user/".concat(this.mform.user_id));
+
+              case 3:
+                response = _context.sent;
+
+                if (response.status == 200) {
+                  swal.fire("Success!", "Access Granted", "success");
+                  $("#assign_user_model").modal("hide");
+                  this.mform.clear();
+                  this.mform.reset();
+                  this.get_patient_list();
+                  console.log("Success message");
+                }
+
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.message);
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 7]]);
+      }));
+
+      function submitUpdate() {
+        return _submitUpdate.apply(this, arguments);
+      }
+
+      return submitUpdate;
+    }()
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/patient/ManagePatientComponent.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/patient/ManagePatientComponent.vue?vue&type=script&lang=js& ***!
@@ -73188,6 +73445,470 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=template&id=3c0db2be&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=template&id=3c0db2be& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "col-12" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "card" }, [
+        _c("img", {
+          staticClass: "card-img-top",
+          attrs: { src: "holder.js/100x180/", alt: "" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              attrs: { action: "" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.add_patient()
+                }
+              }
+            },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-sm-4 col-lg-4 col-md-4" },
+                  [
+                    _c("label", { attrs: { for: "form-control" } }, [
+                      _vm._v("Patient Name:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.name,
+                          expression: "form.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.form.errors.has("name") },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.form.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "name", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: { form: _vm.form, field: "name" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-sm-4 col-lg-4 col-md-4" },
+                  [
+                    _c("label", { attrs: { for: "form-control" } }, [
+                      _vm._v("NIC:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.nic,
+                          expression: "form.nic"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.form.errors.has("nic") },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.form.nic },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "nic", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", { attrs: { form: _vm.form, field: "nic" } })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-sm-4 col-lg-4 col-md-4" },
+                  [
+                    _c("label", { attrs: { for: "form-control" } }, [
+                      _vm._v("Email")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.email,
+                          expression: "form.email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.form.errors.has("email") },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.form.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "email", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: { form: _vm.form, field: "email" }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group mt-3 row" }, [
+                _c("div", { staticClass: "col-sm-4 col-lg-4 col-md-4" }, [
+                  _c("label", { attrs: { for: "form-control" } }, [
+                    _vm._v("Adddress:")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.address,
+                        expression: "form.address"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { rows: "3" },
+                    domProps: { value: _vm.form.address },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "address", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-sm-4 col-lg-4 col-md-4" },
+                  [
+                    _c("label", { attrs: { for: "form-control" } }, [
+                      _vm._v("Mobile:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.mobile,
+                          expression: "form.mobile"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.form.errors.has("mobile") },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.form.mobile },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "mobile", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: { form: _vm.form, field: "mobile" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-sm-4 col-lg-4 col-md-4" },
+                  [
+                    _c("label", { attrs: { for: "form-control" } }, [
+                      _vm._v("Age:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.age,
+                          expression: "form.age"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.form.errors.has("age") },
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.form.age },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "age", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", { attrs: { form: _vm.form, field: "age" } })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-md",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("\n            Next\n          ")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.submitUpdate()
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group mt-3 row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-md-4 mb-3" },
+                    [
+                      _c("label", { attrs: { for: "validationDefault02" } }, [
+                        _vm._v("Username:")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.mform.username,
+                            expression: "mform.username"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.mform.errors.has("username")
+                        },
+                        attrs: { type: "text", name: "username" },
+                        domProps: { value: _vm.mform.username },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.mform, "username", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: { form: _vm.mform, field: "username" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-md-4 mb-3" },
+                    [
+                      _c("label", { attrs: { for: "validationDefault04" } }, [
+                        _vm._v("New Password:")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.mform.password,
+                            expression: "mform.password"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.mform.errors.has("password")
+                        },
+                        attrs: { type: "password", name: "password" },
+                        domProps: { value: _vm.mform.password },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.mform, "password", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: { form: _vm.mform, field: "password" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-md-4 mb-3" },
+                    [
+                      _c("label", { attrs: { for: "validationDefault05" } }, [
+                        _vm._v("Confirm Password:")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.mform.password_confirmation,
+                            expression: "mform.password_confirmation"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.mform.errors.has("password")
+                        },
+                        attrs: {
+                          type: "password",
+                          name: "password_confirmation"
+                        },
+                        domProps: { value: _vm.mform.password_confirmation },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.mform,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: {
+                          form: _vm.mform,
+                          field: "password_confirmation"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mb-2" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("h2", [_vm._v("New Member Registration")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row form-group" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("label", { attrs: { for: "form-control" } }, [
+          _c("h5", [_vm._v("Basic Information")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row form-group" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("label", { attrs: { for: "form-control" } }, [
+          _c("h5", { staticClass: "mt-3" }, [_vm._v("User Authentication")])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/patient/ManagePatientComponent.vue?vue&type=template&id=33960af2&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/patient/ManagePatientComponent.vue?vue&type=template&id=33960af2& ***!
@@ -92267,6 +92988,7 @@ Vue.component('add-patient-component', __webpack_require__(/*! ./components/pati
 Vue.component('manage-patient-component', __webpack_require__(/*! ./components/patient/ManagePatientComponent.vue */ "./resources/js/components/patient/ManagePatientComponent.vue")["default"]);
 Vue.component('add-schedule-component', __webpack_require__(/*! ./components/schedule/AddScheduleComponent.vue */ "./resources/js/components/schedule/AddScheduleComponent.vue")["default"]);
 Vue.component('add-doctor-speciality', __webpack_require__(/*! ./components/doctor/AddSpecialityComponent.vue */ "./resources/js/components/doctor/AddSpecialityComponent.vue")["default"]);
+Vue.component('add-patient-online-component', __webpack_require__(/*! ./components/patient/AddpatientOnlineComponent.vue */ "./resources/js/components/patient/AddpatientOnlineComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -93009,6 +93731,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddPatientComponent_vue_vue_type_template_id_ffc074d8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddPatientComponent_vue_vue_type_template_id_ffc074d8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/patient/AddpatientOnlineComponent.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/patient/AddpatientOnlineComponent.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AddpatientOnlineComponent_vue_vue_type_template_id_3c0db2be___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddpatientOnlineComponent.vue?vue&type=template&id=3c0db2be& */ "./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=template&id=3c0db2be&");
+/* harmony import */ var _AddpatientOnlineComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddpatientOnlineComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AddpatientOnlineComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AddpatientOnlineComponent_vue_vue_type_template_id_3c0db2be___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AddpatientOnlineComponent_vue_vue_type_template_id_3c0db2be___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/patient/AddpatientOnlineComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddpatientOnlineComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AddpatientOnlineComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddpatientOnlineComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=template&id=3c0db2be&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=template&id=3c0db2be& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddpatientOnlineComponent_vue_vue_type_template_id_3c0db2be___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./AddpatientOnlineComponent.vue?vue&type=template&id=3c0db2be& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/patient/AddpatientOnlineComponent.vue?vue&type=template&id=3c0db2be&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddpatientOnlineComponent_vue_vue_type_template_id_3c0db2be___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddpatientOnlineComponent_vue_vue_type_template_id_3c0db2be___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

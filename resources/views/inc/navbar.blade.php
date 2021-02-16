@@ -11,7 +11,7 @@
                             <path
                                 d="m2833 3300c-82-12-190-48-282-95-73-36-637-358-648-369-3-3 580-1022 592-1034 5-5 596 338 673 391 100 69 220 197 260 280 82 167 76 324-19 507-95 184-233 291-411 320-70 11-89 11-165 0z" />
                         </g>
-                    </svg> <span class="h4 font-weight-bold align-self-center mb-0 ml-auto">PICK</span>
+                    </svg> <span class="h4 font-weight-bold align-self-center mb-0 ml-auto">NCC System</span>
                 </a>
             </div>
             <div class="navbar-header h4 mb-0 text-center h-100 collapse-menu-bar">
