@@ -10,7 +10,7 @@
       <div class="card">
         <img class="card-img-top" src="holder.js/100x180/" alt="" />
         <div class="card-body">
-          <form action="" @submit.prevent="add_patient()">
+          <form id="hi" action="" @submit.prevent="add_patient()">
             <div class="row form-group">
               <div class="col-12">
                 <label for="form-control"><h5>Basic Information</h5></label>
@@ -37,15 +37,16 @@
                 />
                 <has-error :form="form" field="nic"></has-error>
               </div>
+
               <div class="col-sm-4 col-lg-4 col-md-4">
-                <label for="form-control">Email</label>
+                <label for="form-control">Age:</label>
                 <input
                   type="text"
                   class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('email') }"
-                  v-model="form.email"
+                  :class="{ 'is-invalid': form.errors.has('age') }"
+                  v-model="form.age"
                 />
-                <has-error :form="form" field="email"></has-error>
+                <has-error :form="form" field="age"></has-error>
               </div>
             </div>
             <div class="form-group mt-3 row">
@@ -63,24 +64,8 @@
                 />
                 <has-error :form="form" field="mobile"></has-error>
               </div>
-              <div class="col-sm-4 col-lg-4 col-md-4">
-                <label for="form-control">Age:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('age') }"
-                  v-model="form.age"
-                />
-                <has-error :form="form" field="age"></has-error>
-              </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-md">
-              Next
-            </button>
-          </form>
 
-
-          <div>
             <div class="row form-group">
               <div class="col-12">
                 <label for="form-control"
@@ -88,48 +73,61 @@
                 >
               </div>
             </div>
-             <form @submit.prevent="submitUpdate()">
-            <div class="form-group mt-3 row">
 
-                <div class="col-md-4 mb-3">
-                  <label for="validationDefault02">Username:</label>
-                  <input
-                    v-model="mform.username"
-                    type="text"
-                    name="username"
-                    class="form-control"
-                    :class="{ 'is-invalid': mform.errors.has('username') }"
-                  />
-                  <has-error :form="mform" field="username"></has-error>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="validationDefault04">New Password:</label>
-                  <input
-                    v-model="mform.password"
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    :class="{ 'is-invalid': mform.errors.has('password') }"
-                  />
-                  <has-error :form="mform" field="password"></has-error>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="validationDefault05">Confirm Password:</label>
-                  <input
-                    v-model="mform.password_confirmation"
-                    type="password"
-                    name="password_confirmation"
-                    class="form-control"
-                    :class="{ 'is-invalid': mform.errors.has('password') }"
-                  />
-                  <has-error
-                    :form="mform"
-                    field="password_confirmation"
-                  ></has-error>
-                </div>
+            <div class="form-group mt-3 row">
+              <div class="col-md-4 mb-3">
+                <label for="validationDefault02">Type Username: *</label>
+                <input
+                  v-model="form.username"
+                  type="text"
+                  name="username"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('username') }"
+                />
+                <has-error :form="form" field="username"></has-error>
+              </div>
+              <div class="col-sm-4 col-lg-4 col-md-4">
+                <label for="form-control">Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('email') }"
+                  v-model="form.email"
+                />
+                <has-error :form="form" field="email"></has-error>
+              </div>
             </div>
-              </form>
-          </div>
+            <div class="form-group mt-2 row">
+              <div class="col-md-4 mb-3">
+                <label for="validationDefault04">Create New Password:</label>
+                <input
+                  v-model="form.password"
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('password') }"
+                />
+                <has-error :form="form" field="password"></has-error>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="validationDefault05">Confirm Password:</label>
+                <input
+                  v-model="form.password_confirmation"
+                  type="password"
+                  name="password_confirmation"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('password') }"
+                />
+                <has-error
+                  :form="form"
+                  field="password_confirmation"
+                ></has-error>
+              </div>
+            </div>
+            <button class="btn btn-primary" :disabled="form.busy" type="submit">
+              Finish
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -139,14 +137,9 @@
 
 <script>
 export default {
-  props: ["user_id"],
-  created() {
-    this.get_patient_list();
-    this.getAllRoles();
-  },
-  mounted() {
-    this.get_patient_list();
-  },
+  //   props: ["user_id"],
+  created() {},
+  mounted() {},
   data() {
     return {
       form: new Form({
@@ -157,32 +150,48 @@ export default {
         mobile: "",
         email: "",
         age: "",
-        p_type: "",
-        status: "",
-      }),
-      patient_data: {},
+        p_type: "online",
+        status: "1",
 
-      mform: new Form({
         user_id: "",
-        role_id: "",
+        role_id: "4",
         username: "",
-        email: "",
         password: "",
         password_confirmation: "",
-        photo: {},
+        // photo: {},
       }),
-      role_list: {},
+      patient_data: {},
     };
   },
   methods: {
     add_patient: function () {
+      let timerInterval;
       this.form
-        .post("/api/patient/addpatient")
+        .post("/api/patient/addpatient_online")
         .then((response) => {
           if (response.status == 200) {
-            swal.fire("Success!", "Patient Added Successfully", "success");
-            this.form.reset();
-            this.get_patient_list();
+            swal.fire({
+              title: "Your Account Create Successfull",
+              html: "Please login to the system",
+              timer: 5000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                timerInterval = setInterval(() => {
+                  const content = Swal.getContent();
+                  if (content) {
+                    const b = content.querySelector("b");
+                    if (b) {
+                      b.textContent = Swal.getTimerLeft();
+                    }
+                  }
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            });
+            window.location.href = "/login";
           }
         })
         .catch((error) => {
@@ -190,22 +199,8 @@ export default {
         });
     },
 
-    submitUpdate: async function () {
-      try {
-        const response = await this.mform.post(
-          `/api/patient/assign/user/${this.mform.user_id}`
-        );
-        if (response.status == 200) {
-          swal.fire("Success!", "Access Granted", "success");
-          $("#assign_user_model").modal("hide");
-          this.mform.clear();
-          this.mform.reset();
-          this.get_patient_list();
-          console.log("Success message");
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
+    hide_form: function (id) {
+      $("#hi").hide();
     },
   },
 };

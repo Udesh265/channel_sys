@@ -51,6 +51,9 @@ Route::group(['prefix' => 'patient'], function () {
     Route::get('get_by_search/{search_keyword}','API\ApiPatientController@get_by_search');
     Route::patch('update/{id}','API\ApiPatientController@update');
     Route::patch('del/{id}','API\ApiPatientController@delete_patient');
+    Route::post('addpatient_online','API\ApiPatientController@add_patient_online');
+    Route::post('assign/user/{patient_id}','API\ApiPatientController@assign_user_online');
+
 
 });
 
