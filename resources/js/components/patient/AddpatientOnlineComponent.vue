@@ -189,6 +189,7 @@ export default {
               },
               willClose: () => {
                 clearInterval(timerInterval);
+
               },
             });
             window.location.href = "/login";
