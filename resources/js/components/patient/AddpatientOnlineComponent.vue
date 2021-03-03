@@ -176,21 +176,19 @@ export default {
               timer: 5000,
               timerProgressBar: true,
               didOpen: () => {
-                Swal.showLoading();
+                swal.showLoading();
                 timerInterval = setInterval(() => {
-                  const content = Swal.getContent();
+                  const content = swal.getContent();
                   if (content) {
                     const b = content.querySelector("b");
                     if (b) {
-                      b.textContent = Swal.getTimerLeft();
+                      b.textContent = swal.getTimerLeft();
                     }
                   }
                 }, 100);
               },
               willClose: () => {
                 clearInterval(timerInterval);
-
-
               },
             });
             window.location.href = "/login";

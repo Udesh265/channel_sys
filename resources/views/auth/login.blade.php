@@ -2,12 +2,11 @@
     <!-- START: Main Content-->
     @section('content')
     <div class="container">
-        <div class="row justify-content-between align-items-center">
-            <div class="col-12">
+        <div class="row">
                 <form method="POST" action="{{ route('login') }}" class="row row-eq-height lockscreen mt-5 mb-5">
                     @csrf
-                    <div class="lock-image col-12 col-sm-5"><img src="{{asset('dist/images/author.jpg')}}" alt="ncc"></div>
-                    <div class="login-form col-12 col-sm-7">
+                    <div class="lock-image col-6"><img style="width: 100%" src="{{asset('dist/images/profile-cover.jpg')}}" alt="ncc"></div>
+                    <div class="login-form col-6">
                         <div class="form-group mb-3">
                             <label for="emailaddress">Email | Username</label>
                             <input class="form-control" type="text" name="email" placeholder="Enter your email">
@@ -48,7 +47,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
 
         </div>
     </div>

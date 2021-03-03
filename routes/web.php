@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('doctor/add_speciality','AddSpecialityController@add_speciality')->name('doctor.speciality');
 
+    Route::get('appoitnment/new_appointment','AppointmentController@new_appointment')->name('appointment.create');
+
 
 
 

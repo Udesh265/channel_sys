@@ -68,6 +68,11 @@ Route::group(['prefix' => 'schedule'], function () {
    Route::post('save','API\ApiScheduleController@store');
    Route::get('get/{employee_id}','API\ApiScheduleController@get_schedule');
    Route::delete('del/{id}','API\ApiScheduleController@destroy');
+   Route::get('get_one_schedule/{id}','API\ApiScheduleController@get_one_schedule');
+});
+
+Route::group(['prefix' => 'appointment'], function () {
+    Route::get('get/{employee_id}','API\ApiAppointmentController@get_schedule_appointment');
 });
 
 Route::apiResource('employee','API\ApiEmployeeController');

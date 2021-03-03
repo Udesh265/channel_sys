@@ -167,7 +167,7 @@ export default {
 		this.form.name = this.role.name;
 	},
 	mounted() {
-		this.getPreviousPermissions();		
+		this.getPreviousPermissions();
 	},
 	data() {
 		return {
@@ -339,7 +339,7 @@ export default {
 
 				for (let i in prev_permissions) {
 					let name = prev_permissions[i].name;
-					let slug = name.split("_"); //Spliting to identify the permission [0]name [2]permission				
+					let slug = name.split("_"); //Spliting to identify the permission [0]name [2]permission
 
 					this.no_prev_permissions ++ ;
 
@@ -357,7 +357,7 @@ export default {
 						this.permissions[key].data.all = true;
 					}
 
-					
+
 				}
 
 				this.comparePermissionArrayToCheckAll();
@@ -446,7 +446,7 @@ export default {
 				this.grant_all =  false;
 			}
 
-		
+
 		}
 	},
 };

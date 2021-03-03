@@ -18,9 +18,20 @@ class ApiScheduleController extends Controller
     public function get_schedule($employee_id)
     {
 
+
         $employee_schedules = Schedule::whereEmployeeId($employee_id)->get();
 
         return response()->json($employee_schedules, 200);
+    }
+
+
+    public function get_one_schedule($id)
+    {
+
+
+        $data = Schedule::find($id);
+
+        return response()->json($data, 200);
     }
 
 

@@ -42,7 +42,8 @@
 // }
 
 .bg-event {
-    background-color: #f2beac !important;
+    background-color: #f71919 !important;
+    color: #fff;
 }
 
 .theme-default .cv-day.outsideOfMonth {
@@ -58,12 +59,12 @@
 
 .theme-default .cv-day.past {
     transition: 1s background-color;
-    background-color: #9ab2be;
+    background-color: #ddb8b8;
 }
 
 .theme-default .cv-day.today {
     transition: 1s background-color;
-    background-color: #b5f399;
+    background-color: #f03325;
 }
 
 
@@ -73,6 +74,43 @@
     cursor: pointer;
     margin: 0 5%;
     transition: color 1s, transform 0.2s;
+
+    &:hover {
+        transition: color 1s, transform 0.2s;
+        animation: brath 2s linear infinite;
+        z-index: 1000;
+
+        @keyframes brath {
+            0% {
+                transform: scale(1.8);
+            }
+            25% {
+                transform: scale(1.5);
+            }
+            50% {
+                transform: scale(1.8);
+            }
+            75% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1.8);
+            }
+        }
+    }
+
+    &:active {
+        transition: color 0s;
+        color: #ff744a !important;
+    }
+}
+
+// Icon button styles POP up
+.event-button {
+    // font-size: 15px;
+    cursor: pointer;
+    // margin: 0 5%;
+    // transition: color 1s, transform 0.2s;
 
     &:hover {
         transition: color 1s, transform 0.2s;

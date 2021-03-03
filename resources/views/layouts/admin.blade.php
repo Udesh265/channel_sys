@@ -52,6 +52,14 @@
     </a>
     <!-- END: Back to top-->
 
+    <script>
+        @auth
+          window.Permissions = {!! json_encode(Auth::user()->allPermissions, true) !!};
+        @else
+          window.Permissions = [];
+        @endauth
+    </script>
+
     @include('inc.scripts')
 </body>
 <!-- END: Body-->

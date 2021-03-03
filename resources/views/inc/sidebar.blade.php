@@ -11,6 +11,14 @@
                 </ul>
             </li>
 
+            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Appointment</a>
+                <ul>
+                    <li class="{{ $page_option['sub'] === 'new_appointment' ? 'active' : '' }}"><a
+                            href="{{ route('appointment.create') }}"><i class="fa fa-rocket"></i> New Appointment</a></li>
+                    <li><a href="{{ route('appointment.create') }}"><i class="icon-layers"></i>View Appointment</a></li>
+                </ul>
+            </li>
+
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Permissions & Users</a>
                 <ul>
                     <li class="dropdown {{ $page_option['main'] === 'permission' ? 'active' : '' }}"><a href="#"><i
@@ -112,23 +120,31 @@
                     </li>
                 </ul>
             </li>
+
+            @if(Auth::user()->can('user_management_create') || Auth::user)
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Doctors Management</a>
                 <ul>
                     <li class="dropdown {{ $page_option['main'] === 'doctor' ? 'active' : '' }}"><a href="#"><i
                                 class="fas fa-sitemap"></i>Doctors</a>
                         <ul class="sub-menu">
 
+
+
                             <li class="{{ $page_option['sub'] === 'employee_manage' ? 'active' : '' }}"><a
                                     href="{{ route('employee.manage_emp') }}">Manage</a>
                             </li>
+
+                            @can('user_management_create')
                             <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
                                     href="{{ route('doctor.speciality') }}">Add Speciality</a>
                             </li>
+                            @endcan
 
                         </ul>
                     </li>
                 </ul>
             </li>
+            @endif
 
         </ul>
         <!-- END: Menu-->

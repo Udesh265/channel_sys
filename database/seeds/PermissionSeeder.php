@@ -17,7 +17,7 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        
+
         Permission::create(['name' => 'user_management_create']);
         Permission::create(['name' => 'user_management_view']);
         Permission::create(['name' => 'user_management_update']);
@@ -47,7 +47,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'payment_management_view']);
         Permission::create(['name' => 'payment_management_update']);
         Permission::create(['name' => 'payment_management_delete']);
-        
+
         Permission::create(['name' => 'payroll_management_create']);
         Permission::create(['name' => 'payroll_management_view']);
         Permission::create(['name' => 'payroll_management_update']);
@@ -58,7 +58,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'expense_management_update']);
         Permission::create(['name' => 'expense_management_delete']);
 
-        
+
         Permission::create(['name' => 'income_management_create']);
         Permission::create(['name' => 'income_management_view']);
         Permission::create(['name' => 'income_management_update']);

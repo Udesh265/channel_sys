@@ -17024,7 +17024,8 @@ readers do not read off random characters that represent icons */
 }
 
 .bg-event {
-  background-color: #f2beac !important;
+  background-color: #f71919 !important;
+  color: #fff;
 }
 
 .theme-default .cv-day.outsideOfMonth {
@@ -17040,12 +17041,12 @@ readers do not read off random characters that represent icons */
 
 .theme-default .cv-day.past {
   transition: 1s background-color;
-  background-color: #9ab2be;
+  background-color: #ddb8b8;
 }
 
 .theme-default .cv-day.today {
   transition: 1s background-color;
-  background-color: #b5f399;
+  background-color: #f03325;
 }
 
 .icon-button {
@@ -17107,6 +17108,44 @@ readers do not read off random characters that represent icons */
 }
 
 .icon-button:active {
+  transition: color 0s;
+  color: #ff744a !important;
+}
+
+.event-button {
+  cursor: pointer;
+}
+
+.event-button:hover {
+  transition: color 1s, transform 0.2s;
+  -webkit-animation: brath 2s linear infinite;
+          animation: brath 2s linear infinite;
+  z-index: 1000;
+}
+
+@keyframes brath {
+  0% {
+    transform: scale(1.8);
+  }
+
+  25% {
+    transform: scale(1.5);
+  }
+
+  50% {
+    transform: scale(1.8);
+  }
+
+  75% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1.8);
+  }
+}
+
+.event-button:active {
   transition: color 0s;
   color: #ff744a !important;
 }

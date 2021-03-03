@@ -26,14 +26,14 @@
             <div class="form-group">
               <label for="form-control">Doctor Name</label>
               <select
-                v-model="s_form.employee_id"
+                v-model="selected_doc"
                 @change="get_schedule"
                 class="form-control"
               >
                 <option
                   v-for="(doc, index) in doc_data"
                   :key="index"
-                  :value="doc.employee.id"
+                  :value="doc"
                 >
                   {{ doc.employee.first_name }}
                 </option>
@@ -41,10 +41,27 @@
             </div>
           </div>
         </div>
+        <div class="row" v-if="selected_doc.id">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="form-control">Doctor Fee :{{  }}</label>
+              <input
+                class="form-control"
+                disabled="true"
+                type="text"
+                name=""
+                id=""
+                v-model="selected_doc.charge_pp"
+              />
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <label for="form-control">Add Date & Time</label>
+              <label for="form-control"
+                ><h5>Pick Doctor Availble Date :</h5></label
+              >
               <calendar-view
                 :showTimes="true"
                 @click-date="
@@ -54,14 +71,14 @@
                 "
                 @click-item="
                   (calendarItem) => {
-                    remove_item(calendarItem);
+                    appointment_item(calendarItem);
                   }
                 "
                 class="theme-default"
                 :startingDayOfWeek="1"
                 :show-date="showDate"
                 :items="items"
-                style="height: 80vh"
+                style="height: 70vh"
               >
                 <calendar-view-header
                   slot="header"
@@ -79,50 +96,51 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="s_model"
+      id="appointment_model"
       tabindex="-1"
       role="dialog"
       aria-labelledby="modelTitleId"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-6 m-auto text-center">
-                  <label for="form-control">Pick Time</label>
-                  <input
-                    v-model="s_form.time"
-                    class="form-control"
-                    :class="{ 'is-invalid': s_form.errors.has('time') }"
-                    type="time"
-                  />
-                  <has-error :form="s_form" field="time"></has-error>
-                </div>
-              </div>
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">
+                Appointment Confirmation
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-          </div>
-          <div class="modal-footer text-center">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              @click="create_schedule"
-              class="btn btn-primary"
-            >
-              Save
-            </button>
+            <div class="modal-body">
+                <div v-if="Object.keys(selected_doc).length > 0">
+                <label for="form-control">Doctor Name : {{selected_doc.employee.first_name}}</label><br>
+                <label for="form-control">Doctor Fee : {{selected_doc.charge_pp}}</label><br>
+                <label for="form-control">Date : {{one_appointment.startDate}}</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -144,49 +162,29 @@ export default {
       doc_data: {},
 
       // calnder
+      selected_doc: {
 
-      s_form: new Form({
-        employee_id: "",
-        startDate: "",
-        time: "",
-      }),
+      },
+      one_appointment:{},
+
 
       showDate: new Date(),
       items: [],
     };
   },
   methods: {
-    create_schedule: function () {
-      this.s_form
-        .post("/api/schedule/save")
-        .then((response) => {
-          if (response.status == 200) {
-            this.items = response.data.map((item) => {
-              return {
-                id: item.id,
-                startDate: item.startDate,
-                classes: "bg-event",
-                title: "Scheduled",
-              };
-            });
-            $("#s_model").modal("hide");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+
     get_schedule: function () {
       axios
-        .get("/api/schedule/get/" + this.s_form.employee_id)
+        .get("/api/appointment/get/" + this.selected_doc.employee_id)
         .then((response) => {
           if (response.status == 200) {
             this.items = response.data.map((item) => {
               return {
                 id: item.id,
                 startDate: item.startDate,
-                classes: "bg-event",
-                title: "Scheduled",
+                classes: "bg-event event-button",
+                title: "Available",
               };
             });
           }
@@ -212,7 +210,7 @@ export default {
       axios
         .get("/api/doctor/get_doc_list/" + this.form.spec_id)
         .then((response) => {
-          console.log(response);
+        //   console.log(response);
           if (response.status == 200) {
             this.doc_data = response.data;
           }
@@ -222,51 +220,32 @@ export default {
         });
     },
 
-    calenderClicked(date) {
-      let newDate = this.$options.filters.calenderDate(date);
-      //   console.log(newDate);
-      this.s_form.startDate = newDate;
-      if (this.s_form.employee_id) {
-        $("#s_model").modal("show");
-      }
-    },
     setShowDate(d) {
       this.showDate = d;
     },
 
-    getEventDetails: function (data) {
-        console.log(data);
-    },
+    // getEventDetails: function (data) {
+    //   console.log(data);
+    // },
 
-    remove_item: function (data) {
-    //   let id = data.id;
+    appointment_item: function (data) {
 
-    let {id} = data;
-    console.log(data);
-      swal
-        .fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
+        this.id = data.id;
+
+        axios.get("/api/schedule/get_one_schedule/" + this.id)
+        .then((response)=>{
+            if(response.status == 200){
+                this.one_appointment = response.data;
+            }
+
         })
-        .then((result) => {
-          if (result.isConfirmed) {
-            axios
-              .delete("/api/schedule/del/" + id)
-              .then((response) => {
-                if (response.status == 200) {
-                  this.get_schedule();
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }
+        .catch((error)=>{
+            console.log(error);
         });
+
+      $("#appointment_model").modal("show");
+
+
     },
   },
 };
