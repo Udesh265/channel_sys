@@ -2,21 +2,122 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Appointment;
 use App\Http\Controllers\Controller;
+use App\Patient;
+use App\Payment;
 use App\Schedule;
 use Illuminate\Http\Request;
+use SebastianBergmann\Environment\Console;
 
 class ApiAppointmentController extends Controller
 {
 
-    public function get_schedule_appointment($employee_id){
+    public function get_schedule_appointment($employee_id)
+    {
 
         $employee_schedules = Schedule::whereEmployeeId($employee_id)->get();
 
         return response()->json($employee_schedules, 200);
+    }
+    public function get_patient_by_user($user_id)
+    {
+        $p_data = Patient::find($user_id);
+
+        return response()->json($p_data, 200);
+    }
+
+    public function submit_appointment(Request $request)
+    {
+
+        $validate_data = $request->validate(
+            [
+                'payment_method' => ['required'],
+            ]
+        );
+
+        if ($validate_data['payment_method'] == 'online') {
+
+            $data = Payment::create([
+
+                'amount' => $request->charge_pp,
+                'type' => $validate_data['payment_method'],
+                'payment_status' => 'Confirm',
+                'patient_id' => $request->p_id,
+
+            ]);
+            if (is_null($data)) return response()->json(['msg' => 'Failed to create payment, rolling back'], 400);
+            $data->id;
+        } else {
+            $data = Payment::create([
+
+                'amount' => $request->charge_pp,
+                'type' => $validate_data['payment_method'],
+                'payment_status' => 'pending',
+                'patient_id' => $request->p_id,
+
+            ]);
+            if (is_null($data)) return response()->json(['msg' => 'Failed to create payment, rolling back'], 400);
+            $data->id;
+        }
+
+        $appointment_data = Appointment::create([
+            'schedule_id' => $request->schedule_id,
+            'user_id' => $request->user_id,
+            'status' => 'active',
+            'payment_id' =>    $data->id,
+            'patient_id' => $request->p_id,
+        ]);
+
+        if (is_null($appointment_data)){
+
+            return response()->json(['msg' => 'Failed to create appoitnment, rolling back'], 400);
+        }
+
+            return response()->json(['msg' => 'Successfully create appoitnment'], 200);
 
     }
 
+    public function get_appoitment_by_userID($user_id){
 
+        $data = Appointment::where('user_id',$user_id)->where('status','active')->count('id');
+
+
+        return response()->json($data,200);
+
+    }
+    public function get_app_total_amount($p_id){
+        $data = Payment::where('patient_id',$p_id)->where('payment_status','Confirm')->sum('amount');
+
+        if (is_null($data)) return response()->json(['msg' => 'Failed to get total amount, rolling back'], 400);
+
+        return response()->json($data,200);
+    }
+
+    public function get_pending_payment($p_id){
+        $data = Payment::where('patient_id',$p_id)->where('payment_status','pending')->sum('amount');
+
+        if (is_null($data)) return response()->json(['msg' => 'Failed to get total amount, rolling back'], 400);
+
+        return response()->json($data,200);
+
+    }
+    public function get_appointment_list($p_id){
+        $data = Appointment::where('patient_id',$p_id)->where('status','active')->get();
+        if (is_null($data)) return response()->json(['msg' => 'Failed to get list rolling back'], 400);
+
+        foreach ($data as $app) {
+          $app->schedule->employee->doctor->speciality;
+
+        }
+        return response()->json($data,200);
+
+    }
+    public function delete_appointment($id){
+        $data = Appointment::find($id);
+        $data->update(['status' => 'Deleted']);
+        if (is_null($data)) return response()->json(['msg' => 'Failed to delete Appoitnment, rolling back'], 400);
+
+        return response()->json(['msg' => 'Successfully deleted'], 200);
+    }
 }
-

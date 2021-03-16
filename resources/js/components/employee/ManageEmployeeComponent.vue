@@ -160,6 +160,46 @@
                           ></textarea>
                         </div>
                       </div>
+            <div v-if="form.job_id == 1">
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                  <label for="form-control"> <h6>For Doctors:</h6> </label>
+                </div>
+                <div class="form-group mt-2 row">
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <label for="form-control"> Speciality:</label>
+                    <select v-model="form.spec_id" class="form-control">
+                      <option
+                        v-for="(spec, index) in spec_data"
+                        :key="index"
+                        :value="spec.id"
+                      >
+                      {{ spec.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <label for="form-control">Working Hopspital:</label>
+                    <input v-model="form.hospital" class="form-control" type="text" />
+                  </div>
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <label for="form-control"> Type:</label>
+                    <select
+                      id="exampleFormControlSelect1"
+                      v-model="form.doc_type"
+                      class="form-control"
+                    >
+                      <option value="1">Permenent Doctors</option>
+                      <option value="2">Visiting Doctors</option>
+                    </select>
+                  </div>
+                </div>
+                <div v-if="form.doc_type == 2" class="form-group mt-2 row">
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <label for="form-control">Charge per patient:</label>
+                    <input v-model="form.charge_pp" class="form-control" type="text" />
+                  </div>
+                </div>
+              </div>
 
                       <button type="submit" class="btn btn-primary btn-lg">
                         Update

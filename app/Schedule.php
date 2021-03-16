@@ -13,4 +13,8 @@ class Schedule extends Model
         "employee_id",
         "startDate",
     ];
+
+    public function employee() {
+        return $this->belongsTo(Employee::class);
+    }
 }

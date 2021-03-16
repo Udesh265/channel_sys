@@ -25,6 +25,18 @@ class AppointmentController extends Controller
         return view('page.appointment.new_appointment', compact('page_name', 'breadcrums', 'page_option'));
 
     }
+    public function view_appointment(){
+
+        $page_option = ['main' => 'appointment', 'sub' => 'view_appointment'];
+        $page_name = "View Appointment";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'Appointment', 'url' => '#'],
+        ];
+
+        return view('page.appointment.view_appointment', compact('page_name', 'breadcrums', 'page_option'));
+
+    }
 
     public function index()
     {

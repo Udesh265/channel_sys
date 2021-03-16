@@ -41,6 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('appoitnment/new_appointment','AppointmentController@new_appointment')->name('appointment.create');
 
+    Route::get('appoitnment/view_appointment','AppointmentController@view_appointment')->name('appointment.view');
+
+
 
 
 

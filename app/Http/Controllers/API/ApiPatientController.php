@@ -151,6 +151,7 @@ class ApiPatientController extends Controller
 
                 'role_id' => ['required'],
 
+
             ],
         );
 
@@ -167,6 +168,7 @@ class ApiPatientController extends Controller
         $user->syncRoles($role);
 
         $user->id;
+
 
         $patient = new Patient();
 

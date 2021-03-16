@@ -1948,6 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log("Component mounted.");
@@ -3483,13 +3484,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_spec();
+    this.get_patient_by_user_id();
   },
+  props: ["user_id"],
   mounted: function mounted() {
     this.get_doc_list();
     this.get_schedule();
+    $(this.$refs.appointment_model).on("hidden.bs.modal", this.on_appointment_modal_close);
   },
   data: function data() {
     return {
@@ -3497,16 +3530,28 @@ __webpack_require__.r(__webpack_exports__);
         spec_id: "",
         name: ""
       }),
+      sform: new Form({
+        charge_pp: "",
+        payment_method: "",
+        schedule_id: "",
+        user_id: this.user_id,
+        status: "1",
+        p_id: ""
+      }),
       spec_data: {},
       doc_data: {},
+      patient_data: {},
       // calnder
-      selected_doc: {},
       one_appointment: {},
+      selected_doc: {},
       showDate: new Date(),
       items: []
     };
   },
   methods: {
+    on_appointment_modal_close: function on_appointment_modal_close() {
+      this.sform.reset();
+    },
     get_schedule: function get_schedule() {
       var _this = this;
 
@@ -3557,8 +3602,10 @@ __webpack_require__.r(__webpack_exports__);
     appointment_item: function appointment_item(data) {
       var _this4 = this;
 
-      this.id = data.id;
-      axios.get("/api/schedule/get_one_schedule/" + this.id).then(function (response) {
+      this.sform.schedule_id = data.id;
+      this.sform.charge_pp = this.selected_doc.charge_pp;
+      this.sform.p_id = this.patient_data.id;
+      axios.get("/api/schedule/get_one_schedule/" + this.sform.schedule_id).then(function (response) {
         if (response.status == 200) {
           _this4.one_appointment = response.data;
         }
@@ -3566,6 +3613,428 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
       $("#appointment_model").modal("show");
+    },
+    submit_appointment: function submit_appointment() {
+      this.sform.post("/api/appointment/submit_appointment").then(function (response) {
+        if (response.status == 200) {
+          swal.fire({
+            position: "middle",
+            icon: "success",
+            title: response.data.msg,
+            showConfirmButton: false,
+            timer: 1500
+          }); // this.reset();
+
+          $("#appointment_model").modal("hide"); // window.location.href = 'view_appointment'
+
+          window.location.href = 'online_payment';
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_patient_by_user_id: function get_patient_by_user_id() {
+      var _this5 = this;
+
+      axios.get("/api/appointment/get_patient/" + this.user_id).then(function (response) {
+        if (response.status == 200) {
+          _this5.patient_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    payment_gatway_modal: function payment_gatway_modal() {
+      $("#pay").modal("show");
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["user_id"],
+  created: function created() {
+    this.get_total_appointment();
+    this.get_patient_by_user_id();
+  },
+  mounted: function mounted() {// this.get_total_appointment_amount();
+  },
+  data: function data() {
+    return {
+      appointment_data: {},
+      patient_data: {},
+      total_app_amount: {},
+      panding_amount: {},
+      appointment_list: {},
+      vform: new Form({
+        p_id: "",
+        app_id: ""
+      })
+    };
+  },
+  methods: {
+    get_total_appointment: function get_total_appointment() {
+      var _this = this;
+
+      axios.get("/api/appointment/get_app_by_userID/" + this.user_id).then(function (response) {
+        if (response) {
+          _this.appointment_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_patient_by_user_id: function get_patient_by_user_id() {
+      var _this2 = this;
+
+      axios.get("/api/appointment/get_patient/" + this.user_id).then(function (response) {
+        if (response.status == 200) {
+          _this2.patient_data = response.data;
+          _this2.vform.p_id = _this2.patient_data.id;
+
+          _this2.get_total_appointment_amount();
+
+          _this2.get_pending_payment();
+
+          _this2.get_appointment_list();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_total_appointment_amount: function get_total_appointment_amount() {
+      var _this3 = this;
+
+      axios.get("/api/appointment/get_tot_amount/" + this.vform.p_id).then(function (response) {
+        if (response.status == 200) {
+          _this3.total_app_amount = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_pending_payment: function get_pending_payment() {
+      var _this4 = this;
+
+      axios.get("/api/appointment/get_pending_pay/" + this.vform.p_id).then(function (response) {
+        if (response.status == 200) {
+          _this4.panding_amount = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_appointment_list: function get_appointment_list() {
+      var _this5 = this;
+
+      axios.get("/api/appointment/get_appointment_list/" + this.vform.p_id).then(function (response) {
+        if (response.status == 200) {
+          _this5.appointment_list = response.data; //    this.vform.app_id = this.app.id;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    delete_app: function delete_app(id) {
+      var _this6 = this;
+
+      swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.patch("/api/appointment/del/" + id).then(function (response) {
+            if (response.status == 200) {
+              _this6.get_appointment_list();
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
     }
   }
 });
@@ -4422,6 +4891,46 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -70871,7 +71380,7 @@ var render = function() {
               _c("div", { staticClass: "col-6" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "form-control" } }, [
-                    _vm._v("Doctor Fee :" + _vm._s())
+                    _vm._v("Doctor Fee :")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -70952,6 +71461,7 @@ var render = function() {
     _c(
       "div",
       {
+        ref: "appointment_model",
         staticClass: "modal fade",
         attrs: {
           id: "appointment_model",
@@ -70975,31 +71485,111 @@ var render = function() {
               _c("div", { staticClass: "modal-body" }, [
                 Object.keys(_vm.selected_doc).length > 0
                   ? _c("div", [
-                      _c("label", { attrs: { for: "form-control" } }, [
+                      _c("h5", [
                         _vm._v(
-                          "Doctor Name : " +
-                            _vm._s(_vm.selected_doc.employee.first_name)
+                          "\n              Dear Customer,Your Appointment will be ready with Dr." +
+                            _vm._s(_vm.selected_doc.employee.first_name) +
+                            "\n              at " +
+                            _vm._s(_vm.one_appointment.startDate) +
+                            " .\n            "
                         )
                       ]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("h6", [
+                        _vm._v(
+                          "\n              Please Select the payment method and confirm your appointment.\n            "
+                        )
+                      ]),
+                      _vm._v(" "),
                       _c("br"),
                       _vm._v(" "),
                       _c("label", { attrs: { for: "form-control" } }, [
-                        _vm._v(
-                          "Doctor Fee : " + _vm._s(_vm.selected_doc.charge_pp)
-                        )
+                        _vm._v(" Payment Method")
                       ]),
-                      _c("br"),
                       _vm._v(" "),
-                      _c("label", { attrs: { for: "form-control" } }, [
-                        _vm._v(
-                          "Date : " + _vm._s(_vm.one_appointment.startDate)
-                        )
-                      ])
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.sform.payment_method,
+                              expression: "sform.payment_method"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("p_type")
+                          },
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.sform,
+                                  "payment_method",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                              _vm.get_schedule
+                            ]
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "on_visit" } }, [
+                            _vm._v("On Visit")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "online" } }, [
+                            _vm._v("Online")
+                          ])
+                        ]
+                      )
                     ])
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _vm._m(2)
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        return _vm.payment_gatway_modal()
+                      }
+                    }
+                  },
+                  [_vm._v("\n            Close\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.submit_appointment()
+                      }
+                    }
+                  },
+                  [_vm._v("\n            Confirm Appointment\n          ")]
+                )
+              ])
             ])
           ]
         )
@@ -71024,7 +71614,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLongTitle" } },
-        [_vm._v("\n              Appointment Confirmation\n            ")]
+        [_vm._v("\n            Appointment Confirmation\n          ")]
       ),
       _vm._v(" "),
       _c(
@@ -71040,26 +71630,474 @@ var staticRenderFns = [
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=template&id=dee05db6&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=template&id=dee05db6& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12" }, [
+          _c("div", { staticClass: "p-5" }, [
+            _c(
+              "ul",
+              {
+                staticClass:
+                  "nav bg-light nav-pills rounded-pill nav-fill mb-3",
+                attrs: { role: "tablist" }
+              },
+              [
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link active rounded-pill",
+                      attrs: { "data-toggle": "pill", href: "#nav-tab-card" }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-credit-card" }),
+                      _vm._v(
+                        "\n                        Credit Card\n                      "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link rounded-pill",
+                      attrs: { "data-toggle": "pill", href: "#nav-tab-paypal" }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-paypal" }),
+                      _vm._v(
+                        "\n                        Paypal\n                      "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link rounded-pill",
+                      attrs: { "data-toggle": "pill", href: "#nav-tab-bank" }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-university" }),
+                      _vm._v(
+                        "\n                        Bank Transfer\n                      "
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade show active",
+                  attrs: { id: "nav-tab-card" }
+                },
+                [
+                  _c("form", { attrs: { role: "form" } }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "username" } }, [
+                        _vm._v("Full name (on the card)")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "username",
+                          placeholder: "Jassa"
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "cardNumber" } }, [
+                        _vm._v("Card number")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: "cardNumber",
+                            placeholder: "Your card number"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group-append" }, [
+                          _c(
+                            "span",
+                            { staticClass: "input-group-text text-muted" },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-credit-card mx-1"
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-money-check mx-1"
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-money-check-alt mx-1"
+                              })
+                            ]
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [
+                            _c("span", { staticClass: "hidden-xs" }, [
+                              _vm._v("Expiration")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "input-group" }, [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                placeholder: "MM",
+                                name: "",
+                                required: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                placeholder: "YY",
+                                name: "",
+                                required: ""
+                              }
+                            })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-4" }, [
+                        _c("div", { staticClass: "form-group mb-4" }, [
+                          _c(
+                            "label",
+                            {
+                              attrs: {
+                                title:
+                                  "Three-digits code on the back of your card"
+                              }
+                            },
+                            [
+                              _vm._v("CVV\n                                "),
+                              _c("i", { staticClass: "fa fa-question-circle" })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: { type: "text", required: "" }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "subscribe btn btn-primary btn-block rounded-pill shadow-sm",
+                        attrs: { type: "button" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                          Confirm\n                        "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade",
+                  attrs: { id: "nav-tab-paypal" }
+                },
+                [
+                  _c("p", [_vm._v("Paypal is easiest way to pay online")]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary rounded-pill",
+                        attrs: { type: "button" }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-paypal mr-2" }),
+                        _vm._v(" Log into my Paypal\n                        ")
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-muted" }, [
+                    _vm._v(
+                      "\n                        Lorem ipsum dolor sit amet, consectetur adipisicing\n                        elit, sed do eiusmod tempor incididunt ut labore et\n                        dolore magna aliqua.\n                      "
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "nav-tab-bank" } },
+                [
+                  _c("h6", [_vm._v("Bank account details")]),
+                  _vm._v(" "),
+                  _c("dl", [
+                    _c("dt", [_vm._v("Bank")]),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v("THE WORLD BANK")])
+                  ]),
+                  _vm._v(" "),
+                  _c("dl", [
+                    _c("dt", [_vm._v("Account number")]),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v("7775877975")])
+                  ]),
+                  _vm._v(" "),
+                  _c("dl", [
+                    _c("dt", [_vm._v("IBAN")]),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v("CZ7775877975656")])
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-muted" }, [
+                    _vm._v(
+                      "\n                        Lorem ipsum dolor sit amet, consectetur adipisicing\n                        elit, sed do eiusmod tempor incididunt ut labore et\n                        dolore magna aliqua.\n                      "
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=template&id=3a79f03e&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=template&id=3a79f03e& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 col-sm-6 col-xl-4 mt-3" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-body text-info border-bottom border-info border-w-5"
+            },
+            [
+              _c("h2", { staticClass: "text-center" }, [
+                _vm._v(_vm._s(_vm.appointment_data))
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "text-center" }, [
+                _vm._v("Total Appointments")
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm-6 col-xl-4 mt-3" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-body text-success border-bottom border-success border-w-5"
+            },
+            [
+              _c("h2", { staticClass: "text-center" }, [
+                _vm._v(_vm._s(_vm.total_app_amount))
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "text-center" }, [
+                _vm._v("Total Paid Amount (LKR)")
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm-6 col-xl-4 mt-3" }, [
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-body text-danger border-bottom border-danger border-w-5"
+            },
+            [
+              _c("h2", { staticClass: "text-center" }, [
+                _vm._v(_vm._s(_vm.panding_amount))
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "text-center" }, [
+                _vm._v("Waiting Appointments (LKR)")
+              ])
+            ]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 mt-3" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table font-w-600 mb-0" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.appointment_list, function(app, index) {
+                  return _c("tr", { key: index, staticClass: "zoom" }, [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(app.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-success" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.schedule.employee.doctor.speciality.name) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.schedule.employee.first_name) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.schedule.startDate))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _c("i", {
+                        staticClass: "fa fa-trash text-danger icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.delete_app(app.id)
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header justify-content-between align-items-center" },
+      [_c("h6", { staticClass: "card-title" }, [_vm._v("View Appointments")])]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("\n              Close\n            ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("\n              Save changes\n            ")]
-      )
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Speciality")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Doctor Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Appointment Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
     ])
   }
 ]
@@ -72914,6 +73952,262 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
+                            _vm.form.job_id == 1
+                              ? _c("div", [
+                                  _vm._m(2),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group mt-2 row" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "col-sm-4 col-lg-4 col-md-4"
+                                        },
+                                        [
+                                          _c(
+                                            "label",
+                                            { attrs: { for: "form-control" } },
+                                            [_vm._v(" Speciality:")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "select",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.form.spec_id,
+                                                  expression: "form.spec_id"
+                                                }
+                                              ],
+                                              staticClass: "form-control",
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "spec_id",
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            _vm._l(_vm.spec_data, function(
+                                              spec,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "option",
+                                                {
+                                                  key: index,
+                                                  domProps: { value: spec.id }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                    " +
+                                                      _vm._s(spec.name) +
+                                                      "\n                    "
+                                                  )
+                                                ]
+                                              )
+                                            }),
+                                            0
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "col-sm-4 col-lg-4 col-md-4"
+                                        },
+                                        [
+                                          _c(
+                                            "label",
+                                            { attrs: { for: "form-control" } },
+                                            [_vm._v("Working Hopspital:")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.form.hospital,
+                                                expression: "form.hospital"
+                                              }
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: { type: "text" },
+                                            domProps: {
+                                              value: _vm.form.hospital
+                                            },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.$set(
+                                                  _vm.form,
+                                                  "hospital",
+                                                  $event.target.value
+                                                )
+                                              }
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "col-sm-4 col-lg-4 col-md-4"
+                                        },
+                                        [
+                                          _c(
+                                            "label",
+                                            { attrs: { for: "form-control" } },
+                                            [_vm._v(" Type:")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "select",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.form.doc_type,
+                                                  expression: "form.doc_type"
+                                                }
+                                              ],
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                id: "exampleFormControlSelect1"
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "doc_type",
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "1" } },
+                                                [_vm._v("Permenent Doctors")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "2" } },
+                                                [_vm._v("Visiting Doctors")]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.form.doc_type == 2
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "form-group mt-2 row" },
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "col-sm-4 col-lg-4 col-md-4"
+                                            },
+                                            [
+                                              _c(
+                                                "label",
+                                                {
+                                                  attrs: { for: "form-control" }
+                                                },
+                                                [_vm._v("Charge per patient:")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.form.charge_pp,
+                                                    expression: "form.charge_pp"
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: { type: "text" },
+                                                domProps: {
+                                                  value: _vm.form.charge_pp
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.form,
+                                                      "charge_pp",
+                                                      $event.target.value
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
                             _c(
                               "button",
                               {
@@ -72957,7 +74251,7 @@ var render = function() {
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -73130,6 +74424,16 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-4 col-lg-4 col-md-4" }, [
+      _c("label", { attrs: { for: "form-control" } }, [
+        _c("h6", [_vm._v("For Doctors:")])
+      ])
     ])
   },
   function() {
@@ -93515,6 +94819,8 @@ Vue.component('add-schedule-component', __webpack_require__(/*! ./components/sch
 Vue.component('add-doctor-speciality', __webpack_require__(/*! ./components/doctor/AddSpecialityComponent.vue */ "./resources/js/components/doctor/AddSpecialityComponent.vue")["default"]);
 Vue.component('add-patient-online-component', __webpack_require__(/*! ./components/patient/AddpatientOnlineComponent.vue */ "./resources/js/components/patient/AddpatientOnlineComponent.vue")["default"]);
 Vue.component('new-appointment-component', __webpack_require__(/*! ./components/appointment/NewAppointmentComponent.vue */ "./resources/js/components/appointment/NewAppointmentComponent.vue")["default"]);
+Vue.component('view-appointment-component', __webpack_require__(/*! ./components/appointment/ViewAppointmentComponent.vue */ "./resources/js/components/appointment/ViewAppointmentComponent.vue")["default"]);
+Vue.component('online-payment-component', __webpack_require__(/*! ./components/appointment/OnlinePaymentComponent.vue */ "./resources/js/components/appointment/OnlinePaymentComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -93981,6 +95287,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewAppointmentComponent_vue_vue_type_template_id_f5936f5a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewAppointmentComponent_vue_vue_type_template_id_f5936f5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/appointment/OnlinePaymentComponent.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/appointment/OnlinePaymentComponent.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OnlinePaymentComponent_vue_vue_type_template_id_dee05db6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OnlinePaymentComponent.vue?vue&type=template&id=dee05db6& */ "./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=template&id=dee05db6&");
+/* harmony import */ var _OnlinePaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OnlinePaymentComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _OnlinePaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _OnlinePaymentComponent_vue_vue_type_template_id_dee05db6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _OnlinePaymentComponent_vue_vue_type_template_id_dee05db6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/appointment/OnlinePaymentComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OnlinePaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./OnlinePaymentComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OnlinePaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=template&id=dee05db6&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=template&id=dee05db6& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OnlinePaymentComponent_vue_vue_type_template_id_dee05db6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./OnlinePaymentComponent.vue?vue&type=template&id=dee05db6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/appointment/OnlinePaymentComponent.vue?vue&type=template&id=dee05db6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OnlinePaymentComponent_vue_vue_type_template_id_dee05db6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OnlinePaymentComponent_vue_vue_type_template_id_dee05db6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/appointment/ViewAppointmentComponent.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/appointment/ViewAppointmentComponent.vue ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewAppointmentComponent_vue_vue_type_template_id_3a79f03e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewAppointmentComponent.vue?vue&type=template&id=3a79f03e& */ "./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=template&id=3a79f03e&");
+/* harmony import */ var _ViewAppointmentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewAppointmentComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ViewAppointmentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ViewAppointmentComponent_vue_vue_type_template_id_3a79f03e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ViewAppointmentComponent_vue_vue_type_template_id_3a79f03e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/appointment/ViewAppointmentComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewAppointmentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewAppointmentComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewAppointmentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=template&id=3a79f03e&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=template&id=3a79f03e& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewAppointmentComponent_vue_vue_type_template_id_3a79f03e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewAppointmentComponent.vue?vue&type=template&id=3a79f03e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/appointment/ViewAppointmentComponent.vue?vue&type=template&id=3a79f03e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewAppointmentComponent_vue_vue_type_template_id_3a79f03e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewAppointmentComponent_vue_vue_type_template_id_3a79f03e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

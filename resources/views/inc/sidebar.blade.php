@@ -15,7 +15,7 @@
                 <ul>
                     <li class="{{ $page_option['sub'] === 'new_appointment' ? 'active' : '' }}"><a
                             href="{{ route('appointment.create') }}"><i class="fa fa-rocket"></i> New Appointment</a></li>
-                    <li><a href="{{ route('appointment.create') }}"><i class="icon-layers"></i>View Appointment</a></li>
+                    <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i>View Appointment</a></li>
                 </ul>
             </li>
 
@@ -121,7 +121,7 @@
                 </ul>
             </li>
 
-            @if(Auth::user()->can('user_management_create') || Auth::user)
+            {{-- @if(Auth::user()->can('user_management_create') || Auth::user) --}}
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Doctors Management</a>
                 <ul>
                     <li class="dropdown {{ $page_option['main'] === 'doctor' ? 'active' : '' }}"><a href="#"><i
@@ -138,7 +138,7 @@
                             <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
                                     href="{{ route('doctor.speciality') }}">Add Speciality</a>
                             </li>
-                            @endcan
+                            {{-- @endcan --}}
 
                         </ul>
                     </li>

@@ -17,12 +17,13 @@ class Doctor extends Model
 
     public function speciality()
     {
-        return $this->belongsTo(AddSpeciality::class);
+        return $this->belongsTo(AddSpeciality::class, 'add_speciality_id', 'id');
     }
 
     public function employee()
     {
         return $this->belongsTo(Employee::class);
     }
+
 
 }

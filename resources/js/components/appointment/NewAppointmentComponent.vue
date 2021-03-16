@@ -44,7 +44,7 @@
         <div class="row" v-if="selected_doc.id">
           <div class="col-6">
             <div class="form-group">
-              <label for="form-control">Doctor Fee :{{  }}</label>
+              <label for="form-control">Doctor Fee :</label>
               <input
                 class="form-control"
                 disabled="true"
@@ -95,6 +95,7 @@
 
     <!-- Modal -->
     <div
+      ref="appointment_model"
       class="modal fade"
       id="appointment_model"
       tabindex="-1"
@@ -102,55 +103,90 @@
       aria-labelledby="modelTitleId"
       aria-hidden="true"
     >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              Appointment Confirmation
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div v-if="Object.keys(selected_doc).length > 0">
 
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">
-                Appointment Confirmation
+              <h5>
+                Dear Customer,Your Appointment will be ready with Dr.{{
+                  selected_doc.employee.first_name
+                }}
+                at {{ one_appointment.startDate }} .
               </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
+              <br />
+              <h6>
+                Please Select the payment method and confirm your appointment.
+              </h6>
+              <br />
+
+              <label for="form-control"> Payment Method</label>
+              <select
+                v-model="sform.payment_method"
+                @change="get_schedule"
+                class="form-control"
+                :class="{ 'is-invalid': form.errors.has('p_type') }"
               >
-                <span aria-hidden="true">&times;</span>
-              </button>
+                <option value="on_visit">On Visit</option>
+                <option value="online">Online</option>
+              </select>
             </div>
-            <div class="modal-body">
-                <div v-if="Object.keys(selected_doc).length > 0">
-                <label for="form-control">Doctor Name : {{selected_doc.employee.first_name}}</label><br>
-                <label for="form-control">Doctor Fee : {{selected_doc.charge_pp}}</label><br>
-                <label for="form-control">Date : {{one_appointment.startDate}}</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              @click="payment_gatway_modal()"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              @click="submit_appointment()"
+              class="btn btn-primary"
+            >
+              Confirm Appointment
+            </button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- end model -->
+
+
+  </div>
 </template>
 
 <script>
 export default {
   created() {
     this.get_spec();
+    this.get_patient_by_user_id();
   },
+  props: ["user_id"],
   mounted() {
     this.get_doc_list();
     this.get_schedule();
+
+    $(this.$refs.appointment_model).on(
+      "hidden.bs.modal",
+      this.on_appointment_modal_close
+    );
   },
   data() {
     return {
@@ -158,22 +194,33 @@ export default {
         spec_id: "",
         name: "",
       }),
+
+      sform: new Form({
+        charge_pp: "",
+        payment_method: "",
+        schedule_id: "",
+        user_id: this.user_id,
+        status: "1",
+        p_id: "",
+      }),
+
       spec_data: {},
       doc_data: {},
+      patient_data: {},
 
       // calnder
-      selected_doc: {
 
-      },
-      one_appointment:{},
-
+      one_appointment: {},
+      selected_doc: {},
 
       showDate: new Date(),
       items: [],
     };
   },
   methods: {
-
+    on_appointment_modal_close: function () {
+      this.sform.reset();
+    },
     get_schedule: function () {
       axios
         .get("/api/appointment/get/" + this.selected_doc.employee_id)
@@ -210,7 +257,7 @@ export default {
       axios
         .get("/api/doctor/get_doc_list/" + this.form.spec_id)
         .then((response) => {
-        //   console.log(response);
+          //   console.log(response);
           if (response.status == 200) {
             this.doc_data = response.data;
           }
@@ -229,23 +276,62 @@ export default {
     // },
 
     appointment_item: function (data) {
-
-        this.id = data.id;
-
-        axios.get("/api/schedule/get_one_schedule/" + this.id)
-        .then((response)=>{
-            if(response.status == 200){
-                this.one_appointment = response.data;
-            }
-
+      this.sform.schedule_id = data.id;
+      this.sform.charge_pp = this.selected_doc.charge_pp;
+      this.sform.p_id = this.patient_data.id;
+      axios
+        .get("/api/schedule/get_one_schedule/" +  this.sform.schedule_id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.one_appointment = response.data;
+          }
         })
-        .catch((error)=>{
-            console.log(error);
+        .catch((error) => {
+          console.log(error);
         });
 
       $("#appointment_model").modal("show");
+    },
 
+    submit_appointment: function () {
+      this.sform
+        .post("/api/appointment/submit_appointment")
+        .then((response) => {
+          if (response.status == 200) {
 
+            swal.fire({
+              position: "middle",
+              icon: "success",
+              title: response.data.msg,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            // this.reset();
+            $("#appointment_model").modal("hide");
+            // window.location.href = 'view_appointment'
+            window.location.href = 'online_payment'
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    get_patient_by_user_id: function () {
+      axios
+        .get("/api/appointment/get_patient/" + this.user_id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.patient_data = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    payment_gatway_modal: function () {
+      $("#pay").modal("show");
     },
   },
 };

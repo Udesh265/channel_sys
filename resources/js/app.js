@@ -96,6 +96,8 @@ Vue.component('add-schedule-component', require('./components/schedule/AddSchedu
 Vue.component('add-doctor-speciality',require('./components/doctor/AddSpecialityComponent.vue').default);
 Vue.component('add-patient-online-component', require('./components/patient/AddpatientOnlineComponent.vue').default);
 Vue.component('new-appointment-component',require('./components/appointment/NewAppointmentComponent.vue').default);
+Vue.component('view-appointment-component',require('./components/appointment/ViewAppointmentComponent.vue').default);
+Vue.component('online-payment-component',require('./components/appointment/OnlinePaymentComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
