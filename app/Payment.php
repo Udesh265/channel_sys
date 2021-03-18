@@ -12,6 +12,7 @@ class Payment extends Model
         'type',
         'payment_status',
         'patient_id',
+
     ];
 
     public function appointment(){

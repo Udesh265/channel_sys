@@ -18,6 +18,13 @@
                     <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i>View Appointment</a></li>
                 </ul>
             </li>
+            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Lab Tests</a>
+                <ul>
+                    <li class="{{ $page_option['sub'] === 'new_appointment' ? 'active' : '' }}"><a
+                            href="{{ route('appointment.create') }}"><i class="fa fa-rocket"></i> Lab Test Appointment</a></li>
+                    <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i> Appointment</a></li>
+                </ul>
+            </li>
 
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Permissions & Users</a>
                 <ul>

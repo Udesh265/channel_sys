@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('appoitnment/view_appointment','AppointmentController@view_appointment')->name('appointment.view');
 
+    Route::get('appointment/pay_online/{payment_id}','AppointmentController@pay_online')->name('online_payment');
+
 
 
 

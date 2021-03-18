@@ -14,7 +14,7 @@
           <div
             class="card-body text-success border-bottom border-success border-w-5"
           >
-            <h2 class="text-center">{{ total_app_amount }}</h2>
+            <h2 class="text-center">{{ total_app_amount | currency }}</h2>
             <h6 class="text-center">Total Paid Amount (LKR)</h6>
           </div>
         </div>
@@ -24,7 +24,7 @@
           <div
             class="card-body text-danger border-bottom border-danger border-w-5"
           >
-            <h2 class="text-center">{{ panding_amount }}</h2>
+            <h2 class="text-center">{{ panding_amount | currency }}</h2>
             <h6 class="text-center">Waiting Appointments (LKR)</h6>
           </div>
         </div>
@@ -44,6 +44,8 @@
                   <th>Speciality</th>
                   <th>Doctor Name</th>
                   <th>Appointment Date</th>
+                  <th>Payment Status</th>
+                  <th>Type</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -52,6 +54,7 @@
                   class="zoom"
                   v-for="(app, index) in appointment_list"
                   :key="index"
+
                 >
                   <th scope="row">{{ app.id }}</th>
                   <td class="text-success">
@@ -61,6 +64,8 @@
                     {{ app.schedule.employee.first_name }}
                   </td>
                   <td class="text-info">{{ app.schedule.startDate }}</td>
+                   <td  class="text-info">{{ app.payment.payment_status }}</td>
+                    <td  class="text-info">{{ app.payment.type }}</td>
                   <td class="text-info">
                     <i
                       class="fa fa-trash text-danger icon-button mx-1"

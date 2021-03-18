@@ -138,11 +138,13 @@
                 v-model="sform.payment_method"
                 @change="get_schedule"
                 class="form-control"
-                :class="{ 'is-invalid': form.errors.has('p_type') }"
+                :class="{ 'is-invalid': sform.errors.has('payment_method') }"
               >
-                <option value="on_visit">On Visit</option>
-                <option value="online">Online</option>
+                <option value="On-Visit">On Visit</option>
+                <option value="Online">Online</option>
               </select>
+               <has-error :form="sform" field="payment_method"></has-error>
+
             </div>
           </div>
           <div class="modal-footer">
@@ -294,27 +296,58 @@ export default {
     },
 
     submit_appointment: function () {
-      this.sform
-        .post("/api/appointment/submit_appointment")
-        .then((response) => {
-          if (response.status == 200) {
+    if(this.sform.payment_method == "Online"){
 
-            swal.fire({
-              position: "middle",
-              icon: "success",
-              title: response.data.msg,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            // this.reset();
-            $("#appointment_model").modal("hide");
-            // window.location.href = 'view_appointment'
-            window.location.href = 'online_payment'
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        this.sform
+          .post("/api/appointment/submit_appointment")
+          .then((response) => {
+            if (response.status == 200) {
+
+              swal.fire({
+                position: "middle",
+                icon: "success",
+                title: response.data.msg,
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(() => {
+                  $("#appointment_model").modal("hide");
+                  let payment_id = response.data.data.payment.payment_id;
+
+                      window.location.href = '/appointment/pay_online/' + payment_id
+              })
+              // this.reset();
+              // window.location.href = 'online_payment'
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }else{
+                this.sform
+          .post("/api/appointment/submit_appointment")
+          .then((response) => {
+            if (response.status == 200) {
+
+              swal.fire({
+                position: "middle",
+                icon: "success",
+                title: response.data.msg,
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(() => {
+                  $("#appointment_model").modal("hide");
+                  let payment_id = response.data.data.payment.payment_id;
+
+                      window.location.href = 'view_appointment'
+              })
+              // this.reset();
+              // window.location.href = 'online_payment'
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
     },
 
     get_patient_by_user_id: function () {

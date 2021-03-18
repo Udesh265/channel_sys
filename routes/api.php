@@ -81,6 +81,7 @@ Route::group(['prefix' => 'appointment'], function () {
     Route::get('get_pending_pay/{p_id}','API\ApiAppointmentController@get_pending_payment');
     Route::get('get_appointment_list/{p_id}','API\ApiAppointmentController@get_appointment_list');
     Route::patch('del/{id}','API\ApiAppointmentController@delete_appointment');
+    Route::patch('online_payment/{pay_id}','API\ApiPaymentController@submit_payment');
 });
 
 Route::apiResource('employee','API\ApiEmployeeController');

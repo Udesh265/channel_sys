@@ -35,31 +35,17 @@ class ApiAppointmentController extends Controller
                 'payment_method' => ['required'],
             ]
         );
-
-        if ($validate_data['payment_method'] == 'online') {
-
             $data = Payment::create([
 
                 'amount' => $request->charge_pp,
                 'type' => $validate_data['payment_method'],
-                'payment_status' => 'Confirm',
+                'payment_status' => 'Pending',
                 'patient_id' => $request->p_id,
 
             ]);
             if (is_null($data)) return response()->json(['msg' => 'Failed to create payment, rolling back'], 400);
             $data->id;
-        } else {
-            $data = Payment::create([
 
-                'amount' => $request->charge_pp,
-                'type' => $validate_data['payment_method'],
-                'payment_status' => 'pending',
-                'patient_id' => $request->p_id,
-
-            ]);
-            if (is_null($data)) return response()->json(['msg' => 'Failed to create payment, rolling back'], 400);
-            $data->id;
-        }
 
         $appointment_data = Appointment::create([
             'schedule_id' => $request->schedule_id,
@@ -74,7 +60,7 @@ class ApiAppointmentController extends Controller
             return response()->json(['msg' => 'Failed to create appoitnment, rolling back'], 400);
         }
 
-            return response()->json(['msg' => 'Successfully create appoitnment'], 200);
+            return response()->json(['msg' => 'Successfully create appoitnment', 'data' => ['payment' => $appointment_data]], 200);
 
     }
 
@@ -107,6 +93,8 @@ class ApiAppointmentController extends Controller
         if (is_null($data)) return response()->json(['msg' => 'Failed to get list rolling back'], 400);
 
         foreach ($data as $app) {
+
+            $app->payment;
           $app->schedule->employee->doctor->speciality;
 
         }

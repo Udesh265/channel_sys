@@ -2,6 +2,6 @@
 
 @section('content')
 
-<online-payment-component :user_id = "{{ Auth::user()->id }}" />
+<online-payment-component :p_id="{{$payment_id}}" :user_id = "{{ Auth::user()->id }}" />
 
 @endsection

@@ -160,46 +160,61 @@
                           ></textarea>
                         </div>
                       </div>
-            <div v-if="form.job_id == 1">
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                  <label for="form-control"> <h6>For Doctors:</h6> </label>
-                </div>
-                <div class="form-group mt-2 row">
-                  <div class="col-sm-4 col-lg-4 col-md-4">
-                    <label for="form-control"> Speciality:</label>
-                    <select v-model="form.spec_id" class="form-control">
-                      <option
-                        v-for="(spec, index) in spec_data"
-                        :key="index"
-                        :value="spec.id"
-                      >
-                      {{ spec.name }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-sm-4 col-lg-4 col-md-4">
-                    <label for="form-control">Working Hopspital:</label>
-                    <input v-model="form.hospital" class="form-control" type="text" />
-                  </div>
-                  <div class="col-sm-4 col-lg-4 col-md-4">
-                    <label for="form-control"> Type:</label>
-                    <select
-                      id="exampleFormControlSelect1"
-                      v-model="form.doc_type"
-                      class="form-control"
-                    >
-                      <option value="1">Permenent Doctors</option>
-                      <option value="2">Visiting Doctors</option>
-                    </select>
-                  </div>
-                </div>
-                <div v-if="form.doc_type == 2" class="form-group mt-2 row">
-                  <div class="col-sm-4 col-lg-4 col-md-4">
-                    <label for="form-control">Charge per patient:</label>
-                    <input v-model="form.charge_pp" class="form-control" type="text" />
-                  </div>
-                </div>
-              </div>
+                      <div v-if="form.job_id == 1">
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                          <label for="form-control">
+                            <h6>For Doctors:</h6>
+                          </label>
+                        </div>
+                        <div class="form-group mt-2 row">
+                          <div class="col-sm-4 col-lg-4 col-md-4">
+                            <label for="form-control"> Speciality:</label>
+                            <select v-model="form.spec_id" class="form-control">
+                              <option
+                                v-for="(spec, index) in spec_data"
+                                :key="index"
+                                :value="spec.id"
+                              >
+                                {{ spec.name }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-sm-4 col-lg-4 col-md-4">
+                            <label for="form-control">Working Hopspital:</label>
+                            <input
+                              v-model="form.hospital"
+                              class="form-control"
+                              type="text"
+                            />
+                          </div>
+                          <div class="col-sm-4 col-lg-4 col-md-4">
+                            <label for="form-control"> Type:</label>
+                            <select
+                              id="exampleFormControlSelect1"
+                              v-model="form.doc_type"
+                              class="form-control"
+                            >
+                              <option value="1">Permenent Doctors</option>
+                              <option value="2">Visiting Doctors</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div
+                          v-if="form.doc_type == 2"
+                          class="form-group mt-2 row"
+                        >
+                          <div class="col-sm-4 col-lg-4 col-md-4">
+                            <label for="form-control"
+                              >Charge per patient:</label
+                            >
+                            <input
+                              v-model="form.charge_pp"
+                              class="form-control"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                      </div>
 
                       <button type="submit" class="btn btn-primary btn-lg">
                         Update
@@ -319,9 +334,14 @@ export default {
         email: "",
         nic: "",
         mobile: "",
-        job_type_id: "",
+        job_id: "",
+        spec_id: "",
+        hospital: "",
+        doc_type: "",
+        charge_pp: "",
       }),
 
+      spec_data: {},
       search_keyword: "",
       jobdata: {},
       emp_data: {},
@@ -388,6 +408,18 @@ export default {
           }
         });
     },
+    get_spec: function () {
+      axios
+        .get("/api/doctor/get_spec")
+        .then((response) => {
+          if (response.status == 200) {
+            this.spec_data = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
     get_job_list: function () {
       axios
@@ -405,7 +437,7 @@ export default {
     get_one_employee: function (emp) {
       this.one_emp_data = emp;
       $("#modelId1").modal("show");
-   //   axios
+      //   axios
       //     .get("/api/employee/getone/" + id)
       //     .then((response) => {
       //       if (response.status == 200) {
@@ -415,7 +447,7 @@ export default {
       // .catch((error) => {
       //   console.log(error);
 
-   // });
+      // });
     },
 
     update_emp_load_modal: function (emp_data) {

@@ -38,6 +38,19 @@ class AppointmentController extends Controller
 
     }
 
+    public function pay_online($payment_id){
+
+        $payment_id = $payment_id;
+        $page_option = ['main' => 'online_pay', 'sub' => 'pay_online'];
+        $page_name = "Online Payment";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'Online Payment', 'url' => '#'],
+        ];
+
+        return view('page.appointment.online_payment', compact('page_name', 'breadcrums', 'page_option', 'payment_id'));
+    }
+
     public function index()
     {
         //

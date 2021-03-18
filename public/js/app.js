@@ -3513,6 +3513,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_spec();
@@ -3615,23 +3617,45 @@ __webpack_require__.r(__webpack_exports__);
       $("#appointment_model").modal("show");
     },
     submit_appointment: function submit_appointment() {
-      this.sform.post("/api/appointment/submit_appointment").then(function (response) {
-        if (response.status == 200) {
-          swal.fire({
-            position: "middle",
-            icon: "success",
-            title: response.data.msg,
-            showConfirmButton: false,
-            timer: 1500
-          }); // this.reset();
-
-          $("#appointment_model").modal("hide"); // window.location.href = 'view_appointment'
-
-          window.location.href = 'online_payment';
-        }
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      if (this.sform.payment_method == "Online") {
+        this.sform.post("/api/appointment/submit_appointment").then(function (response) {
+          if (response.status == 200) {
+            swal.fire({
+              position: "middle",
+              icon: "success",
+              title: response.data.msg,
+              showConfirmButton: false,
+              timer: 1500
+            }).then(function () {
+              $("#appointment_model").modal("hide");
+              var payment_id = response.data.data.payment.payment_id;
+              window.location.href = '/appointment/pay_online/' + payment_id;
+            }); // this.reset();
+            // window.location.href = 'online_payment'
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else {
+        this.sform.post("/api/appointment/submit_appointment").then(function (response) {
+          if (response.status == 200) {
+            swal.fire({
+              position: "middle",
+              icon: "success",
+              title: response.data.msg,
+              showConfirmButton: false,
+              timer: 1500
+            }).then(function () {
+              $("#appointment_model").modal("hide");
+              var payment_id = response.data.data.payment.payment_id;
+              window.location.href = 'view_appointment';
+            }); // this.reset();
+            // window.location.href = 'online_payment'
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     get_patient_by_user_id: function get_patient_by_user_id() {
       var _this5 = this;
@@ -3837,7 +3861,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["p_id"],
+  mounted: function mounted() {
+    console.log(this.p_id);
+  },
+  data: function data() {
+    return {
+      form: new Form({
+        name: "",
+        card: "",
+        month: "",
+        year: "",
+        cvv: "",
+        pay_id: this.p_id
+      })
+    };
+  },
+  methods: {
+    submit_payment: function submit_payment() {
+      this.id = this.form.pay_id;
+      console.log(this.id);
+      axios.patch("/api/appointment/online_payment/" + this.id).then(function (response) {
+        if (response.status == 200) {
+          swal.fire({
+            position: "middle",
+            icon: "success",
+            title: response.data.msg,
+            showConfirmButton: false,
+            timer: 1500
+          }).then(function () {
+            window.location.href = 'view_appointment';
+          });
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -3850,6 +3915,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5193,6 +5263,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_job_list();
@@ -5210,8 +5295,13 @@ __webpack_require__.r(__webpack_exports__);
         email: "",
         nic: "",
         mobile: "",
-        job_type_id: ""
+        job_id: "",
+        spec_id: "",
+        hospital: "",
+        doc_type: "",
+        charge_pp: ""
       }),
+      spec_data: {},
       search_keyword: "",
       jobdata: {},
       emp_data: {},
@@ -5268,12 +5358,23 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    get_job_list: function get_job_list() {
+    get_spec: function get_spec() {
       var _this4 = this;
+
+      axios.get("/api/doctor/get_spec").then(function (response) {
+        if (response.status == 200) {
+          _this4.spec_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_job_list: function get_job_list() {
+      var _this5 = this;
 
       axios.get("/api/jobtype").then(function (response) {
         if (response.status == 200) {
-          _this4.jobdata = response.data;
+          _this5.jobdata = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
@@ -5296,7 +5397,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form.fill(emp_data);
     },
     update_emp: function update_emp() {
-      var _this5 = this;
+      var _this6 = this;
 
       swal.fire({
         title: "Are you sure?",
@@ -5308,11 +5409,11 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Yes, update it!"
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this5.form.patch("/api/employee/update/" + _this5.form.id).then(function (response) {
+          _this6.form.patch("/api/employee/update/" + _this6.form.id).then(function (response) {
             if (response.status == 200) {
               swal.fire("Updated!", "Your file has been Updated.", "success");
 
-              _this5.get_all_emp();
+              _this6.get_all_emp();
 
               $("#modelId").modal("hide");
             }
@@ -71484,80 +71585,91 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 Object.keys(_vm.selected_doc).length > 0
-                  ? _c("div", [
-                      _c("h5", [
-                        _vm._v(
-                          "\n              Dear Customer,Your Appointment will be ready with Dr." +
-                            _vm._s(_vm.selected_doc.employee.first_name) +
-                            "\n              at " +
-                            _vm._s(_vm.one_appointment.startDate) +
-                            " .\n            "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("h6", [
-                        _vm._v(
-                          "\n              Please Select the payment method and confirm your appointment.\n            "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("label", { attrs: { for: "form-control" } }, [
-                        _vm._v(" Payment Method")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.sform.payment_method,
-                              expression: "sform.payment_method"
+                  ? _c(
+                      "div",
+                      [
+                        _c("h5", [
+                          _vm._v(
+                            "\n              Dear Customer,Your Appointment will be ready with Dr." +
+                              _vm._s(_vm.selected_doc.employee.first_name) +
+                              "\n              at " +
+                              _vm._s(_vm.one_appointment.startDate) +
+                              " .\n            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("h6", [
+                          _vm._v(
+                            "\n              Please Select the payment method and confirm your appointment.\n            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("label", { attrs: { for: "form-control" } }, [
+                          _vm._v(" Payment Method")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.sform.payment_method,
+                                expression: "sform.payment_method"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.sform.errors.has(
+                                "payment_method"
+                              )
+                            },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.sform,
+                                    "payment_method",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                _vm.get_schedule
+                              ]
                             }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.form.errors.has("p_type")
                           },
-                          on: {
-                            change: [
-                              function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.sform,
-                                  "payment_method",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                              _vm.get_schedule
-                            ]
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "on_visit" } }, [
-                            _vm._v("On Visit")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "online" } }, [
-                            _vm._v("Online")
-                          ])
-                        ]
-                      )
-                    ])
+                          [
+                            _c("option", { attrs: { value: "On-Visit" } }, [
+                              _vm._v("On Visit")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Online" } }, [
+                              _vm._v("Online")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.sform, field: "payment_method" }
+                        })
+                      ],
+                      1
+                    )
                   : _vm._e()
               ]),
               _vm._v(" "),
@@ -71653,277 +71765,381 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-12" }, [
-          _c("div", { staticClass: "p-5" }, [
-            _c(
-              "ul",
-              {
-                staticClass:
-                  "nav bg-light nav-pills rounded-pill nav-fill mb-3",
-                attrs: { role: "tablist" }
-              },
-              [
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link active rounded-pill",
-                      attrs: { "data-toggle": "pill", href: "#nav-tab-card" }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-credit-card" }),
-                      _vm._v(
-                        "\n                        Credit Card\n                      "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link rounded-pill",
-                      attrs: { "data-toggle": "pill", href: "#nav-tab-paypal" }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-paypal" }),
-                      _vm._v(
-                        "\n                        Paypal\n                      "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link rounded-pill",
-                      attrs: { "data-toggle": "pill", href: "#nav-tab-bank" }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-university" }),
-                      _vm._v(
-                        "\n                        Bank Transfer\n                      "
-                      )
-                    ]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "tab-content" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "tab-pane fade show active",
-                  attrs: { id: "nav-tab-card" }
-                },
-                [
-                  _c("form", { attrs: { role: "form" } }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "username" } }, [
-                        _vm._v("Full name (on the card)")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "username",
-                          placeholder: "Jassa"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "cardNumber" } }, [
-                        _vm._v("Card number")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "input-group" }, [
+  return _c("div", [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "p-5" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "tab-content" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade show active",
+                    attrs: { id: "nav-tab-card" }
+                  },
+                  [
+                    _c("form", { attrs: { role: "form" } }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "username" } }, [
+                          _vm._v("Full name (on the card)")
+                        ]),
+                        _vm._v(" "),
                         _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            name: "cardNumber",
-                            placeholder: "Your card number"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "input-group-append" }, [
-                          _c(
-                            "span",
-                            { staticClass: "input-group-text text-muted" },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-credit-card mx-1"
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-money-check mx-1"
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-money-check-alt mx-1"
-                              })
-                            ]
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-sm-8" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", [
-                            _c("span", { staticClass: "hidden-xs" }, [
-                              _vm._v("Expiration")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "input-group" }, [
-                            _c("input", {
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "number",
-                                placeholder: "MM",
-                                name: "",
-                                required: ""
+                            name: "username",
+                            placeholder: "Jassa"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
                               }
-                            }),
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "cardNumber" } }, [
+                          _vm._v("Card number")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.card,
+                                expression: "form.card"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "cardNumber",
+                              placeholder: "Your card number"
+                            },
+                            domProps: { value: _vm.form.card },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "card", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(1)
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-sm-8" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _vm._m(2),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.month,
+                                    expression: "form.month"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "number",
+                                  placeholder: "MM",
+                                  name: "",
+                                  required: ""
+                                },
+                                domProps: { value: _vm.form.month },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.form,
+                                      "month",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.year,
+                                    expression: "form.year"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "number",
+                                  placeholder: "YY",
+                                  name: "",
+                                  required: ""
+                                },
+                                domProps: { value: _vm.form.year },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.form,
+                                      "year",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-4" }, [
+                          _c("div", { staticClass: "form-group mb-4" }, [
+                            _vm._m(3),
                             _vm._v(" "),
                             _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.cvv,
+                                  expression: "form.cvv"
+                                }
+                              ],
                               staticClass: "form-control",
-                              attrs: {
-                                type: "number",
-                                placeholder: "YY",
-                                name: "",
-                                required: ""
+                              attrs: { type: "text", required: "" },
+                              domProps: { value: _vm.form.cvv },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(_vm.form, "cvv", $event.target.value)
+                                }
                               }
                             })
                           ])
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-4" }, [
-                        _c("div", { staticClass: "form-group mb-4" }, [
-                          _c(
-                            "label",
-                            {
-                              attrs: {
-                                title:
-                                  "Three-digits code on the back of your card"
-                              }
-                            },
-                            [
-                              _vm._v("CVV\n                                "),
-                              _c("i", { staticClass: "fa fa-question-circle" })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass: "form-control",
-                            attrs: { type: "text", required: "" }
-                          })
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "subscribe btn btn-primary btn-block rounded-pill shadow-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                          Confirm\n                        "
-                        )
-                      ]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "tab-pane fade",
-                  attrs: { id: "nav-tab-paypal" }
-                },
-                [
-                  _c("p", [_vm._v("Paypal is easiest way to pay online")]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary rounded-pill",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fa fa-paypal mr-2" }),
-                        _vm._v(" Log into my Paypal\n                        ")
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-muted" }, [
-                    _vm._v(
-                      "\n                        Lorem ipsum dolor sit amet, consectetur adipisicing\n                        elit, sed do eiusmod tempor incididunt ut labore et\n                        dolore magna aliqua.\n                      "
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "tab-pane fade", attrs: { id: "nav-tab-bank" } },
-                [
-                  _c("h6", [_vm._v("Bank account details")]),
-                  _vm._v(" "),
-                  _c("dl", [
-                    _c("dt", [_vm._v("Bank")]),
-                    _vm._v(" "),
-                    _c("dd", [_vm._v("THE WORLD BANK")])
-                  ]),
-                  _vm._v(" "),
-                  _c("dl", [
-                    _c("dt", [_vm._v("Account number")]),
-                    _vm._v(" "),
-                    _c("dd", [_vm._v("7775877975")])
-                  ]),
-                  _vm._v(" "),
-                  _c("dl", [
-                    _c("dt", [_vm._v("IBAN")]),
-                    _vm._v(" "),
-                    _c("dd", [_vm._v("CZ7775877975656")])
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-muted" }, [
-                    _vm._v(
-                      "\n                        Lorem ipsum dolor sit amet, consectetur adipisicing\n                        elit, sed do eiusmod tempor incididunt ut labore et\n                        dolore magna aliqua.\n                      "
-                    )
-                  ])
-                ]
-              )
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-block",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.submit_payment()
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Confirm Payment\n                  "
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(4),
+                _vm._v(" "),
+                _vm._m(5)
+              ])
             ])
           ])
         ])
       ])
     ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass: "nav bg-light nav-pills rounded-pill nav-fill mb-3",
+        attrs: { role: "tablist" }
+      },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active rounded-pill",
+              attrs: { "data-toggle": "pill", href: "#nav-tab-card" }
+            },
+            [
+              _c("i", { staticClass: "fa fa-credit-card" }),
+              _vm._v("\n                  Credit Card\n                ")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link rounded-pill",
+              attrs: { "data-toggle": "pill", href: "#nav-tab-paypal" }
+            },
+            [
+              _c("i", { staticClass: "fa fa-paypal" }),
+              _vm._v("\n                  Paypal\n                ")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link rounded-pill",
+              attrs: { "data-toggle": "pill", href: "#nav-tab-bank" }
+            },
+            [
+              _c("i", { staticClass: "fa fa-university" }),
+              _vm._v("\n                  Bank Transfer\n                ")
+            ]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("span", { staticClass: "input-group-text text-muted" }, [
+        _c("i", { staticClass: "fa fa-credit-card mx-1" }),
+        _vm._v(" "),
+        _c("i", { staticClass: "fa fa-money-check mx-1" }),
+        _vm._v(" "),
+        _c("i", { staticClass: "fa fa-money-check-alt mx-1" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _c("span", { staticClass: "hidden-xs" }, [_vm._v("Expiration")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { attrs: { title: "Three-digits code on the back of your card" } },
+      [
+        _vm._v("CVV\n                          "),
+        _c("i", { staticClass: "fa fa-question-circle" })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "tab-pane fade", attrs: { id: "nav-tab-paypal" } },
+      [
+        _c("p", [_vm._v("Paypal is easiest way to pay online")]),
+        _vm._v(" "),
+        _c("p", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary rounded-pill",
+              attrs: { type: "button" }
+            },
+            [
+              _c("i", { staticClass: "fa fa-paypal mr-2" }),
+              _vm._v(" Log into my Paypal\n                  ")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-muted" }, [
+          _vm._v(
+            "\n                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,\n                  sed do eiusmod tempor incididunt ut labore et dolore magna\n                  aliqua.\n                "
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "tab-pane fade", attrs: { id: "nav-tab-bank" } },
+      [
+        _c("h6", [_vm._v("Bank account details")]),
+        _vm._v(" "),
+        _c("dl", [
+          _c("dt", [_vm._v("Bank")]),
+          _vm._v(" "),
+          _c("dd", [_vm._v("Sampath Bank - Kandy Brach")])
+        ]),
+        _vm._v(" "),
+        _c("dl", [
+          _c("dt", [_vm._v("Account number")]),
+          _vm._v(" "),
+          _c("dd", [_vm._v("117775877975")])
+        ]),
+        _vm._v(" "),
+        _c("dl", [
+          _c("dt", [_vm._v("IBAN")]),
+          _vm._v(" "),
+          _c("dd", [_vm._v("CZ7775877975656")])
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-muted" }, [
+          _vm._v(
+            "\n                  Please send your bank slip to our email.\n                  payments@nawaminichanneling.com\n                "
+          )
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -71980,7 +72196,7 @@ var render = function() {
             },
             [
               _c("h2", { staticClass: "text-center" }, [
-                _vm._v(_vm._s(_vm.total_app_amount))
+                _vm._v(_vm._s(_vm._f("currency")(_vm.total_app_amount)))
               ]),
               _vm._v(" "),
               _c("h6", { staticClass: "text-center" }, [
@@ -72001,7 +72217,7 @@ var render = function() {
             },
             [
               _c("h2", { staticClass: "text-center" }, [
-                _vm._v(_vm._s(_vm.panding_amount))
+                _vm._v(_vm._s(_vm._f("currency")(_vm.panding_amount)))
               ]),
               _vm._v(" "),
               _c("h6", { staticClass: "text-center" }, [
@@ -72051,6 +72267,14 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.payment.payment_status))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.payment.type))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
                       _c("i", {
                         staticClass: "fa fa-trash text-danger icon-button mx-1",
                         on: {
@@ -72095,6 +72319,10 @@ var staticRenderFns = [
         _c("th", [_vm._v("Doctor Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Appointment Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Payment Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
@@ -74023,9 +74251,9 @@ var render = function() {
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                    " +
+                                                    "\n                              " +
                                                       _vm._s(spec.name) +
-                                                      "\n                    "
+                                                      "\n                            "
                                                   )
                                                 ]
                                               )
