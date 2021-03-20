@@ -24,4 +24,9 @@ class Appointment extends Model
         return $this->belongsTo(Schedule::class);
     }
 
+    public function token()
+    {
+        return $this->hasOne(Token::class);
+    }
+
 }
