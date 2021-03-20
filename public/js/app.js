@@ -3894,7 +3894,7 @@ __webpack_require__.r(__webpack_exports__);
             showConfirmButton: false,
             timer: 1500
           }).then(function () {
-            window.location.href = 'view_appointment';
+            window.location.href = "http://dev.cs/appoitnment/view_appointment";
           });
         }
       })["catch"](function (error) {

@@ -213,7 +213,7 @@ export default {
               })
               .then(() => {
 
-                window.location.href = 'view_appointment';
+                window.location.href = "http://dev.cs/appoitnment/view_appointment";
               });
           }
         })
