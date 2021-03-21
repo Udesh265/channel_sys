@@ -3999,6 +3999,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
   created: function created() {
@@ -4014,6 +4040,7 @@ __webpack_require__.r(__webpack_exports__);
       total_app_amount: {},
       panding_amount: {},
       appointment_list: {},
+      selected_appointment: {},
       vform: new Form({
         p_id: "",
         app_id: ""
@@ -4105,6 +4132,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    modal_appointment_view: function modal_appointment_view(app) {
+      $("#modal_app_view").modal("show");
+      this.selected_appointment = app;
     }
   }
 });
@@ -72243,7 +72274,7 @@ var render = function() {
                 _vm._l(_vm.appointment_list, function(app, index) {
                   return _c("tr", { key: index, staticClass: "zoom" }, [
                     _c("th", { attrs: { scope: "row" } }, [
-                      _vm._v(_vm._s(app.id))
+                      _vm._v(_vm._s(app.token.token))
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-success" }, [
@@ -72282,6 +72313,15 @@ var render = function() {
                             return _vm.delete_app(app.id)
                           }
                         }
+                      }),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "fa fa-eye text-success icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.modal_appointment_view(app)
+                          }
+                        }
                       })
                     ])
                   ])
@@ -72292,7 +72332,71 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modal_app_view",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalCenterTitle",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm.selected_appointment.hasOwnProperty("schedule")
+                  ? _c("h5", [
+                      _vm._v(
+                        "Your Appointment at : " +
+                          _vm._s(_vm.selected_appointment.schedule.startDate)
+                      )
+                    ])
+                  : _vm._e(),
+                _c("br"),
+                _vm._v(" "),
+                _vm.selected_appointment.hasOwnProperty("schedule")
+                  ? _c("h5", [
+                      _vm._v(
+                        "Doctor : " +
+                          _vm._s(
+                            _vm.selected_appointment.schedule.employee
+                              .first_name
+                          )
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm.selected_appointment.hasOwnProperty("token")
+                  ? _c("h3", { staticClass: "text-center" }, [
+                      _vm._v(
+                        "TOKEN ID: " +
+                          _vm._s(_vm.selected_appointment.token.token)
+                      )
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -72312,7 +72416,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("#")]),
+        _c("th", [_vm._v("Token ID")]),
         _vm._v(" "),
         _c("th", [_vm._v("Speciality")]),
         _vm._v(" "),
@@ -72326,6 +72430,54 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal-header",
+        staticStyle: { "background-color": "#001638" }
+      },
+      [
+        _c(
+          "h5",
+          { staticClass: "modal-title", staticStyle: { color: "white" } },
+          [_vm._v("Doctor Appointment")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            staticStyle: { color: "white" },
+            attrs: {
+              type: "button",
+              "data-dismiss": "modal",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
     ])
   }
 ]

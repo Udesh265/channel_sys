@@ -40,7 +40,7 @@
             <table class="table font-w-600 mb-0">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>Token ID</th>
                   <th>Speciality</th>
                   <th>Doctor Name</th>
                   <th>Appointment Date</th>
@@ -56,7 +56,7 @@
                   :key="index"
 
                 >
-                  <th scope="row">{{ app.id }}</th>
+                  <th scope="row">{{ app.token.token }}</th>
                   <td class="text-success">
                     {{ app.schedule.employee.doctor.speciality.name }}
                   </td>
@@ -71,6 +71,10 @@
                       class="fa fa-trash text-danger icon-button mx-1"
                       @click="delete_app(app.id)"
                     ></i>
+                      <i
+                      class="fa fa-eye text-success icon-button mx-1"
+                      @click="modal_appointment_view(app)"
+                    ></i>
                   </td>
                 </tr>
               </tbody>
@@ -78,6 +82,28 @@
           </div>
         </div>
       </div>
+    </div>
+    <!-- appoitnment view modal start -->
+    <!-- Modal -->
+    <div class="modal fade" id="modal_app_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#001638 ">
+                    <h5 class="modal-title" style="color:white">Doctor Appointment</h5>
+                        <button style="color:white" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <h5  v-if="selected_appointment.hasOwnProperty('schedule')">Your Appointment at : {{ selected_appointment.schedule.startDate }}</h5><br>
+                    <h5 v-if="selected_appointment.hasOwnProperty('schedule')">Doctor : {{ selected_appointment.schedule.employee.first_name }}</h5>
+                    <br><h3 class="text-center" v-if="selected_appointment.hasOwnProperty('token')">TOKEN ID: {{ selected_appointment.token.token }}</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </template>
@@ -100,6 +126,9 @@ export default {
       total_app_amount: {},
       panding_amount: {},
       appointment_list: {},
+      selected_appointment:{},
+
+
 
       vform: new Form({
         p_id: "",
@@ -204,9 +233,19 @@ export default {
         });
 
   },
+
+  modal_appointment_view: function(app){
+      $("#modal_app_view").modal("show");
+      this.selected_appointment = app;
+
+
+  },
+
   },
 };
 </script>
 
 <style>
 </style>
+
+
