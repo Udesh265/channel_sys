@@ -24,12 +24,12 @@ class HomeController extends Controller
     public function index()
     {
         $page_option = ['main' => 'dash', 'sub' => 'dash'];
-        $page_name = "Dashboard";
+        $page_name = "Patient Dashboard";
         $breadcrums = [
             ['name' => 'Home', 'url' => '#'],
             ['name' => 'Dashboard', 'url' => '#'],
         ];
 
-        return view('home', compact('page_name', 'breadcrums','page_option'));
+        return view('patient_dashboard', compact('page_name', 'breadcrums','page_option'));
     }
 }
