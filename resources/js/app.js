@@ -8,6 +8,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// Permission Mixins
+import Permission from "./mixins/Permission.vue"
+Vue.mixin(Permission);
 
 //vForms
 import { Form, HasError, AlertError } from 'vform';
@@ -80,7 +83,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('patient-dashboard-component', require('./components/patient/PatientDashboardComponent.vue').default);
+Vue.component('dashboard-component', require('./components/dashboard/Dashbaord.vue').default);
 
 //Permission Components
 Vue.component('permission-component', require('./components/PermissionComponent.vue').default);

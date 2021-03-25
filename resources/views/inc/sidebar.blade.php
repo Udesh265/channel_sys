@@ -26,8 +26,18 @@
                 </ul>
             </li>
 
+            @if(Auth::user()->can('user_management_create') || Auth::user()->can('user_management_view') ||
+            Auth::user()->can('user_management_update')|| Auth::user()->can('user__management_delete') ||
+            Auth::user()->can('role_management_create') || Auth::user()->can('role_management_view') ||
+            Auth::user()->can('role_management_update')|| Auth::user()->can('role_management_delete')
+            )
+
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Permissions & Users</a>
                 <ul>
+                    @if(  Auth::user()->can('role_management_management_create') || Auth::user()->can('role_management_view') ||
+                    Auth::user()->can('role_management_update')|| Auth::user()->can('role_management_delete')
+                    )
+
                     <li class="dropdown {{ $page_option['main'] === 'permission' ? 'active' : '' }}"><a href="#"><i
                                 class="fas fa-sitemap"></i>Roles & Permissions</a>
                         <ul class="sub-menu">
@@ -36,6 +46,9 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                    @if((Auth::user()->can('user_management_create') || Auth::user()->can('user_management_view') ||
+                    Auth::user()->can('user_management_update')|| Auth::user()->can('user_management_delete')))
                     <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
                                 class="fas fa-user-tie"></i> Users</a>
                         <ul class="sub-menu">
@@ -47,8 +60,14 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
                 </ul>
             </li>
+            @endif
+
+
+            @if(Auth::user()->can('employee_management_create') || Auth::user()->can('employee_management_view') ||
+            Auth::user()->can('employee_management_update')|| Auth::user()->can('employee_management_delete'))
 
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Employee Management</a>
                 <ul>
@@ -80,6 +99,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Patient Management</a>
                 <ul>
                     <li class="dropdown {{ $page_option['main'] === 'patient' ? 'active' : '' }}"><a href="#"><i
