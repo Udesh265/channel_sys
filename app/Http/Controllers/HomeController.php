@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $page_option = ['main' => 'dash', 'sub' => 'dash'];
-        $page_name = "Patient Dashboard";
+        $page_name = "Dashboard";
         $breadcrums = [
             ['name' => 'Home', 'url' => '#'],
             ['name' => 'Dashboard', 'url' => '#'],

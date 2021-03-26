@@ -1,5 +1,6 @@
 <?php
 
+use App\JobType;
 use App\Photo;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -43,6 +44,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'dashboard_management_update']);
         Permission::create(['name' => 'dashboard_management_delete']);
 
+        Permission::create(['name' => 'doctordash_management_create']);
+        Permission::create(['name' => 'doctordash_management_view']);
+        Permission::create(['name' => 'doctordash_management_update']);
+        Permission::create(['name' => 'doctordash_management_delete']);
+
 
 
 
@@ -60,6 +66,10 @@ class PermissionSeeder extends Seeder
             'password' => 'password',
         ]);
         $supermin->syncRoles($supermin_role);
+
+        $data = JobType::create([
+            'name' => 'Doctor',
+        ]);
 
     }
 }

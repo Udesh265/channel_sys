@@ -33,6 +33,7 @@ class ApiUserController extends Controller
     public function assign_emp(Request $request){
 
         // return $request;
+        $role = Role::find($request->role_id);
 
         $emp = Employee::find($request->emp_id);
 
@@ -42,6 +43,8 @@ class ApiUserController extends Controller
             'password' => $request->password,
             'is_active' => 1,
         ]);
+
+        $user->syncRoles($role);
 
         $emp->user_id = $user->id;
         $emp->save();

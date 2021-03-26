@@ -3032,11 +3032,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             "delete": false
           }
         },
-        patient_dashboard: {
+        patientdashboard: {
           data: {
             all: false,
-            name: "Patient Dashboard",
+            name: "Patient Dashbaord",
             phrase: "dashboard_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        doctordashboard: {
+          data: {
+            all: false,
+            name: "Doctor Dashbaord",
+            phrase: "doctordash_management_"
           },
           permissions: {
             create: false,
@@ -3072,7 +3085,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   this.no_prev_permissions++;
                   key = slug[0];
                   value = slug[2];
-                  this.permissions[key].permissions[value] = true;
+                  this.permissions[key].permissions[value] = true; //   console.log(prev_permissions[i].name);
 
                   if (this.permissions[key].permissions.create == true && this.permissions[key].permissions.view == true && this.permissions[key].permissions.update == true && this.permissions[key].permissions["delete"] == true) {
                     this.permissions[key].data.all = true;
@@ -4047,6 +4060,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4070,6 +4084,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -72543,7 +72566,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [_vm.$can("dashboard_management_view") ? _c("PatientDash") : _vm._e()],
+    [
+      _vm.$can("dashboard_management_view") ? _c("PatientDash") : _vm._e(),
+      _vm._v(" "),
+      _vm.$can("doctordash_management_view") ? _c("DoctorDash") : _vm._e()
+    ],
     1
   )
 }
@@ -72569,9 +72596,34 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    fddfdf\n")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-9" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "button", value: "" }
+            })
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

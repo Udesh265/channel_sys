@@ -2,6 +2,7 @@
   <div>
 
       <PatientDash v-if="$can('dashboard_management_view')" />
+      <DoctorDash v-if="$can('doctordash_management_view')" />
 
   </div>
 </template>

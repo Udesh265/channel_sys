@@ -126,6 +126,8 @@ class ApiRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return response()->json($request, 400);
+
         $validated_data = $request->validate([
             'name' => ['required', 'unique:roles,name,' . $id]
         ]);

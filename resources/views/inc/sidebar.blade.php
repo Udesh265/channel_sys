@@ -100,6 +100,9 @@
                 </ul>
             </li>
             @endif
+
+            @if(Auth::user()->can('patient_management_create') || Auth::user()->can('patient_management_view') ||
+            Auth::user()->can('patient_management_update')|| Auth::user()->can('patient_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Patient Management</a>
                 <ul>
                     <li class="dropdown {{ $page_option['main'] === 'patient' ? 'active' : '' }}"><a href="#"><i
@@ -130,6 +133,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Schedule Management</a>
                 <ul>

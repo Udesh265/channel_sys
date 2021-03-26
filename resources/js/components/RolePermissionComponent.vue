@@ -270,10 +270,10 @@ export default {
             delete: false,
           },
         },
-        patient_dashboard: {
+        patientdashboard: {
           data: {
             all: false,
-            name: "Patient Dashboard",
+            name: "Patient Dashbaord",
             phrase: "dashboard_management_",
           },
           permissions: {
@@ -283,6 +283,21 @@ export default {
             delete: false,
           },
         },
+        doctordashboard: {
+          data: {
+            all: false,
+            name: "Doctor Dashbaord",
+            phrase: "doctordash_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+
       },
     };
   },
@@ -304,6 +319,7 @@ export default {
           let value = slug[2];
 
           this.permissions[key].permissions[value] = true;
+        //   console.log(prev_permissions[i].name);
 
           if (
             this.permissions[key].permissions.create == true &&
