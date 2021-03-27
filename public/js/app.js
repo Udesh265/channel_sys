@@ -4099,6 +4099,229 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -72596,30 +72819,394 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "col-12" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mt-3" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c("div", { staticClass: "card shadow bg-white rounded" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("table", { staticClass: "table table-striped" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("tbody", [
+                    _c("tr", { staticClass: "zoom" }, [
+                      _c("td", [
+                        _vm._v(
+                          "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                      elit. Veniam possimus sed laborum, atque at praesentium\n                      itaque magnam minus magni, recusandae corrupti nemo,\n                      error voluptatem accusantium consequuntur quam iusto qui\n                      deserunt?\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("2021-08-31")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("i", {
+                          staticClass:
+                            "fa fa-eye text-success icon-button mx-1",
+                          on: {
+                            click: function($event) {
+                              return _vm.modal_appointment_view(_vm.app)
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", { staticClass: "zoom" }, [
+                      _c("td", [
+                        _vm._v(
+                          "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                      elit. Veniam possimus sed laborum, atque at praesentium\n                      itaque magnam minus magni, recusandae corrupti nemo,\n                      error voluptatem accusantium consequuntur quam iusto qui\n                      deserunt?\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("2021-08-31")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("i", {
+                          staticClass:
+                            "fa fa-eye text-success icon-button mx-1",
+                          on: {
+                            click: function($event) {
+                              return _vm.modal_appointment_view(_vm.app)
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("td", [
+                        _vm._v(
+                          "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                      elit. Veniam possimus sed laborum, atque at praesentium\n                      itaque magnam minus magni, recusandae corrupti nemo,\n                      error voluptatem accusantium consequuntur quam iusto qui\n                      deserunt?\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("2021-08-31")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("i", {
+                          staticClass:
+                            "fa fa-eye text-success icon-button mx-1",
+                          on: {
+                            click: function($event) {
+                              return _vm.modal_appointment_view(_vm.app)
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mt-3" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c("div", { staticClass: "card shadow bg-white rounded" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _vm._m(4),
+                _vm._v(" "),
+                _c("table", { staticClass: "table table-striped" }, [
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _c("tbody", [
+                    _c("tr", { staticClass: "zoom" }, [
+                      _c("td", [
+                        _vm._v(
+                          "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("2021-08-31")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("i", {
+                          staticClass:
+                            "fa fa-eye text-success icon-button mx-1",
+                          on: {
+                            click: function($event) {
+                              return _vm.modal_appointment_view(_vm.app)
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("td", [
+                        _vm._v(
+                          "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("2021-08-31")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("i", {
+                          staticClass:
+                            "fa fa-eye text-success icon-button mx-1",
+                          on: {
+                            click: function($event) {
+                              return _vm.modal_appointment_view(_vm.app)
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "col-12" }, [
+    return _c("div", { staticClass: "card" }, [
+      _c("img", {
+        staticClass: "card-img-top",
+        attrs: { src: "holder.js/100x180/", alt: "" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-9" }, [
             _c("input", {
               staticClass: "form-control",
-              attrs: { type: "text" }
+              attrs: { type: "text", placeholder: "Enter Barcode ID or NIC" }
             })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-3" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "button", value: "" }
-            })
+            _c(
+              "button",
+              {
+                staticClass: "form-control btn btn-success",
+                attrs: { type: "button" }
+              },
+              [_vm._v("\n              Search Patient\n            ")]
+            )
           ])
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-3" }, [
+      _c("div", { staticClass: "col-5" }, [
+        _c("div", { staticClass: "card bg-white" }, [
+          _c("img", {
+            staticClass: "card-img-top",
+            attrs: { src: "holder.js/100x180/", alt: "" }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body border-left border-success border-w-4" },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-9" }, [
+                  _c("h5", [_vm._v("Patient Data")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mt-3" }, [
+                _c("div", { staticClass: "col-3" }, [
+                  _c("h6", [_vm._v("Name")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-8" }, [
+                  _c("h6", [_vm._v("D.M.Udeshika Nilantha")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mt-2" }, [
+                _c("div", { staticClass: "col-3" }, [
+                  _c("h6", [_vm._v("Address")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-8" }, [
+                  _c("h6", [_vm._v("Kandy")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mt-2" }, [
+                _c("div", { staticClass: "col-3" }, [
+                  _c("h6", [_vm._v("Age")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-8" }, [_c("h6", [_vm._v("26")])])
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-7" }, [
+        _c(
+          "div",
+          {
+            staticClass: "card bg-white rounded",
+            staticStyle: { height: "168px" }
+          },
+          [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: { src: "holder.js/100x180/", alt: "" }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "card-body border-left border-success border-w-4"
+              },
+              [
+                _c("div", { staticClass: "row mb-3" }, [
+                  _c("div", { staticClass: "col-9" }, [
+                    _c("h5", [_vm._v("Biometric Data")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "form-control btn btn-primary",
+                        staticStyle: { color: "white" },
+                        attrs: { type: "button" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Update\n                  "
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mt-3" }, [
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("h6", [_vm._v("Weight : 25kg")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("h6", [_vm._v("Height : 162cm")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("h6", [_vm._v("B/P Lvl : 120mg")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("h6", [_vm._v("L/P : 195mg")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mt-2" }, [
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("h6", [_vm._v("Primary Diseases:")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("h6", [_vm._v("Diabetics , High Pressure, Asthma")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mt-2" }, [
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("h6", [_vm._v("Others:")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("h6", [_vm._v("Diabetics , High Pressure, Asthma")])
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mb-3" }, [
+      _c("div", { staticClass: "col-9" }, [
+        _c("h5", [_vm._v("Patient Treatment History")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c(
+          "button",
+          {
+            staticClass: "form-control btn btn-primary",
+            staticStyle: { color: "white" },
+            attrs: { type: "button" }
+          },
+          [_vm._v("\n                    Add New Record\n                  ")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-inverse" }, [
+      _c("tr", [
+        _c("th", { staticStyle: { width: "70%" } }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mb-3" }, [
+      _c("div", { staticClass: "col-9" }, [
+        _c("h5", [_vm._v("Patient Laboraty Reports")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-inverse" }, [
+      _c("tr", [
+        _c("th", { staticStyle: { width: "70%" } }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
     ])
   }
