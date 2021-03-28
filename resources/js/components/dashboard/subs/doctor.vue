@@ -74,6 +74,7 @@
                       type="button"
                       class="form-control btn btn-primary"
                       style="color: white"
+                      @click="biometric_modal()"
                     >
                       Update
                     </button>
@@ -101,6 +102,110 @@
             </div>
           </div>
         </div>
+        <!-- modal for patient biometric data  -->
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="modelId_bio"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                  Patient Data
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <div class="col-12">
+                    <div class="row form-group">
+                      <div class="col-12">
+                        <label for="form-control">Primary Diseases:</label>
+                        <input
+                          type="text"
+                          placeholder="Ex:Diabetics,High Pressure,.."
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-6">
+                        <label for="form-control">Weight:</label>
+                        <input
+                          type="text"
+                          placeholder="52 Kg"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="col-6">
+                        <label for="form-control">Height:</label>
+                        <input
+                          type="text"
+                          placeholder="162 cm"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-6">
+                        <label for="form-control">B/P Level:</label>
+                        <input
+                          type="text"
+                          placeholder="120 hg"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="col-6">
+                        <label for="form-control">Lipid Profile:</label>
+                        <input
+                          type="text"
+                          placeholder="195"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                      <div class="row form-group">
+                        <div class="col-12">
+                          <label for="form-control">Others:</label>
+                          <input
+                            type="text"
+                            placeholder="Ex: Other facts,.."
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end patinet biometric data  -->
         <div class="row mt-3">
           <div class="col-12">
             <div class="card shadow bg-white rounded">
@@ -237,7 +342,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    biometric_modal: function () {
+      $("#modelId_bio").modal("show");
+    },
+  },
+};
 </script>
 
 <style>

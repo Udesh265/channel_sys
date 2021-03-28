@@ -4322,7 +4322,118 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    biometric_modal: function biometric_modal() {
+      $("#modelId_bio").modal("show");
+    }
+  }
+});
 
 /***/ }),
 
@@ -72824,16 +72935,76 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", [
-        _vm._m(1),
+        _c("div", { staticClass: "row mt-3" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-7" }, [
+            _c(
+              "div",
+              {
+                staticClass: "card bg-white rounded",
+                staticStyle: { height: "168px" }
+              },
+              [
+                _c("img", {
+                  staticClass: "card-img-top",
+                  attrs: { src: "holder.js/100x180/", alt: "" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "card-body border-left border-success border-w-4"
+                  },
+                  [
+                    _c("div", { staticClass: "row mb-3" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-3" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "form-control btn btn-primary",
+                            staticStyle: { color: "white" },
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.biometric_modal()
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                    Update\n                  "
+                            )
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _vm._m(5)
+                  ]
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(6),
         _vm._v(" "),
         _c("div", { staticClass: "row mt-3" }, [
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card shadow bg-white rounded" }, [
               _c("div", { staticClass: "card-body" }, [
-                _vm._m(2),
+                _vm._m(7),
                 _vm._v(" "),
                 _c("table", { staticClass: "table table-striped" }, [
-                  _vm._m(3),
+                  _vm._m(8),
                   _vm._v(" "),
                   _c("tbody", [
                     _c("tr", { staticClass: "zoom" }, [
@@ -72912,10 +73083,10 @@ var render = function() {
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card shadow bg-white rounded" }, [
               _c("div", { staticClass: "card-body" }, [
-                _vm._m(4),
+                _vm._m(9),
                 _vm._v(" "),
                 _c("table", { staticClass: "table table-striped" }, [
-                  _vm._m(5),
+                  _vm._m(10),
                   _vm._v(" "),
                   _c("tbody", [
                     _c("tr", { staticClass: "zoom" }, [
@@ -73009,146 +73180,269 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-5" }, [
-        _c("div", { staticClass: "card bg-white" }, [
-          _c("img", {
-            staticClass: "card-img-top",
-            attrs: { src: "holder.js/100x180/", alt: "" }
-          }),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body border-left border-success border-w-4" },
-            [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-9" }, [
-                  _c("h5", [_vm._v("Patient Data")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row mt-3" }, [
-                _c("div", { staticClass: "col-3" }, [
-                  _c("h6", [_vm._v("Name")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("h6", [_vm._v("D.M.Udeshika Nilantha")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row mt-2" }, [
-                _c("div", { staticClass: "col-3" }, [
-                  _c("h6", [_vm._v("Address")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("h6", [_vm._v("Kandy")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row mt-2" }, [
-                _c("div", { staticClass: "col-3" }, [
-                  _c("h6", [_vm._v("Age")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [_c("h6", [_vm._v("26")])])
-              ])
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-7" }, [
+    return _c("div", { staticClass: "col-5" }, [
+      _c("div", { staticClass: "card bg-white" }, [
+        _c("img", {
+          staticClass: "card-img-top",
+          attrs: { src: "holder.js/100x180/", alt: "" }
+        }),
+        _vm._v(" "),
         _c(
           "div",
-          {
-            staticClass: "card bg-white rounded",
-            staticStyle: { height: "168px" }
-          },
+          { staticClass: "card-body border-left border-success border-w-4" },
           [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: { src: "holder.js/100x180/", alt: "" }
-            }),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-9" }, [
+                _c("h5", [_vm._v("Patient Data")])
+              ])
+            ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "card-body border-left border-success border-w-4"
-              },
-              [
-                _c("div", { staticClass: "row mb-3" }, [
-                  _c("div", { staticClass: "col-9" }, [
-                    _c("h5", [_vm._v("Biometric Data")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-3" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "form-control btn btn-primary",
-                        staticStyle: { color: "white" },
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    Update\n                  "
-                        )
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row mt-3" }, [
-                  _c("div", { staticClass: "col-3" }, [
-                    _c("h6", [_vm._v("Weight : 25kg")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-3" }, [
-                    _c("h6", [_vm._v("Height : 162cm")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-3" }, [
-                    _c("h6", [_vm._v("B/P Lvl : 120mg")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-3" }, [
-                    _c("h6", [_vm._v("L/P : 195mg")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row mt-2" }, [
-                  _c("div", { staticClass: "col-4" }, [
-                    _c("h6", [_vm._v("Primary Diseases:")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("h6", [_vm._v("Diabetics , High Pressure, Asthma")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row mt-2" }, [
-                  _c("div", { staticClass: "col-4" }, [
-                    _c("h6", [_vm._v("Others:")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("h6", [_vm._v("Diabetics , High Pressure, Asthma")])
-                  ])
-                ])
-              ]
-            )
+            _c("div", { staticClass: "row mt-3" }, [
+              _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Name")])]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-8" }, [
+                _c("h6", [_vm._v("D.M.Udeshika Nilantha")])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mt-2" }, [
+              _c("div", { staticClass: "col-3" }, [
+                _c("h6", [_vm._v("Address")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-8" }, [_c("h6", [_vm._v("Kandy")])])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mt-2" }, [
+              _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Age")])]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-1" }, [_c("h6", [_vm._v(":")])]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-8" }, [_c("h6", [_vm._v("26")])])
+            ])
           ]
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-9" }, [
+      _c("h5", [_vm._v("Biometric Data")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-3" }, [
+      _c("div", { staticClass: "col-3" }, [
+        _c("h6", [_vm._v("Weight : 25kg")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c("h6", [_vm._v("Height : 162cm")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c("h6", [_vm._v("B/P Lvl : 120mg")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("L/P : 195mg")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-2" }, [
+      _c("div", { staticClass: "col-4" }, [
+        _c("h6", [_vm._v("Primary Diseases:")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-8" }, [
+        _c("h6", [_vm._v("Diabetics , High Pressure, Asthma")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-2" }, [
+      _c("div", { staticClass: "col-4" }, [_c("h6", [_vm._v("Others:")])]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-8" }, [
+        _c("h6", [_vm._v("Diabetics , High Pressure, Asthma")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modelId_bio",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalCenterTitle",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLongTitle" }
+                  },
+                  [_vm._v("\n                Patient Data\n              ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("form", { attrs: { action: "" } }, [
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "row form-group" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("label", { attrs: { for: "form-control" } }, [
+                          _vm._v("Primary Diseases:")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Ex:Diabetics,High Pressure,.."
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row form-group" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c("label", { attrs: { for: "form-control" } }, [
+                          _vm._v("Weight:")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "52 Kg" }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-6" }, [
+                        _c("label", { attrs: { for: "form-control" } }, [
+                          _vm._v("Height:")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "162 cm" }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row form-group" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c("label", { attrs: { for: "form-control" } }, [
+                          _vm._v("B/P Level:")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "120 hg" }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-6" }, [
+                        _c("label", { attrs: { for: "form-control" } }, [
+                          _vm._v("Lipid Profile:")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "195" }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row form-group" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("label", { attrs: { for: "form-control" } }, [
+                          _vm._v("Others:")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Ex: Other facts,.."
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("\n                Close\n              ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                  [_vm._v("\n                Save changes\n              ")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   },
   function() {
     var _vm = this
