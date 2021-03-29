@@ -5,8 +5,11 @@ namespace App\Http\Controllers\API;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Patient;
+use App\Patient_biometric_data;
 use App\User;
 use Illuminate\Http\Request;
+
+use function GuzzleHttp\Promise\all;
 
 class ApiPatientController extends Controller
 {
@@ -67,6 +70,17 @@ class ApiPatientController extends Controller
     {
 
         $patient = Patient::where('name', 'like', '%' . $search_keyword . '%')->orWhere('nic', 'like', '%' . $search_keyword . '%')->get();
+        if (is_null($patient)) {
+            return response()->json(["msg", "error"], 400);
+        }
+        return response()->json($patient, 200);
+    }
+
+
+    public function get_patient_by_search($search_keyword)
+    {
+
+        $patient = Patient::where('id',$search_keyword)->orWhere('nic', 'like', '%' . $search_keyword . '%')->get();
         if (is_null($patient)) {
             return response()->json(["msg", "error"], 400);
         }
@@ -228,6 +242,27 @@ class ApiPatientController extends Controller
         if ($patient) return response()->json(['msg' => 'successfully assigned user!'], 200);
 
         return response()->json(['msg' => 'Failed to assign user!'], 400);
+    }
+
+    public function submit_patient_biometric_data(Request $request,$patient_id){
+
+        $data = Patient_biometric_data::where('patient_id',$patient_id);
+
+        $data->update($request->all());
+
+        if(is_null($data)) return response()->json(['msg' => 'not save patient bio metric data!'], 400);
+
+        return response()->json($data,200);
+
+    }
+
+    public function get_biometric_data_by_patientID($patient_id){
+
+        $data = Patient_biometric_data::where('patient_id',$patient_id)->get();
+
+        if(is_null($data)) return response()->json(['msg' => 'not get patient bio metric data!'], 400);
+
+        return response()->json($data,200);
     }
 
 

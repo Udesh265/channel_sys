@@ -7,20 +7,25 @@
           <div class="row">
             <div class="col-9">
               <input
+                v-model="pform.patient_id"
                 type="text"
                 class="form-control"
                 placeholder="Enter Barcode ID or NIC"
               />
             </div>
             <div class="col-3">
-              <button type="button" class="form-control btn btn-success">
+              <button
+                @click="get_patient_by_id()"
+                type="button"
+                class="form-control btn btn-success"
+              >
                 Search Patient
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="">
+      <div v-if="patient_id == patient_data.id">
         <div class="row mt-3">
           <div class="col-5">
             <div class="card bg-white">
@@ -38,7 +43,9 @@
                   <div class="col-1">
                     <h6>:</h6>
                   </div>
-                  <div class="col-8"><h6>D.M.Udeshika Nilantha</h6></div>
+                  <div class="col-8">
+                    <h6>{{ patient_data.name }}</h6>
+                  </div>
                 </div>
                 <div class="row mt-2">
                   <div class="col-3">
@@ -47,7 +54,9 @@
                   <div class="col-1">
                     <h6>:</h6>
                   </div>
-                  <div class="col-8"><h6>Kandy</h6></div>
+                  <div class="col-8">
+                    <h6>{{ patient_data.address }}</h6>
+                  </div>
                 </div>
                 <div class="row mt-2">
                   <div class="col-3">
@@ -56,7 +65,9 @@
                   <div class="col-1">
                     <h6>:</h6>
                   </div>
-                  <div class="col-8"><h6>26</h6></div>
+                  <div class="col-8">
+                    <h6>{{ patient_data.age }}</h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -81,21 +92,21 @@
                   </div>
                 </div>
                 <div class="row mt-3">
-                  <div class="col-3"><h6>Weight : 25kg</h6></div>
-                  <div class="col-3"><h6>Height : 162cm</h6></div>
-                  <div class="col-3"><h6>B/P Lvl : 120mg</h6></div>
-                  <div class="col-3"><h6>L/P : 195mg</h6></div>
+                  <div class="col-3"><h6>Weight :{{ biometric_data.weight }}</h6></div>
+                  <div class="col-3"><h6>Height :{{ biometric_data.height }}</h6></div>
+                  <div class="col-3"><h6>B/P Lvl :{{ biometric_data.bp }}</h6></div>
+                  <div class="col-3"><h6>L/P :{{ biometric_data.lp }}</h6></div>
                 </div>
                 <div class="row mt-2">
-                  <div class="col-4"><h6>Primary Diseases:</h6></div>
+                  <div class="col-4"><h6>Primary Diseases:{{ biometric_data.diseases }}</h6></div>
                   <div class="col-8">
-                    <h6>Diabetics , High Pressure, Asthma</h6>
+                    <h6></h6>
                   </div>
                 </div>
                 <div class="row mt-2">
-                  <div class="col-4"><h6>Others:</h6></div>
+                  <div class="col-4"><h6>Others:{{ biometric_data.others }}</h6></div>
                   <div class="col-8">
-                    <h6>Diabetics , High Pressure, Asthma</h6>
+                    <h6></h6>
                   </div>
                 </div>
               </div>
@@ -114,8 +125,12 @@
         >
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">
+              <div class="modal-header" style="background-color: #1e3d73">
+                <h5
+                  class="modal-title"
+                  id="exampleModalLongTitle"
+                  style="color: white"
+                >
                   Patient Data
                 </h5>
                 <button
@@ -129,11 +144,14 @@
               </div>
               <div class="modal-body">
                 <form action="">
-                  <div class="col-12">
+                  <div v-for="(bio_data,index) in biometric_data" :key="index" class="col-12">
                     <div class="row form-group">
                       <div class="col-12">
-                        <label for="form-control">Primary Diseases:</label>
+                        <label for="form-control"
+                          >Primary Diseases:{{ biometric_data.diseases }}</label
+                        >
                         <input
+                          v-model="pform.diseases"
                           type="text"
                           placeholder="Ex:Diabetics,High Pressure,.."
                           class="form-control"
@@ -142,16 +160,22 @@
                     </div>
                     <div class="row form-group">
                       <div class="col-6">
-                        <label for="form-control">Weight:</label>
+                        <label for="form-control"
+                          >Weight:{{ bio_data.weight }}</label
+                        >
                         <input
+                          v-model="pform.weight"
                           type="text"
                           placeholder="52 Kg"
                           class="form-control"
                         />
                       </div>
                       <div class="col-6">
-                        <label for="form-control">Height:</label>
+                        <label for="form-control"
+                          >Height:{{ bio_data.height }}</label
+                        >
                         <input
+                          v-model="pform.height"
                           type="text"
                           placeholder="162 cm"
                           class="form-control"
@@ -160,33 +184,41 @@
                     </div>
                     <div class="row form-group">
                       <div class="col-6">
-                        <label for="form-control">B/P Level:</label>
+                        <label for="form-control"
+                          >B/P Level:{{ bio_data.bp }}</label
+                        >
                         <input
+                          v-model="pform.bp"
                           type="text"
                           placeholder="120 hg"
                           class="form-control"
                         />
                       </div>
                       <div class="col-6">
-                        <label for="form-control">Lipid Profile:</label>
+                        <label for="form-control"
+                          >Lipid Profile:{{ bio_data.lp }}</label
+                        >
                         <input
+                          v-model="pform.lp"
                           type="text"
                           placeholder="195"
                           class="form-control"
                         />
                       </div>
                     </div>
-                      <div class="row form-group">
-                        <div class="col-12">
-                          <label for="form-control">Others:</label>
-                          <input
-                            type="text"
-                            placeholder="Ex: Other facts,.."
-                            class="form-control"
-                          />
-                        </div>
+                    <div class="row form-group">
+                      <div class="col-12">
+                        <label for="form-control"
+                          >Others:{{ bio_data.others }}</label
+                        >
+                        <input
+                          v-model="pform.others"
+                          type="text"
+                          placeholder="Ex: Other facts,.."
+                          class="form-control"
+                        />
                       </div>
-
+                    </div>
                   </div>
                 </form>
               </div>
@@ -198,7 +230,11 @@
                 >
                   Close
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button
+                  @click="add_biometric_data()"
+                  type="button"
+                  class="btn btn-primary"
+                >
                   Save changes
                 </button>
               </div>
@@ -206,6 +242,7 @@
           </div>
         </div>
         <!-- end patinet biometric data  -->
+
         <div class="row mt-3">
           <div class="col-12">
             <div class="card shadow bg-white rounded">
@@ -219,6 +256,7 @@
                       type="button"
                       class="form-control btn btn-primary"
                       style="color: white"
+                      @click="add_treatment_record()"
                     >
                       Add New Record
                     </button>
@@ -288,6 +326,94 @@
             </div>
           </div>
         </div>
+        <!-- Start add patient history records  -->
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="modelId_treatment_record"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: #1e3d73">
+                <h5
+                  class="modal-title"
+                  id="exampleModalLongTitle"
+                  style="color: white"
+                >
+                  Add Patient Treatment Records
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  style="color: white"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <div class="col-12">
+                    <div class="row form-group">
+                      <div class="col-12">
+                        <label for="form-control"
+                          >Patient Treatments details:</label
+                        >
+                        <textarea
+                          v-model="tform.treatment"
+                          class="form-control"
+                          id="exampleFormControlTextarea1"
+                          rows="3"
+                          placeholder="Type patient tratment records"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-12">
+                        <label for="form-control"
+                          >Next Treatment (optional) :</label
+                        >
+                        <textarea
+                          v-model="tform.next_treatment"
+                          class="form-control"
+                          id="exampleFormControlTextarea1"
+                          rows="3"
+                          placeholder="Type Next treatment information records"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-12">
+                        <label for="form-control"
+                          >Next Treatment Date (optional):</label
+                        >
+                        <input
+                          v-model="tform.date"
+                          type="date"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">
+                  Add Record
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--End Start add patient history records  -->
+
         <div class="row mt-3">
           <div class="col-12">
             <div class="card shadow bg-white rounded">
@@ -343,9 +469,80 @@
 
 <script>
 export default {
+  created() {
+
+      },
+  mounted() {
+        this.get_biometric_data();
+  },
+  data() {
+    return {
+      patient_id: "",
+      pform: new Form({
+        diseases: "",
+        weight: "",
+        height: "",
+        bp: "",
+        lp: "",
+        others: "",
+        patient_id: "",
+      }),
+      tform: new Form({
+        treatment: "",
+        next_treatment: "",
+      }),
+      patient_data: {},
+      biometric_data: "",
+    };
+  },
   methods: {
     biometric_modal: function () {
       $("#modelId_bio").modal("show");
+    },
+    add_treatment_record: function () {
+      $("#modelId_treatment_record").modal("show");
+    },
+    get_patient_by_id: function () {
+      this.patient_id = this.pform.patient_id;
+      axios
+        .get("/api/appointment/get_patient/" + this.patient_id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.patient_data = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    add_biometric_data: function () {
+      this.patient_id = this.pform.patient_id;
+      this.pform
+        .patch("/api/patient/bio_data/" + this.patient_id)
+        .then((response) => {
+          if (response.status == 200) {
+            swal.fire("Record Added Successfull");
+            this.get_biometric_data();
+            this.reset();
+          }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+            $("#modelId_bio").modal("hide");
+    },
+    get_biometric_data: function () {
+      this.patient_id = this.pform.patient_id;
+      axios
+        .get("/api/patient/get_biometric_data/" + this.patient_id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.biometric_data = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

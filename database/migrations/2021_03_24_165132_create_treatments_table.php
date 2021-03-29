@@ -15,6 +15,13 @@ class CreateTreatmentsTable extends Migration
     {
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
+            $table->integer('patient_id');
+            $table->integer('doctor_id');
+            $table->string('treatment');
+            $table->string('next_treatment');
+            $table->date('next_treatment_date');
+            $table->date('remind_date');
+
             $table->timestamps();
         });
     }
