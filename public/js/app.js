@@ -4552,11 +4552,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {},
-  mounted: function mounted() {
-    this.get_biometric_data();
+  mounted: function mounted() {// this.get_biometric_data();
   },
   data: function data() {
     return {
@@ -4575,7 +4573,7 @@ __webpack_require__.r(__webpack_exports__);
         next_treatment: ""
       }),
       patient_data: {},
-      biometric_data: ""
+      biometric_data: {}
     };
   },
   methods: {
@@ -73362,274 +73360,233 @@ var render = function() {
                       _vm._m(10),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-body" }, [
-                        _c(
-                          "form",
-                          { attrs: { action: "" } },
-                          _vm._l(_vm.biometric_data, function(bio_data, index) {
-                            return _c(
-                              "div",
-                              { key: index, staticClass: "col-12" },
-                              [
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _c("div", { staticClass: "col-12" }, [
-                                    _c(
-                                      "label",
-                                      { attrs: { for: "form-control" } },
-                                      [
-                                        _vm._v(
-                                          "Primary Diseases:" +
-                                            _vm._s(_vm.biometric_data.diseases)
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.pform.diseases,
-                                          expression: "pform.diseases"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        placeholder:
-                                          "Ex:Diabetics,High Pressure,.."
-                                      },
-                                      domProps: { value: _vm.pform.diseases },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.pform,
-                                            "diseases",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ])
-                                ]),
+                        _c("form", { attrs: { action: "" } }, [
+                          _c("div", { staticClass: "col-12" }, [
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Primary Diseases:")]
+                                ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _c("div", { staticClass: "col-6" }, [
-                                    _c(
-                                      "label",
-                                      { attrs: { for: "form-control" } },
-                                      [
-                                        _vm._v(
-                                          "Weight:" + _vm._s(bio_data.weight)
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.pform.weight,
-                                          expression: "pform.weight"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        placeholder: "52 Kg"
-                                      },
-                                      domProps: { value: _vm.pform.weight },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.pform,
-                                            "weight",
-                                            $event.target.value
-                                          )
-                                        }
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.diseases,
+                                      expression: "pform.diseases"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Ex:Diabetics,High Pressure,.."
+                                  },
+                                  domProps: { value: _vm.pform.diseases },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
                                       }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-6" }, [
-                                    _c(
-                                      "label",
-                                      { attrs: { for: "form-control" } },
-                                      [
-                                        _vm._v(
-                                          "Height:" + _vm._s(bio_data.height)
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.pform.height,
-                                          expression: "pform.height"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        placeholder: "162 cm"
-                                      },
-                                      domProps: { value: _vm.pform.height },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.pform,
-                                            "height",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ])
-                                ]),
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "diseases",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Weight:")]
+                                ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _c("div", { staticClass: "col-6" }, [
-                                    _c(
-                                      "label",
-                                      { attrs: { for: "form-control" } },
-                                      [
-                                        _vm._v(
-                                          "B/P Level:" + _vm._s(bio_data.bp)
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.pform.bp,
-                                          expression: "pform.bp"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        placeholder: "120 hg"
-                                      },
-                                      domProps: { value: _vm.pform.bp },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.pform,
-                                            "bp",
-                                            $event.target.value
-                                          )
-                                        }
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.weight,
+                                      expression: "pform.weight"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "52 Kg" },
+                                  domProps: { value: _vm.pform.weight },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
                                       }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-6" }, [
-                                    _c(
-                                      "label",
-                                      { attrs: { for: "form-control" } },
-                                      [
-                                        _vm._v(
-                                          "Lipid Profile:" + _vm._s(bio_data.lp)
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.pform.lp,
-                                          expression: "pform.lp"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        placeholder: "195"
-                                      },
-                                      domProps: { value: _vm.pform.lp },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.pform,
-                                            "lp",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ])
-                                ]),
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "weight",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Height:")]
+                                ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _c("div", { staticClass: "col-12" }, [
-                                    _c(
-                                      "label",
-                                      { attrs: { for: "form-control" } },
-                                      [
-                                        _vm._v(
-                                          "Others:" + _vm._s(bio_data.others)
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.pform.others,
-                                          expression: "pform.others"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        placeholder: "Ex: Other facts,.."
-                                      },
-                                      domProps: { value: _vm.pform.others },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.pform,
-                                            "others",
-                                            $event.target.value
-                                          )
-                                        }
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.height,
+                                      expression: "pform.height"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "162 cm"
+                                  },
+                                  domProps: { value: _vm.pform.height },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
                                       }
-                                    })
-                                  ])
-                                ])
-                              ]
-                            )
-                          }),
-                          0
-                        )
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "height",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("B/P Level:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.bp,
+                                      expression: "pform.bp"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "120 hg"
+                                  },
+                                  domProps: { value: _vm.pform.bp },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "bp",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Lipid Profile:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.lp,
+                                      expression: "pform.lp"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "195" },
+                                  domProps: { value: _vm.pform.lp },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "lp",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Others:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.others,
+                                      expression: "pform.others"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Ex: Other facts,.."
+                                  },
+                                  domProps: { value: _vm.pform.others },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "others",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          ])
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-footer" }, [
@@ -73856,7 +73813,6 @@ var render = function() {
                                   ],
                                   staticClass: "form-control",
                                   attrs: {
-                                    id: "exampleFormControlTextarea1",
                                     rows: "3",
                                     placeholder:
                                       "Type Next treatment information records"

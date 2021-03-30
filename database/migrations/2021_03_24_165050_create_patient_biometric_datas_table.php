@@ -15,7 +15,7 @@ class CreatePatientBiometricDatasTable extends Migration
     {
         Schema::create('patient_biometric_datas', function (Blueprint $table) {
             $table->id();
-            $table->integer('patient_id');
+            $table->integer('patient_id')->unique();
             $table->string('diseases');
             $table->string('weight');
             $table->string('height');

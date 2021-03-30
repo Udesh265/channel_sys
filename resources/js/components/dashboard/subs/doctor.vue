@@ -144,11 +144,11 @@
               </div>
               <div class="modal-body">
                 <form action="">
-                  <div v-for="(bio_data,index) in biometric_data" :key="index" class="col-12">
+                  <div class="col-12">
                     <div class="row form-group">
                       <div class="col-12">
                         <label for="form-control"
-                          >Primary Diseases:{{ biometric_data.diseases }}</label
+                          >Primary Diseases:</label
                         >
                         <input
                           v-model="pform.diseases"
@@ -161,7 +161,7 @@
                     <div class="row form-group">
                       <div class="col-6">
                         <label for="form-control"
-                          >Weight:{{ bio_data.weight }}</label
+                          >Weight:</label
                         >
                         <input
                           v-model="pform.weight"
@@ -172,7 +172,7 @@
                       </div>
                       <div class="col-6">
                         <label for="form-control"
-                          >Height:{{ bio_data.height }}</label
+                          >Height:</label
                         >
                         <input
                           v-model="pform.height"
@@ -185,7 +185,7 @@
                     <div class="row form-group">
                       <div class="col-6">
                         <label for="form-control"
-                          >B/P Level:{{ bio_data.bp }}</label
+                          >B/P Level:</label
                         >
                         <input
                           v-model="pform.bp"
@@ -196,7 +196,7 @@
                       </div>
                       <div class="col-6">
                         <label for="form-control"
-                          >Lipid Profile:{{ bio_data.lp }}</label
+                          >Lipid Profile:</label
                         >
                         <input
                           v-model="pform.lp"
@@ -209,7 +209,7 @@
                     <div class="row form-group">
                       <div class="col-12">
                         <label for="form-control"
-                          >Others:{{ bio_data.others }}</label
+                          >Others:</label
                         >
                         <input
                           v-model="pform.others"
@@ -382,7 +382,6 @@
                         <textarea
                           v-model="tform.next_treatment"
                           class="form-control"
-                          id="exampleFormControlTextarea1"
                           rows="3"
                           placeholder="Type Next treatment information records"
                         ></textarea>
@@ -473,7 +472,7 @@ export default {
 
       },
   mounted() {
-        this.get_biometric_data();
+        // this.get_biometric_data();
   },
   data() {
     return {
@@ -492,7 +491,7 @@ export default {
         next_treatment: "",
       }),
       patient_data: {},
-      biometric_data: "",
+      biometric_data: {},
     };
   },
   methods: {

@@ -252,13 +252,13 @@ class ApiPatientController extends Controller
 
         if(is_null($data)) return response()->json(['msg' => 'not save patient bio metric data!'], 400);
 
-        return response()->json($data,200);
+        return response()->json(['msg' => 'recored added suceess!'],200);
 
     }
 
     public function get_biometric_data_by_patientID($patient_id){
 
-        $data = Patient_biometric_data::where('patient_id',$patient_id)->get();
+        $data = Patient_biometric_data::where('patient_id',$patient_id)->first();
 
         if(is_null($data)) return response()->json(['msg' => 'not get patient bio metric data!'], 400);
 
