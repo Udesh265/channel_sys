@@ -6,7 +6,9 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Patient;
 use App\Patient_biometric_data;
+use App\Treatment;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use function GuzzleHttp\Promise\all;
@@ -256,6 +258,23 @@ class ApiPatientController extends Controller
 
     }
 
+    public function save_biometric_data(Request $request){
+
+        $data = Patient_biometric_data::create([
+            'patient_id' => $request->patient_id,
+            'diseases' => $request->diseases,
+            'weight' => $request->weight,
+            'height' => $request->height,
+            'bp' => $request->bp,
+            'lp' => $request->lp,
+            'others' => $request->others,
+        ]);
+
+        if(is_null($data)) return response()->json(['msg'=>'not added data'],400);
+
+        return response()->json(['msg'=>'record added successfull'],200);
+    }
+
     public function get_biometric_data_by_patientID($patient_id){
 
         $data = Patient_biometric_data::where('patient_id',$patient_id)->first();
@@ -263,6 +282,56 @@ class ApiPatientController extends Controller
         if(is_null($data)) return response()->json(['msg' => 'not get patient bio metric data!'], 400);
 
         return response()->json($data,200);
+    }
+    public function save_treatment_data(Request $request , $patient_id){
+
+        // return $request;
+
+        $date = Carbon::parse($request->date);
+        $newDate = $date->subDays(2);
+        // return $newDate;
+        $data = Treatment::create([
+            'patient_id' => $patient_id,
+            'doctor_id' => $request->user_id,
+            'treatment'=> $request->treatment,
+            'next_treatment' => $request->next_treatment,
+            'next_treatment_date' => $request->date,
+            'remind_date' => $newDate,
+
+        ]);
+
+        if(is_null($data)) return response()->json(['msg'=>'faild to add record',400]);
+
+        return response()->json(['msg'=>'Record added successfull',200]);
+
+    }
+
+    public function get_treatment_data_by_patient_id($patient_id){
+
+        $data = Treatment::where('patient_id',$patient_id)->get();
+
+        if(is_null($data)) return response()->json(['msg'=>'faild to get tratment data',400]);
+
+        return response()->json($data,200);
+
+    }
+
+    public function update_treatment_record(Request $request, $treatment_id){
+
+        $date = Carbon::parse($request->date);
+        $data = Treatment::where('id',$treatment_id);
+
+
+        $data->update([
+            'treatment' => $request->treatment,
+            'next_treatment' => $request->next_treatment,
+            'next_treatment_date' => $date,
+        ]);
+
+        if(is_null($data)) return response()->json(['msg' => 'not tratment data!'], 400);
+
+        return response()->json(['msg' => 'recored added suceess!'],200);
+
     }
 
 

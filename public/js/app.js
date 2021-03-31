@@ -3410,10 +3410,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_spec();
@@ -3528,7 +3524,7 @@ __webpack_require__.r(__webpack_exports__);
             }).then(function () {
               $("#appointment_model").modal("hide");
               var payment_id = response.data.data.payment.payment_id;
-              window.location.href = '/appointment/pay_online/' + payment_id;
+              window.location.href = "/appointment/pay_online/" + payment_id;
             }); // this.reset();
             // window.location.href = 'online_payment'
           }
@@ -3547,7 +3543,7 @@ __webpack_require__.r(__webpack_exports__);
             }).then(function () {
               $("#appointment_model").modal("hide");
               var payment_id = response.data.data.payment.payment_id;
-              window.location.href = 'view_appointment';
+              window.location.href = "view_appointment";
             }); // this.reset();
             // window.location.href = 'online_payment'
           }
@@ -4064,6 +4060,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["user_id"],
   components: {
     PatientDash: _subs_patient__WEBPACK_IMPORTED_MODULE_0__["default"],
     DoctorDash: _subs_doctor__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -4552,13 +4549,206 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["user_id"],
   created: function created() {},
   mounted: function mounted() {// this.get_biometric_data();
   },
   data: function data() {
     return {
       patient_id: "",
+      treatment_id: "",
       pform: new Form({
         diseases: "",
         weight: "",
@@ -4570,18 +4760,30 @@ __webpack_require__.r(__webpack_exports__);
       }),
       tform: new Form({
         treatment: "",
-        next_treatment: ""
+        next_treatment: "",
+        date: "",
+        patient_id: "",
+        user_id: this.user_id
       }),
       patient_data: {},
-      biometric_data: {}
+      biometric_data: {},
+      treatment_data: {}
     };
   },
   methods: {
     biometric_modal: function biometric_modal() {
       $("#modelId_bio").modal("show");
     },
-    add_treatment_record: function add_treatment_record() {
+    add_biometric_modal: function add_biometric_modal() {
+      $("#add_bio_modal").modal("show");
+    },
+    add_treatment_record_modal: function add_treatment_record_modal() {
       $("#modelId_treatment_record").modal("show");
+    },
+    update_history_record_modal: function update_history_record_modal(treat) {
+      $("#modelId_update_record").modal("show");
+      this.tform.fill(treat);
+      this.treatment_id = treat.id;
     },
     get_patient_by_id: function get_patient_by_id() {
       var _this = this;
@@ -4590,6 +4792,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/appointment/get_patient/" + this.patient_id).then(function (response) {
         if (response.status == 200) {
           _this.patient_data = response.data;
+
+          _this.get_biometric_data();
+
+          _this.get_treatment_data_by_patient_id();
         }
       })["catch"](function (error) {
         console.log(error);
@@ -4599,7 +4805,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.patient_id = this.pform.patient_id;
-      this.pform.patch("/api/patient/bio_data/" + this.patient_id).then(function (response) {
+      this.pform.post("/api/patient/add_bio_data").then(function (response) {
         if (response.status == 200) {
           swal.fire("Record Added Successfull");
 
@@ -4610,15 +4816,76 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.error(error);
       });
+      $("#add_bio_modal").modal("hide");
+    },
+    update_biometric_data: function update_biometric_data() {
+      var _this3 = this;
+
+      this.patient_id = this.pform.patient_id;
+      this.pform.patch("/api/patient/bio_data/" + this.patient_id).then(function (response) {
+        if (response.status == 200) {
+          swal.fire("Record Added Successfull");
+
+          _this3.get_biometric_data();
+
+          _this3.reset();
+        }
+      })["catch"](function (error) {
+        console.error(error);
+      });
       $("#modelId_bio").modal("hide");
     },
     get_biometric_data: function get_biometric_data() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.patient_id = this.pform.patient_id;
       axios.get("/api/patient/get_biometric_data/" + this.patient_id).then(function (response) {
         if (response.status == 200) {
-          _this3.biometric_data = response.data;
+          _this4.biometric_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    add_treatment_record: function add_treatment_record() {
+      var _this5 = this;
+
+      this.patient_id = this.pform.patient_id;
+      this.tform.post("/api/patient/add_treatment/" + this.patient_id).then(function (response) {
+        if (response.status == 200) {
+          swal.fire(response.data.msg);
+          $("#modelId_treatment_record").modal("hide");
+
+          _this5.get_treatment_data_by_patient_id();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_treatment_data_by_patient_id: function get_treatment_data_by_patient_id() {
+      var _this6 = this;
+
+      this.patient_id = this.pform.patient_id;
+      axios.get("/api/patient/get_treatment_data/" + this.patient_id).then(function (response) {
+        if (response.status == 200) {
+          _this6.treatment_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    update_treatment_record: function update_treatment_record() {
+      var _this7 = this;
+
+      this.tform.patch("/api/patient/update_treatment/" + this.treatment_id).then(function (response) {
+        if (response.status == 200) {
+          swal.fire(response.data.msg);
+
+          _this7.reset();
+
+          $("#modelId_update_record").modal("hide");
+
+          _this7.get_treatment_data_by_patient_id();
         }
       })["catch"](function (error) {
         console.log(error);
@@ -73095,7 +73362,9 @@ var render = function() {
     [
       _vm.$can("dashboard_management_view") ? _c("PatientDash") : _vm._e(),
       _vm._v(" "),
-      _vm.$can("doctordash_management_view") ? _c("DoctorDash") : _vm._e()
+      _vm.$can("doctordash_management_view")
+        ? _c("DoctorDash", { attrs: { user_id: this.user_id } })
+        : _vm._e()
     ],
     1
   )
@@ -73146,6 +73415,9 @@ var render = function() {
                 attrs: { type: "text", placeholder: "Enter Barcode ID or NIC" },
                 domProps: { value: _vm.pform.patient_id },
                 on: {
+                  keypress: function($event) {
+                    return _vm.get_patient_by_id()
+                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -73168,7 +73440,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("\n              Search Patient\n            ")]
+                [_vm._v("\n                Search Patient\n              ")]
               )
             ])
           ])
@@ -73233,7 +73505,7 @@ var render = function() {
                   "div",
                   {
                     staticClass: "card bg-white rounded",
-                    staticStyle: { height: "168px" }
+                    staticStyle: { height: "183px" }
                   },
                   [
                     _c("img", {
@@ -73252,24 +73524,47 @@ var render = function() {
                           _vm._m(7),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-3" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "form-control btn btn-primary",
-                                staticStyle: { color: "white" },
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.biometric_modal()
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                    Update\n                  "
+                            (_vm.biometric_data.id = _vm.biometric_data.id)
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "form-control btn btn-primary",
+                                    staticStyle: { color: "white" },
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.biometric_modal()
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                      Update\n                    "
+                                    )
+                                  ]
                                 )
-                              ]
-                            )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.biometric_data.id == null
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "form-control btn btn-primary",
+                                    staticStyle: { color: "white" },
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.add_biometric_modal()
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                      Add Data\n                    "
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ])
                         ]),
                         _vm._v(" "),
@@ -73277,7 +73572,7 @@ var render = function() {
                           _c("div", { staticClass: "col-3" }, [
                             _c("h6", [
                               _vm._v(
-                                "Weight :" + _vm._s(_vm.biometric_data.weight)
+                                "Weight : " + _vm._s(_vm.biometric_data.weight)
                               )
                             ])
                           ]),
@@ -73285,7 +73580,7 @@ var render = function() {
                           _c("div", { staticClass: "col-3" }, [
                             _c("h6", [
                               _vm._v(
-                                "Height :" + _vm._s(_vm.biometric_data.height)
+                                "Height : " + _vm._s(_vm.biometric_data.height)
                               )
                             ])
                           ]),
@@ -73293,23 +73588,23 @@ var render = function() {
                           _c("div", { staticClass: "col-3" }, [
                             _c("h6", [
                               _vm._v(
-                                "B/P Lvl :" + _vm._s(_vm.biometric_data.bp)
+                                "B/P Lvl : " + _vm._s(_vm.biometric_data.bp)
                               )
                             ])
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-3" }, [
                             _c("h6", [
-                              _vm._v("L/P :" + _vm._s(_vm.biometric_data.lp))
+                              _vm._v("L/P : " + _vm._s(_vm.biometric_data.lp))
                             ])
                           ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row mt-2" }, [
-                          _c("div", { staticClass: "col-4" }, [
+                          _c("div", { staticClass: "col-8" }, [
                             _c("h6", [
                               _vm._v(
-                                "Primary Diseases:" +
+                                "Primary Diseases : " +
                                   _vm._s(_vm.biometric_data.diseases)
                               )
                             ])
@@ -73319,10 +73614,10 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row mt-2" }, [
-                          _c("div", { staticClass: "col-4" }, [
+                          _c("div", { staticClass: "col-8" }, [
                             _c("h6", [
                               _vm._v(
-                                "Others:" + _vm._s(_vm.biometric_data.others)
+                                "Others : " + _vm._s(_vm.biometric_data.others)
                               )
                             ])
                           ]),
@@ -73596,7 +73891,302 @@ var render = function() {
                             staticClass: "btn btn-secondary",
                             attrs: { type: "button", "data-dismiss": "modal" }
                           },
-                          [_vm._v("\n                Close\n              ")]
+                          [
+                            _vm._v(
+                              "\n                  Close\n                "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.update_biometric_data()
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                  Save changes\n                "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "modal fade",
+                attrs: {
+                  id: "add_bio_modal",
+                  tabindex: "-1",
+                  role: "dialog",
+                  "aria-labelledby": "exampleModalCenterTitle",
+                  "aria-hidden": "true"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-dialog modal-dialog-centered",
+                    attrs: { role: "document" }
+                  },
+                  [
+                    _c("div", { staticClass: "modal-content" }, [
+                      _vm._m(11),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-body" }, [
+                        _c("form", { attrs: { action: "" } }, [
+                          _c("div", { staticClass: "col-12" }, [
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Primary Diseases:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.diseases,
+                                      expression: "pform.diseases"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Ex:Diabetics,High Pressure,.."
+                                  },
+                                  domProps: { value: _vm.pform.diseases },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "diseases",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Weight:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.weight,
+                                      expression: "pform.weight"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "52 Kg" },
+                                  domProps: { value: _vm.pform.weight },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "weight",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Height:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.height,
+                                      expression: "pform.height"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "162 cm"
+                                  },
+                                  domProps: { value: _vm.pform.height },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "height",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("B/P Level:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.bp,
+                                      expression: "pform.bp"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "120 hg"
+                                  },
+                                  domProps: { value: _vm.pform.bp },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "bp",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Lipid Profile:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.lp,
+                                      expression: "pform.lp"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "195" },
+                                  domProps: { value: _vm.pform.lp },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "lp",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Others:")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pform.others,
+                                      expression: "pform.others"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Ex: Other facts,.."
+                                  },
+                                  domProps: { value: _vm.pform.others },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.pform,
+                                        "others",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary",
+                            attrs: { type: "button", "data-dismiss": "modal" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                  Close\n                "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -73610,11 +74200,7 @@ var render = function() {
                               }
                             }
                           },
-                          [
-                            _vm._v(
-                              "\n                Save changes\n              "
-                            )
-                          ]
+                          [_vm._v("\n                  Add\n                ")]
                         )
                       ])
                     ])
@@ -73628,7 +74214,7 @@ var render = function() {
                 _c("div", { staticClass: "card shadow bg-white rounded" }, [
                   _c("div", { staticClass: "card-body" }, [
                     _c("div", { staticClass: "row mb-3" }, [
-                      _vm._m(11),
+                      _vm._m(12),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-3" }, [
                         _c(
@@ -73639,13 +74225,13 @@ var render = function() {
                             attrs: { type: "button" },
                             on: {
                               click: function($event) {
-                                return _vm.add_treatment_record()
+                                return _vm.add_treatment_record_modal()
                               }
                             }
                           },
                           [
                             _vm._v(
-                              "\n                    Add New Record\n                  "
+                              "\n                      Add New Record\n                    "
                             )
                           ]
                         )
@@ -73653,75 +74239,39 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("table", { staticClass: "table table-striped" }, [
-                      _vm._m(12),
+                      _vm._m(13),
                       _vm._v(" "),
-                      _c("tbody", [
-                        _c("tr", { staticClass: "zoom" }, [
-                          _c("td", [
-                            _vm._v(
-                              "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                      elit. Veniam possimus sed laborum, atque at praesentium\n                      itaque magnam minus magni, recusandae corrupti nemo,\n                      error voluptatem accusantium consequuntur quam iusto qui\n                      deserunt?\n                    "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("2021-08-31")]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("i", {
-                              staticClass:
-                                "fa fa-eye text-success icon-button mx-1",
-                              on: {
-                                click: function($event) {
-                                  return _vm.modal_appointment_view(_vm.app)
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.treatment_data, function(treat, index) {
+                          return _c("tr", { key: index, staticClass: "zoom" }, [
+                            _c("td", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(treat.treatment) +
+                                  "\n                      "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(treat.updated_at))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("i", {
+                                staticClass:
+                                  "fa fa-edit text-success icon-button mx-1",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.update_history_record_modal(
+                                      treat
+                                    )
+                                  }
                                 }
-                              }
-                            })
+                              })
+                            ])
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", { staticClass: "zoom" }, [
-                          _c("td", [
-                            _vm._v(
-                              "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                      elit. Veniam possimus sed laborum, atque at praesentium\n                      itaque magnam minus magni, recusandae corrupti nemo,\n                      error voluptatem accusantium consequuntur quam iusto qui\n                      deserunt?\n                    "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("2021-08-31")]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("i", {
-                              staticClass:
-                                "fa fa-eye text-success icon-button mx-1",
-                              on: {
-                                click: function($event) {
-                                  return _vm.modal_appointment_view(_vm.app)
-                                }
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("td", [
-                            _vm._v(
-                              "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                      elit. Veniam possimus sed laborum, atque at praesentium\n                      itaque magnam minus magni, recusandae corrupti nemo,\n                      error voluptatem accusantium consequuntur quam iusto qui\n                      deserunt?\n                    "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("2021-08-31")]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("i", {
-                              staticClass:
-                                "fa fa-eye text-success icon-button mx-1",
-                              on: {
-                                click: function($event) {
-                                  return _vm.modal_appointment_view(_vm.app)
-                                }
-                              }
-                            })
-                          ])
-                        ])
-                      ])
+                        }),
+                        0
+                      )
                     ])
                   ])
                 ])
@@ -73749,7 +74299,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "modal-content" }, [
-                      _vm._m(13),
+                      _vm._m(14),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-body" }, [
                         _c("form", { attrs: { action: "" } }, [
@@ -73873,7 +74423,195 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(14)
+                      _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.add_treatment_record()
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                  Add Record\n                "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "modal fade",
+                attrs: {
+                  id: "modelId_update_record",
+                  tabindex: "-1",
+                  role: "dialog",
+                  "aria-labelledby": "exampleModalCenterTitle",
+                  "aria-hidden": "true"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-dialog modal-dialog-centered",
+                    attrs: { role: "document" }
+                  },
+                  [
+                    _c("div", { staticClass: "modal-content" }, [
+                      _vm._m(15),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-body" }, [
+                        _c("form", { attrs: { action: "" } }, [
+                          _c("div", { staticClass: "col-12" }, [
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Patient Treatments details:")]
+                                ),
+                                _vm._v(" "),
+                                _c("textarea", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.tform.treatment,
+                                      expression: "tform.treatment"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    id: "exampleFormControlTextarea1",
+                                    rows: "3",
+                                    placeholder: "Type patient tratment records"
+                                  },
+                                  domProps: { value: _vm.tform.treatment },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.tform,
+                                        "treatment",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Next Treatment (optional) :")]
+                                ),
+                                _vm._v(" "),
+                                _c("textarea", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.tform.next_treatment,
+                                      expression: "tform.next_treatment"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    rows: "3",
+                                    placeholder:
+                                      "Type Next treatment information records"
+                                  },
+                                  domProps: { value: _vm.tform.next_treatment },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.tform,
+                                        "next_treatment",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row form-group" }, [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "form-control" } },
+                                  [_vm._v("Next Treatment Date (optional):")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.tform.date,
+                                      expression: "tform.date"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "date" },
+                                  domProps: { value: _vm.tform.date },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.tform,
+                                        "date",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.update_treatment_record()
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                  Add Record\n                "
+                            )
+                          ]
+                        )
+                      ])
                     ])
                   ]
                 )
@@ -73884,16 +74622,16 @@ var render = function() {
               _c("div", { staticClass: "col-12" }, [
                 _c("div", { staticClass: "card shadow bg-white rounded" }, [
                   _c("div", { staticClass: "card-body" }, [
-                    _vm._m(15),
+                    _vm._m(16),
                     _vm._v(" "),
                     _c("table", { staticClass: "table table-striped" }, [
-                      _vm._m(16),
+                      _vm._m(17),
                       _vm._v(" "),
                       _c("tbody", [
                         _c("tr", { staticClass: "zoom" }, [
                           _c("td", [
                             _vm._v(
-                              "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                    "
+                              "\n                        Lorem ipsum dolor sit amet consectetur, adipisicing\n                      "
                             )
                           ]),
                           _vm._v(" "),
@@ -73915,7 +74653,7 @@ var render = function() {
                         _c("tr", [
                           _c("td", [
                             _vm._v(
-                              "\n                      Lorem ipsum dolor sit amet consectetur, adipisicing\n                    "
+                              "\n                        Lorem ipsum dolor sit amet consectetur, adipisicing\n                      "
                             )
                           ]),
                           _vm._v(" "),
@@ -73927,7 +74665,9 @@ var render = function() {
                                 "fa fa-eye text-success icon-button mx-1",
                               on: {
                                 click: function($event) {
-                                  return _vm.modal_appointment_view(_vm.app)
+                                  return _vm.update_history_record_modal(
+                                    _vm.treat
+                                  )
                                 }
                               }
                             })
@@ -73957,7 +74697,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Name")])])
+    return _c("div", { staticClass: "col-3" }, [
+      _c("h6", { staticStyle: { "font-weight": "bold" } }, [_vm._v("Name")])
+    ])
   },
   function() {
     var _vm = this
@@ -73969,7 +74711,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Address")])])
+    return _c("div", { staticClass: "col-3" }, [
+      _c("h6", { staticStyle: { "font-weight": "bold" } }, [_vm._v("Address")])
+    ])
   },
   function() {
     var _vm = this
@@ -73981,7 +74725,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Age")])])
+    return _c("div", { staticClass: "col-3" }, [
+      _c("h6", { staticStyle: { "font-weight": "bold" } }, [_vm._v("Age")])
+    ])
   },
   function() {
     var _vm = this
@@ -74001,13 +74747,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-8" }, [_c("h6")])
+    return _c("div", { staticClass: "col-4" }, [_c("h6")])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-8" }, [_c("h6")])
+    return _c("div", { staticClass: "col-4" }, [_c("h6")])
   },
   function() {
     var _vm = this
@@ -74027,7 +74773,43 @@ var staticRenderFns = [
             staticStyle: { color: "white" },
             attrs: { id: "exampleModalLongTitle" }
           },
-          [_vm._v("\n                Patient Data\n              ")]
+          [_vm._v("\n                  Patient Data\n                ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            attrs: {
+              type: "button",
+              "data-dismiss": "modal",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal-header",
+        staticStyle: { "background-color": "#1e3d73" }
+      },
+      [
+        _c(
+          "h5",
+          {
+            staticClass: "modal-title",
+            staticStyle: { color: "white" },
+            attrs: { id: "exampleModalLongTitle" }
+          },
+          [_vm._v("\n                  Add Bio Data\n                ")]
         ),
         _vm._v(" "),
         _c(
@@ -74059,9 +74841,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-inverse" }, [
       _c("tr", [
-        _c("th", { staticStyle: { width: "70%" } }, [_vm._v("Description")]),
+        _c("th", { staticStyle: { width: "70%" } }, [
+          _vm._v("History Records")
+        ]),
         _vm._v(" "),
-        _c("th", [_vm._v("Date")]),
+        _c("th", { staticStyle: { width: "20%" } }, [_vm._v("Date")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
@@ -74087,7 +74871,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                Add Patient Treatment Records\n              "
+              "\n                  Add Patient Treatment Records\n                "
             )
           ]
         ),
@@ -74112,13 +74896,42 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("\n                Add Record\n              ")]
-      )
-    ])
+    return _c(
+      "div",
+      {
+        staticClass: "modal-header",
+        staticStyle: { "background-color": "#1e3d73" }
+      },
+      [
+        _c(
+          "h5",
+          {
+            staticClass: "modal-title",
+            staticStyle: { color: "white" },
+            attrs: { id: "exampleModalLongTitle" }
+          },
+          [
+            _vm._v(
+              "\n                  Update Patient Treatment Records\n                "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            staticStyle: { color: "white" },
+            attrs: {
+              type: "button",
+              "data-dismiss": "modal",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        )
+      ]
+    )
   },
   function() {
     var _vm = this

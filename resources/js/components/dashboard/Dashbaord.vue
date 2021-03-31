@@ -2,7 +2,7 @@
   <div>
 
       <PatientDash v-if="$can('dashboard_management_view')" />
-      <DoctorDash v-if="$can('doctordash_management_view')" />
+      <DoctorDash :user_id="this.user_id" v-if="$can('doctordash_management_view')"/>
 
   </div>
 </template>
@@ -11,6 +11,7 @@
 import PatientDash from "./subs/patient"
 import DoctorDash from "./subs/doctor"
 export default {
+    props:["user_id"],
     components: {
         PatientDash,
         DoctorDash,

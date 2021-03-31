@@ -18,4 +18,9 @@ class Patient extends Model
         'status',
         'user_id'
     ];
+
+    public function documents()
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
 }

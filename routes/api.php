@@ -55,10 +55,14 @@ Route::group(['prefix' => 'patient'], function () {
     Route::post('assign/user/{patient_id}','API\ApiPatientController@assign_user_online');
     Route::patch('bio_data/{patient_id}','API\ApiPatientController@submit_patient_biometric_data');
     Route::get('get_patient/{search_keyword}','API\ApiPatientController@get_patient_by_search');
+    Route::post('add_bio_data','API\ApiPatientController@save_biometric_data');
     Route::get('get_biometric_data/{patient_id}','API\ApiPatientController@get_biometric_data_by_patientID');
-
+    Route::post('add_treatment/{patient_id}','API\ApiPatientController@save_treatment_data');
+    Route::get('get_treatment_data/{patient_id}','API\ApiPatientController@get_treatment_data_by_patient_id');
+    Route::patch('update_treatment/{treatment_id}','API\ApiPatientController@update_treatment_record');
 
 });
+
 
 Route::group(['prefix' => 'doctor'], function () {
    Route::post('addspeciality','API\AddSpecialityController@add_speciality');

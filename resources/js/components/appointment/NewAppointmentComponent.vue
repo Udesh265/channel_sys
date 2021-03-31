@@ -120,7 +120,6 @@
           </div>
           <div class="modal-body">
             <div v-if="Object.keys(selected_doc).length > 0">
-
               <h5>
                 Dear Customer,Your Appointment will be ready with Dr.{{
                   selected_doc.employee.first_name
@@ -143,8 +142,7 @@
                 <option value="On-Visit">On Visit</option>
                 <option value="Online">Online</option>
               </select>
-               <has-error :form="sform" field="payment_method"></has-error>
-
+              <has-error :form="sform" field="payment_method"></has-error>
             </div>
           </div>
           <div class="modal-footer">
@@ -169,8 +167,6 @@
     </div>
 
     <!-- end model -->
-
-
   </div>
 </template>
 
@@ -282,7 +278,7 @@ export default {
       this.sform.charge_pp = this.selected_doc.charge_pp;
       this.sform.p_id = this.patient_data.id;
       axios
-        .get("/api/schedule/get_one_schedule/" +  this.sform.schedule_id)
+        .get("/api/schedule/get_one_schedule/" + this.sform.schedule_id)
         .then((response) => {
           if (response.status == 200) {
             this.one_appointment = response.data;
@@ -296,25 +292,26 @@ export default {
     },
 
     submit_appointment: function () {
-    if(this.sform.payment_method == "Online"){
-
+      if (this.sform.payment_method == "Online") {
         this.sform
           .post("/api/appointment/submit_appointment")
           .then((response) => {
             if (response.status == 200) {
-
-              swal.fire({
-                position: "middle",
-                icon: "success",
-                title: response.data.msg,
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(() => {
+              swal
+                .fire({
+                  position: "middle",
+                  icon: "success",
+                  title: response.data.msg,
+                  showConfirmButton: false,
+                  timer: 1500,
+                })
+                .then(() => {
                   $("#appointment_model").modal("hide");
                   let payment_id = response.data.data.payment.payment_id;
 
-                      window.location.href = '/appointment/pay_online/' + payment_id
-              })
+                  window.location.href =
+                    "/appointment/pay_online/" + payment_id;
+                });
               // this.reset();
               // window.location.href = 'online_payment'
             }
@@ -322,24 +319,25 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-    }else{
-                this.sform
+      } else {
+        this.sform
           .post("/api/appointment/submit_appointment")
           .then((response) => {
             if (response.status == 200) {
-
-              swal.fire({
-                position: "middle",
-                icon: "success",
-                title: response.data.msg,
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(() => {
+              swal
+                .fire({
+                  position: "middle",
+                  icon: "success",
+                  title: response.data.msg,
+                  showConfirmButton: false,
+                  timer: 1500,
+                })
+                .then(() => {
                   $("#appointment_model").modal("hide");
                   let payment_id = response.data.data.payment.payment_id;
 
-                      window.location.href = 'view_appointment'
-              })
+                  window.location.href = "view_appointment";
+                });
               // this.reset();
               // window.location.href = 'online_payment'
             }
@@ -347,7 +345,7 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-    }
+      }
     },
 
     get_patient_by_user_id: function () {
