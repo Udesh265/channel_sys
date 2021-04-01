@@ -71,6 +71,14 @@ Route::group(['prefix' => 'doctor'], function () {
    Route::get('get_doc_list/{spec_id}','API\ApiDoctorController@get_doc_list_by_spec_id');
 });
 
+Route::group(['prefix' => 'lab'], function () {
+    Route::post('add_report_type','API\ApiLabTestController@add_report_type');
+    Route::get('get_all','API\ApiLabTestController@get_all');
+
+
+ });
+
+
 Route::group(['prefix' => 'schedule'], function () {
    Route::post('save','API\ApiScheduleController@store');
    Route::get('get/{employee_id}','API\ApiScheduleController@get_schedule');

@@ -87,7 +87,7 @@
                       type="button"
                       class="form-control btn btn-primary"
                       style="color: white"
-                      @click="biometric_modal()"
+                      @click="biometric_modal(biometric_data)"
                     >
                       Update
                     </button>
@@ -692,8 +692,9 @@ export default {
     };
   },
   methods: {
-    biometric_modal: function () {
+    biometric_modal: function (biometric_data) {
       $("#modelId_bio").modal("show");
+      this.pform.fill(biometric_data);
     },
     add_biometric_modal: function () {
       $("#add_bio_modal").modal("show");
@@ -806,9 +807,9 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             swal.fire(response.data.msg);
+            this.get_treatment_data_by_patient_id();
             this.reset();
              $("#modelId_update_record").modal("hide");
-            this.get_treatment_data_by_patient_id();
 
           }
         })

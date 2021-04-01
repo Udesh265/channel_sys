@@ -15,6 +15,9 @@ class CreateLabReportsTable extends Migration
     {
         Schema::create('lab_reports', function (Blueprint $table) {
             $table->id();
+            $table->integer("patient_id");
+            $table->integer("report_type_id");
+            $table->integer("document_id");
             $table->timestamps();
         });
     }

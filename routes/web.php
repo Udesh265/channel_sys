@@ -45,6 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('appointment/pay_online/{payment_id}','AppointmentController@pay_online')->name('online_payment');
 
+    Route::get('lab_appointment/new','LabTestController@new_test_appointment')->name('lab.new_appointment');
+
+    Route::get('lab/add_lab_report_types','LabTestController@add_lab_report_type')->name('lab.add_reports_type');
+
 
 
 
