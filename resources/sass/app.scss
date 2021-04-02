@@ -59,7 +59,11 @@
 
 .theme-default .cv-day.past {
     transition: 1s background-color;
-    background-color: #ddb8b8;
+    background-color: #afb6ac;
+    pointer-events: none;
+    cursor:no-drop;
+    color: #f71919;
+
 }
 
 .theme-default .cv-day.today {

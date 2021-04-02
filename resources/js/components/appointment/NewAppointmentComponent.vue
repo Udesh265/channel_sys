@@ -181,11 +181,9 @@ export default {
     this.get_doc_list();
     this.get_schedule();
 
-    $(this.$refs.appointment_model).on(
-      "hidden.bs.modal",
-      this.on_appointment_modal_close
-    );
-  },
+    $(this.$refs.appointment_model).on( "hidden.bs.modal", this.on_appointment_modal_close);
+
+    },
   data() {
     return {
       form: new Form({

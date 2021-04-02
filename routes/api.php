@@ -73,7 +73,10 @@ Route::group(['prefix' => 'doctor'], function () {
 
 Route::group(['prefix' => 'lab'], function () {
     Route::post('add_report_type','API\ApiLabTestController@add_report_type');
-    Route::get('get_all','API\ApiLabTestController@get_all');
+    Route::get('get_all','API\ApiLabTestController@get_all_report_type');
+    Route::patch('update/{id}','API\ApiLabTestController@update_report_type');
+    Route::get('get_report_type','API\ApiLabTestController@get_report_type');
+
 
 
  });

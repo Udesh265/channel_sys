@@ -24,7 +24,7 @@ class ApiAppointmentController extends Controller
     }
     public function get_patient_by_user($user_id)
     {
-        $p_data = Patient::find($user_id);
+        $p_data = Patient::where('user_id',$user_id)->first();
 
         return response()->json($p_data, 200);
     }
