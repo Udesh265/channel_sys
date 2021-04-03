@@ -6750,7 +6750,8 @@ __webpack_require__.r(__webpack_exports__);
       showDate: new Date(),
       patient_data: {},
       report_type_data: {},
-      selected_rtype: {}
+      selected_rtype: {},
+      display_date: ""
     };
   },
   methods: {
@@ -6770,8 +6771,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     calenderClicked: function calenderClicked(date) {
-      console.log(date);
-      this.aform.app_date = this.date;
+      var new_date = moment(date).format('LL');
+      console.log(new_date);
+      this.aform.app_date = date;
+      this.display_date = new_date;
       $("#lab_appointment_model").modal("show");
     },
     get_report_type: function get_report_type() {
@@ -78495,7 +78498,7 @@ var render = function() {
                     _c("h5", [
                       _vm._v(
                         "Dear Customer,Your Appointment will be ready at " +
-                          _vm._s(this.date)
+                          _vm._s(_vm.display_date)
                       )
                     ]),
                     _vm._v(" "),

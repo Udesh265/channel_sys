@@ -134,7 +134,7 @@
                     <li class="dropdown user-profile align-self-center d-inline-block">
                         <a href="#" class="nav-link py-0" data-toggle="dropdown" aria-expanded="false">
                             <div class="media">
-                                <img src="https://via.placeholder.com/600x600" alt="" class="d-flex img-fluid rounded-circle"
+                                <img src="{{ Auth::user()->photo->path }}" alt="" class="d-flex img-fluid rounded-circle"
                                     width="35">
                             </div>
                         </a>
