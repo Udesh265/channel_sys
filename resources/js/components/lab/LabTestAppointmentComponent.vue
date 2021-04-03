@@ -8,8 +8,8 @@
             <div class="col-6">
               <div class="form-group">
                 <label for="form-control"><h6>Select Report Type :</h6></label>
-                <select class="form-control" v-model="selected_rtype">
-                  <option v-for="(type,index) in report_type_data" :key="index" :value="type">
+                <select class="form-control" v-model="aform.rtype_id">
+                  <option v-for="(type,index) in report_type_data" :key="index" :value="type.id">
                       {{ type.report_type }}
                   </option>
                 </select>
@@ -18,7 +18,7 @@
             <div class="col-6">
               <div class="form-group">
                 <label for="form-control"><h6>Report Fee :</h6></label>
-                <input type="text" disabled class="form-control" v-model="selected_rtype.fee">
+                <input type="text" disabled class="form-control" :value="report_fee.fee">
               </div>
             </div>
           </div>
@@ -90,7 +90,6 @@
               <label for="form-control"> Payment Method</label>
               <select
                 v-model="aform.payment_method"
-                @change="get_schedule"
                 class="form-control"
                 :class="{ 'is-invalid': sform.errors.has('payment_method') }"
               >
@@ -141,7 +140,7 @@ export default {
         user_id: this.user_id,
         patient_id: "",
         payment_method: "",
-        fee:"",
+        rtype_id:"",
       }),
       sform: new Form({
         charge_pp: "",
@@ -197,6 +196,15 @@ export default {
 
     }
   },
+  computed: {
+      report_fee() {
+          if(this.aform.rtype_id) {
+              return _.find(this.report_type_data, {id: this.aform.rtype_id})
+          }
+
+          return {fee: null};
+      }
+  }
 };
 </script>
 

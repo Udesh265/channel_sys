@@ -6722,7 +6722,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
   created: function created() {
@@ -6737,7 +6736,7 @@ __webpack_require__.r(__webpack_exports__);
         user_id: this.user_id,
         patient_id: "",
         payment_method: "",
-        fee: ""
+        rtype_id: ""
       }),
       sform: new Form({
         charge_pp: "",
@@ -6787,6 +6786,19 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    }
+  },
+  computed: {
+    report_fee: function report_fee() {
+      if (this.aform.rtype_id) {
+        return _.find(this.report_type_data, {
+          id: this.aform.rtype_id
+        });
+      }
+
+      return {
+        fee: null
+      };
     }
   }
 });
@@ -78355,8 +78367,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.selected_rtype,
-                        expression: "selected_rtype"
+                        value: _vm.aform.rtype_id,
+                        expression: "aform.rtype_id"
                       }
                     ],
                     staticClass: "form-control",
@@ -78370,16 +78382,20 @@ var render = function() {
                             var val = "_value" in o ? o._value : o.value
                             return val
                           })
-                        _vm.selected_rtype = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
+                        _vm.$set(
+                          _vm.aform,
+                          "rtype_id",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
                       }
                     }
                   },
                   _vm._l(_vm.report_type_data, function(type, index) {
                     return _c(
                       "option",
-                      { key: index, domProps: { value: type } },
+                      { key: index, domProps: { value: type.id } },
                       [
                         _vm._v(
                           "\n                    " +
@@ -78399,25 +78415,9 @@ var render = function() {
                 _vm._m(1),
                 _vm._v(" "),
                 _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.selected_rtype.fee,
-                      expression: "selected_rtype.fee"
-                    }
-                  ],
                   staticClass: "form-control",
                   attrs: { type: "text", disabled: "" },
-                  domProps: { value: _vm.selected_rtype.fee },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.selected_rtype, "fee", $event.target.value)
-                    }
-                  }
+                  domProps: { value: _vm.report_fee.fee }
                 })
               ])
             ])
@@ -78532,26 +78532,23 @@ var render = function() {
                           "is-invalid": _vm.sform.errors.has("payment_method")
                         },
                         on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.aform,
-                                "payment_method",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            },
-                            _vm.get_schedule
-                          ]
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.aform,
+                              "payment_method",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
                         }
                       },
                       [
