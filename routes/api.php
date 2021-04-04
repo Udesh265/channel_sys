@@ -76,6 +76,8 @@ Route::group(['prefix' => 'lab'], function () {
     Route::get('get_all','API\ApiLabTestController@get_all_report_type');
     Route::patch('update/{id}','API\ApiLabTestController@update_report_type');
     Route::get('get_report_type','API\ApiLabTestController@get_report_type');
+    Route::post('submit_appointment','API\ApiLabTestController@submit_appointment');
+    Route::get('get_lab_appointment/{patient_id}','API\ApiLabTestController@get_lab_appointment');
 
 
 

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Report_type extends Model
 {
@@ -11,4 +12,9 @@ class Report_type extends Model
         'report_type',
         'fee',
     ];
+
+
+    public function lab_app(){
+        return $this.BelongsTo(Lab_test_appointment::class);
+    }
 }

@@ -3920,11 +3920,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
   created: function created() {
     this.get_total_appointment();
     this.get_patient_by_user_id();
+    this.get_lab_appointments();
   },
   mounted: function mounted() {// this.get_total_appointment_amount();
   },
@@ -3936,6 +3988,7 @@ __webpack_require__.r(__webpack_exports__);
       panding_amount: {},
       appointment_list: {},
       selected_appointment: {},
+      lab_app_list: {},
       vform: new Form({
         p_id: "",
         app_id: ""
@@ -4031,6 +4084,18 @@ __webpack_require__.r(__webpack_exports__);
     modal_appointment_view: function modal_appointment_view(app) {
       $("#modal_app_view").modal("show");
       this.selected_appointment = app;
+    },
+    get_lab_appointments: function get_lab_appointments() {
+      var _this7 = this;
+
+      this.patient_id = this.vform.p_id;
+      axios.get("/api/lab/get_lab_appointment/" + this.patient_id).then(function (response) {
+        if (response.status == 200) {
+          _this7.lab_app_list = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -6722,8 +6787,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
+  computed: {
+    report_fee: function report_fee() {
+      if (this.aform.rtype_id) {
+        return _.find(this.report_type_data, {
+          id: this.aform.rtype_id
+        });
+      }
+
+      return {
+        fee: null
+      };
+    }
+  },
   created: function created() {
     this.get_patient_by_user_id();
     this.get_report_type();
@@ -6736,20 +6827,14 @@ __webpack_require__.r(__webpack_exports__);
         user_id: this.user_id,
         patient_id: "",
         payment_method: "",
-        rtype_id: ""
-      }),
-      sform: new Form({
-        charge_pp: "",
-        payment_method: "",
-        schedule_id: "",
-        user_id: this.user_id,
-        status: "1",
-        p_id: ""
+        rtype_id: "",
+        appointment_type: "Register",
+        // registered patient or regular patient
+        status: "pending"
       }),
       showDate: new Date(),
       patient_data: {},
       report_type_data: {},
-      selected_rtype: {},
       display_date: ""
     };
   },
@@ -6786,19 +6871,49 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
-    }
-  },
-  computed: {
-    report_fee: function report_fee() {
-      if (this.aform.rtype_id) {
-        return _.find(this.report_type_data, {
-          id: this.aform.rtype_id
+    },
+    submit_lab_appointment: function submit_lab_appointment() {
+      if (this.aform.payment_method == "Online") {
+        this.aform.post("/api/lab/submit_appointment").then(function (response) {
+          if (response.status == 200) {
+            swal.fire({
+              position: "middle",
+              icon: "success",
+              title: response.data.msg,
+              showConfirmButton: false,
+              timer: 1500
+            }).then(function () {
+              $("#lab_appointment_model").modal("hide");
+              var payment_id = response.data.data.payment.payment_id;
+              window.location.href = "/appointment/pay_online/" + payment_id;
+            }); // this.reset();
+            // window.location.href = 'online_payment'
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else this.aform.payment_method == "On-Visit";
+
+      {
+        this.aform.post("/api/lab/submit_appointment").then(function (response) {
+          if (response.status == 200) {
+            swal.fire({
+              position: "middle",
+              icon: "success",
+              title: response.data.msg,
+              showConfirmButton: false,
+              timer: 1500
+            }).then(function () {
+              $("#lab_appointment_model").modal("hide");
+              var payment_id = response.data.data.payment.payment_id;
+              window.location.href = "view_appointment";
+            }); // this.reset();
+            // window.location.href = 'online_payment'
+          }
+        })["catch"](function (error) {
+          console.log(error);
         });
       }
-
-      return {
-        fee: null
-      };
     }
   }
 });
@@ -73640,6 +73755,80 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 mt-3" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table font-w-600 mb-0" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.appointment_list, function(app, index) {
+                  return _c("tr", { key: index, staticClass: "zoom" }, [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(app.token.token))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-success" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.schedule.employee.doctor.speciality.name) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.schedule.employee.first_name) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.schedule.startDate))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.payment.payment_status))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.payment.type))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _c("i", {
+                        staticClass: "fa fa-trash text-danger icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.delete_app(app.id)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "fa fa-eye text-success icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.modal_appointment_view(app)
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -73661,7 +73850,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(4),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm.selected_appointment.hasOwnProperty("schedule")
@@ -73697,7 +73886,7 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(5)
             ])
           ]
         )
@@ -73713,7 +73902,11 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "card-header justify-content-between align-items-center" },
-      [_c("h6", { staticClass: "card-title" }, [_vm._v("View Appointments")])]
+      [
+        _c("h6", { staticClass: "card-title" }, [
+          _vm._v("View Doctors Appointments")
+        ])
+      ]
     )
   },
   function() {
@@ -73733,6 +73926,38 @@ var staticRenderFns = [
         _c("th", [_vm._v("Payment Status")]),
         _vm._v(" "),
         _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header justify-content-between align-items-center" },
+      [
+        _c("h6", { staticClass: "card-title" }, [
+          _vm._v("View Lab Appointments")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Appointment Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Report Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Payment Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fee")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
@@ -78398,7 +78623,7 @@ var render = function() {
                       { key: index, domProps: { value: type.id } },
                       [
                         _vm._v(
-                          "\n                    " +
+                          "\n                  " +
                             _vm._s(type.report_type) +
                             "\n                "
                         )
@@ -78497,8 +78722,9 @@ var render = function() {
                   [
                     _c("h5", [
                       _vm._v(
-                        "Dear Customer,Your Appointment will be ready at " +
-                          _vm._s(_vm.display_date)
+                        "\n              Dear Customer,Your Appointment will be ready at\n              " +
+                          _vm._s(_vm.display_date) +
+                          "\n            "
                       )
                     ]),
                     _vm._v(" "),
@@ -78529,7 +78755,7 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         class: {
-                          "is-invalid": _vm.sform.errors.has("payment_method")
+                          "is-invalid": _vm.aform.errors.has("payment_method")
                         },
                         on: {
                           change: function($event) {
@@ -78563,7 +78789,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("has-error", {
-                      attrs: { form: _vm.sform, field: "payment_method" }
+                      attrs: { form: _vm.aform, field: "payment_method" }
                     })
                   ],
                   1
@@ -78592,7 +78818,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.submit_appointment()
+                        return _vm.submit_lab_appointment()
                       }
                     }
                   },

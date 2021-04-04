@@ -34,7 +34,7 @@
       <div class="col-12 mt-3">
         <div class="card">
           <div class="card-header justify-content-between align-items-center">
-            <h6 class="card-title">View Appointments</h6>
+            <h6 class="card-title">View Doctors Appointments</h6>
           </div>
           <div class="card-body table-responsive p-0">
             <table class="table font-w-600 mb-0">
@@ -46,6 +46,57 @@
                   <th>Appointment Date</th>
                   <th>Payment Status</th>
                   <th>Type</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="zoom"
+                  v-for="(app, index) in appointment_list"
+                  :key="index"
+
+                >
+                  <th scope="row">{{ app.token.token }}</th>
+                  <td class="text-success">
+                    {{ app.schedule.employee.doctor.speciality.name }}
+                  </td>
+                  <td class="text-danger">
+                    {{ app.schedule.employee.first_name }}
+                  </td>
+                  <td class="text-info">{{ app.schedule.startDate }}</td>
+                   <td  class="text-info">{{ app.payment.payment_status }}</td>
+                    <td  class="text-info">{{ app.payment.type }}</td>
+                  <td class="text-info">
+                    <i
+                      class="fa fa-trash text-danger icon-button mx-1"
+                      @click="delete_app(app.id)"
+                    ></i>
+                      <i
+                      class="fa fa-eye text-success icon-button mx-1"
+                      @click="modal_appointment_view(app)"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mt-3">
+        <div class="card">
+          <div class="card-header justify-content-between align-items-center">
+            <h6 class="card-title">View Lab Appointments</h6>
+          </div>
+          <div class="card-body table-responsive p-0">
+            <table class="table font-w-600 mb-0">
+              <thead>
+                <tr>
+                  <th>Appointment Date</th>
+                  <th>Report Type</th>
+                  <th>Payment Status</th>
+                  <th>Fee</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -114,6 +165,7 @@ export default {
   created() {
     this.get_total_appointment();
     this.get_patient_by_user_id();
+    this.get_lab_appointments();
   },
 
   mounted() {
@@ -127,6 +179,7 @@ export default {
       panding_amount: {},
       appointment_list: {},
       selected_appointment:{},
+      lab_app_list:{},
 
 
 
@@ -240,6 +293,20 @@ export default {
 
 
   },
+
+  get_lab_appointments: function(){
+      this.patient_id = this.vform.p_id;
+    axios.get("/api/lab/get_lab_appointment/" + this.patient_id)
+    .then((response)=>{
+        if(response.status == 200){
+            this.lab_app_list = response.data;
+        }
+
+    })
+    .catch((error)=>{
+        console.log(error);
+    });
+  }
 
   },
 };

@@ -49,6 +49,7 @@ class ApiAppointmentController extends Controller
         $data->id;
 
 
+
         $appointment_data = Appointment::create([
             'schedule_id' => $request->schedule_id,
             'user_id' => $request->user_id,

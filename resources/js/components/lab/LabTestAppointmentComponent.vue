@@ -9,8 +9,12 @@
               <div class="form-group">
                 <label for="form-control"><h6>Select Report Type :</h6></label>
                 <select class="form-control" v-model="aform.rtype_id">
-                  <option v-for="(type,index) in report_type_data" :key="index" :value="type.id">
-                      {{ type.report_type }}
+                  <option
+                    v-for="(type, index) in report_type_data"
+                    :key="index"
+                    :value="type.id"
+                  >
+                    {{ type.report_type }}
                   </option>
                 </select>
               </div>
@@ -18,7 +22,13 @@
             <div class="col-6">
               <div class="form-group">
                 <label for="form-control"><h6>Report Fee :</h6></label>
-                <input type="text" disabled class="form-control" :value="report_fee.fee">
+                <input
+                  type="text"
+                  disabled
+                  class="form-control"
+                  :value="report_fee.fee"
+                />
+                <!-- this report value value comes from computed function lowdash  -->
               </div>
             </div>
           </div>
@@ -80,7 +90,10 @@
           </div>
           <div class="modal-body">
             <div>
-              <h5>Dear Customer,Your Appointment will be ready at {{ display_date}}</h5>
+              <h5>
+                Dear Customer,Your Appointment will be ready at
+                {{ display_date }}
+              </h5>
               <br />
               <h6>
                 Please Select the payment method and confirm your appointment.
@@ -91,12 +104,12 @@
               <select
                 v-model="aform.payment_method"
                 class="form-control"
-                :class="{ 'is-invalid': sform.errors.has('payment_method') }"
+                :class="{ 'is-invalid': aform.errors.has('payment_method') }"
               >
                 <option value="On-Visit">On Visit</option>
                 <option value="Online">Online</option>
               </select>
-              <has-error :form="sform" field="payment_method"></has-error>
+              <has-error :form="aform" field="payment_method"></has-error>
             </div>
           </div>
           <div class="modal-footer">
@@ -110,7 +123,7 @@
             </button>
             <button
               type="button"
-              @click="submit_appointment()"
+              @click="submit_lab_appointment()"
               class="btn btn-primary"
             >
               Confirm Appointment
@@ -127,6 +140,15 @@
 <script>
 export default {
   props: ["user_id"],
+    computed: {
+      report_fee() {
+          if(this.aform.rtype_id) {
+              return _.find(this.report_type_data, {id: this.aform.rtype_id})
+          }
+
+          return {fee: null};
+      }
+  },
   created() {
     this.get_patient_by_user_id();
     this.get_report_type();
@@ -141,19 +163,13 @@ export default {
         patient_id: "",
         payment_method: "",
         rtype_id:"",
+        appointment_type:"Register", // registered patient or regular patient
+        status:"pending"
       }),
-      sform: new Form({
-        charge_pp: "",
-        payment_method: "",
-        schedule_id: "",
-        user_id: this.user_id,
-        status: "1",
-        p_id: "",
-      }),
+
       showDate: new Date(),
       patient_data: {},
       report_type_data:{},
-      selected_rtype:{},
       display_date:"",
     };
   },
@@ -187,24 +203,78 @@ export default {
          .then((response) => {
           if (response.status == 200) {
             this.report_type_data = response.data;
-
           }
         })
         .catch((error) => {
           console.log(error);
         });
 
-    }
-  },
-  computed: {
-      report_fee() {
-          if(this.aform.rtype_id) {
-              return _.find(this.report_type_data, {id: this.aform.rtype_id})
-          }
+    },
 
-          return {fee: null};
-      }
-  }
+    submit_lab_appointment: function (){
+
+        if(this.aform.payment_method == "Online")
+        {
+        this.aform.post("/api/lab/submit_appointment")
+         .then((response) => {
+          if (response.status == 200) {
+              swal
+                .fire({
+                  position: "middle",
+                  icon: "success",
+                  title: response.data.msg,
+                  showConfirmButton: false,
+                  timer: 1500,
+                })
+                .then(() => {
+                  $("#lab_appointment_model").modal("hide");
+                  let payment_id = response.data.data.payment.payment_id;
+
+                  window.location.href =
+                    "/appointment/pay_online/" + payment_id;
+                });
+              // this.reset();
+              // window.location.href = 'online_payment'
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
+    else(this.aform.payment_method == "On-Visit")
+    {
+        this.aform
+          .post("/api/lab/submit_appointment")
+          .then((response) => {
+            if (response.status == 200) {
+              swal
+                .fire({
+                  position: "middle",
+                  icon: "success",
+                  title: response.data.msg,
+                  showConfirmButton: false,
+                  timer: 1500,
+                })
+                .then(() => {
+                  $("#lab_appointment_model").modal("hide");
+                  let payment_id = response.data.data.payment.payment_id;
+
+                  window.location.href = "view_appointment";
+                });
+              // this.reset();
+              // window.location.href = 'online_payment'
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+    }
+
+    },
+
+  },
+
 };
 </script>
 
