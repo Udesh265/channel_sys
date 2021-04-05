@@ -95,7 +95,9 @@ Route::group(['prefix' => 'schedule'], function () {
 Route::group(['prefix' => 'appointment'], function () {
     Route::get('get/{employee_id}','API\ApiAppointmentController@get_schedule_appointment');
     Route::post('submit_appointment','API\ApiAppointmentController@submit_appointment');
-    Route::get('get_patient/{user_id}','API\ApiAppointmentController@get_patient_by_user');
+    Route::get('get_patient/{patient_id}','API\ApiAppointmentController@get_patient_by_user');
+    Route::get('get_patient_by_userID/{user_id}','API\ApiAppointmentController@get_patient_by_userID');
+
     Route::get('get_app_by_userID/{user_id}','API\ApiAppointmentController@get_appoitment_by_userID');
     Route::get('get_tot_amount/{p_id}','API\ApiAppointmentController@get_app_total_amount');
     Route::get('get_pending_pay/{p_id}','API\ApiAppointmentController@get_pending_payment');

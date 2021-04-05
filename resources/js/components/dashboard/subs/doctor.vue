@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div v-if="patient_id == patient_data.id">
+      <div v-if="pform.patient_id == patient_data.id">
         <div class="row mt-3">
           <div class="col-5">
             <div class="card bg-white">

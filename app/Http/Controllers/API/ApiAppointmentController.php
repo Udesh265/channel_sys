@@ -22,7 +22,13 @@ class ApiAppointmentController extends Controller
 
         return response()->json($employee_schedules, 200);
     }
-    public function get_patient_by_user($user_id)
+    public function get_patient_by_user($patient_id)
+    {
+        $p_data = Patient::where('id',$patient_id)->first();
+
+        return response()->json($p_data, 200);
+    }
+    public function get_patient_by_userID($user_id)
     {
         $p_data = Patient::where('user_id',$user_id)->first();
 

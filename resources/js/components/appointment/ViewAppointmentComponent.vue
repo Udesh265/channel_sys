@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-body text-info border-bottom border-info border-w-5">
             <h2 class="text-center">{{ appointment_data }}</h2>
-            <h6 class="text-center">Total Appointments</h6>
+            <h6 class="text-center">Total Doctors Appointments</h6>
           </div>
         </div>
       </div>
@@ -54,7 +54,6 @@
                   class="zoom"
                   v-for="(app, index) in appointment_list"
                   :key="index"
-
                 >
                   <th scope="row">{{ app.token.token }}</th>
                   <td class="text-success">
@@ -64,14 +63,14 @@
                     {{ app.schedule.employee.first_name }}
                   </td>
                   <td class="text-info">{{ app.schedule.startDate }}</td>
-                   <td  class="text-info">{{ app.payment.payment_status }}</td>
-                    <td  class="text-info">{{ app.payment.type }}</td>
+                  <td class="text-info">{{ app.payment.payment_status }}</td>
+                  <td class="text-info">{{ app.payment.type }}</td>
                   <td class="text-info">
                     <i
                       class="fa fa-trash text-danger icon-button mx-1"
                       @click="delete_app(app.id)"
                     ></i>
-                      <i
+                    <i
                       class="fa fa-eye text-success icon-button mx-1"
                       @click="modal_appointment_view(app)"
                     ></i>
@@ -103,28 +102,26 @@
               <tbody>
                 <tr
                   class="zoom"
-                  v-for="(app, index) in appointment_list"
+                  v-for="(app, index) in lab_app_list"
                   :key="index"
-
                 >
-                  <th scope="row">{{ app.token.token }}</th>
+                  <th scope="row">{{ app.date }}</th>
                   <td class="text-success">
-                    {{ app.schedule.employee.doctor.speciality.name }}
+                    {{ app.report_type.report_type }}
                   </td>
                   <td class="text-danger">
-                    {{ app.schedule.employee.first_name }}
+                    {{ app.payment.payment_status }}
                   </td>
-                  <td class="text-info">{{ app.schedule.startDate }}</td>
-                   <td  class="text-info">{{ app.payment.payment_status }}</td>
-                    <td  class="text-info">{{ app.payment.type }}</td>
+                  <td class="text-info">{{ app.report_type.fee }}</td>
+
                   <td class="text-info">
                     <i
                       class="fa fa-trash text-danger icon-button mx-1"
                       @click="delete_app(app.id)"
                     ></i>
-                      <i
+                    <i
                       class="fa fa-eye text-success icon-button mx-1"
-                      @click="modal_appointment_view(app)"
+                      @click="modal_lab_app_view(app)"
                     ></i>
                   </td>
                 </tr>
@@ -136,25 +133,103 @@
     </div>
     <!-- appoitnment view modal start -->
     <!-- Modal -->
-    <div class="modal fade" id="modal_app_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#001638 ">
-                    <h5 class="modal-title" style="color:white">Doctor Appointment</h5>
-                        <button style="color:white" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                </div>
-                <div class="modal-body">
-                    <h5  v-if="selected_appointment.hasOwnProperty('schedule')">Your Appointment at : {{ selected_appointment.schedule.startDate }}</h5><br>
-                    <h5 v-if="selected_appointment.hasOwnProperty('schedule')">Doctor : {{ selected_appointment.schedule.employee.first_name }}</h5>
-                    <br><h3 class="text-center" v-if="selected_appointment.hasOwnProperty('token')">TOKEN ID: {{ selected_appointment.token.token }}</h3>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="modal_app_view"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #001638">
+            <h5 class="modal-title" style="color: white">Doctor Appointment</h5>
+            <button
+              style="color: white"
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5 v-if="selected_appointment.hasOwnProperty('schedule')">
+              Your Appointment at :
+              {{ selected_appointment.schedule.startDate }}
+            </h5>
+            <br />
+            <h5 v-if="selected_appointment.hasOwnProperty('schedule')">
+              Doctor : {{ selected_appointment.schedule.employee.first_name }}
+            </h5>
+            <br />
+            <h3
+              class="text-center"
+              v-if="selected_appointment.hasOwnProperty('token')"
+            >
+              TOKEN ID: {{ selected_appointment.token.token }}
+            </h3>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
         </div>
+      </div>
+      <!-- End doctor appointment  -->
+
+       <!--Lab Appoitnment view modal start -->
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="modal_lab_app_view"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #001638">
+            <h5 class="modal-title" style="color: white">Lab Appointment</h5>
+            <button
+              style="color: white"
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5>
+              Your Appointment at :
+              {{  }}
+            </h5>
+
+            <br />
+
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -178,14 +253,14 @@ export default {
       total_app_amount: {},
       panding_amount: {},
       appointment_list: {},
-      selected_appointment:{},
-      lab_app_list:{},
-
-
+      selected_appointment: {},
+      lab_app_list: {},
+      display_appointment_date:"",
+      selected_lab_appointment_data:{},
 
       vform: new Form({
         p_id: "",
-        app_id:"",
+        app_id: "",
       }),
     };
   },
@@ -205,7 +280,7 @@ export default {
 
     get_patient_by_user_id: function () {
       axios
-        .get("/api/appointment/get_patient/" + this.user_id)
+        .get("/api/appointment/get_patient_by_userID/" + this.user_id)
         .then((response) => {
           if (response.status == 200) {
             this.patient_data = response.data;
@@ -252,15 +327,17 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             this.appointment_list = response.data;
-            //    this.vform.app_id = this.app.id;
+            // let new_date = moment(this.appointment_list.).format("LL");
+            // this.display_doctor_appointment_date = new_date;
+
           }
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    delete_app: function(id){
-         swal
+    delete_app: function (id) {
+      swal
         .fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -272,42 +349,44 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
+            axios
+              .patch("/api/appointment/del/" + id)
+              .then((response) => {
+                if (response.status == 200) {
+                  this.get_appointment_list();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+    },
 
-        axios.patch("/api/appointment/del/" + id)
-                .then((response) => {
+    modal_appointment_view: function (app) {
+      $("#modal_app_view").modal("show");
+      this.selected_appointment = app;
+    },
+    modal_lab_app_view: function (app) {
+      $("#modal_lab_app_view").modal("show");
+      this.selected_lab_appointment_data = app;
+    },
+
+
+
+    get_lab_appointments: function () {
+      axios
+        .get("/api/lab/get_lab_appointment/" + this.user_id)
+        .then((response) => {
           if (response.status == 200) {
-              this.get_appointment_list();
+            this.lab_app_list = response.data;
+
           }
         })
         .catch((error) => {
           console.log(error);
         });
-          }
-        });
-
-  },
-
-  modal_appointment_view: function(app){
-      $("#modal_app_view").modal("show");
-      this.selected_appointment = app;
-
-
-  },
-
-  get_lab_appointments: function(){
-      this.patient_id = this.vform.p_id;
-    axios.get("/api/lab/get_lab_appointment/" + this.patient_id)
-    .then((response)=>{
-        if(response.status == 200){
-            this.lab_app_list = response.data;
-        }
-
-    })
-    .catch((error)=>{
-        console.log(error);
-    });
-  }
-
+    },
   },
 };
 </script>

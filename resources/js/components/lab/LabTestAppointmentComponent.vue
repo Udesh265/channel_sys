@@ -241,7 +241,7 @@ export default {
             console.log(error);
           });
     }
-    else(this.aform.payment_method == "On-Visit")
+    else
     {
         this.aform
           .post("/api/lab/submit_appointment")
@@ -259,7 +259,7 @@ export default {
                   $("#lab_appointment_model").modal("hide");
                   let payment_id = response.data.data.payment.payment_id;
 
-                  window.location.href = "view_appointment";
+                  window.location.href = "http://dev.cs/appoitnment/view_appointment";
                 });
               // this.reset();
               // window.location.href = 'online_payment'

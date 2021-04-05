@@ -348,7 +348,7 @@ export default {
 
     get_patient_by_user_id: function () {
       axios
-        .get("/api/appointment/get_patient/" + this.user_id)
+        .get("/api/appointment/get_patient_by_userID/" + this.user_id)
         .then((response) => {
           if (response.status == 200) {
             this.patient_data = response.data;

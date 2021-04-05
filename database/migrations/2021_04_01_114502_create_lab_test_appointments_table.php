@@ -15,7 +15,7 @@ class CreateLabTestAppointmentsTable extends Migration
     {
         Schema::create('lab_test_appointments', function (Blueprint $table) {
             $table->id();
-            $table->dateTime("date");
+            $table->date("date");
             $table->integer('user_id');
             $table->integer('payment_id');
             $table->integer('patient_id');
