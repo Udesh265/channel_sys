@@ -29,4 +29,11 @@ class Lab_test_appointment extends Model
     {
         return $this->belongsTo(Payment::class);
     }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class,'patient_id');
+    }
+
+
 }

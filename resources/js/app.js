@@ -103,6 +103,7 @@ Vue.component('view-appointment-component',require('./components/appointment/Vie
 Vue.component('online-payment-component',require('./components/appointment/OnlinePaymentComponent.vue').default);
 Vue.component('lab-test-appointment-component',require('./components/lab/LabTestAppointmentComponent.vue').default);
 Vue.component('lab-report-type-component',require('./components/lab/LabReportType.vue').default);
+Vue.component('laboraty-overview-component',require('./components/lab/LaboratyOverviewComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

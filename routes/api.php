@@ -106,6 +106,19 @@ Route::group(['prefix' => 'appointment'], function () {
     Route::patch('online_payment/{pay_id}','API\ApiPaymentController@submit_payment');
 });
 
+Route::group(['prefix' => 'laboraty'], function () {
+    Route::get('get_waiting_list','API\ApiLaboratyController@get_waiting_list');
+    Route::patch('check_appointment/{id}','API\ApiLaboratyController@check_appointment');
+    Route::get('get_processing_list','API\ApiLaboratyController@get_processing_list');
+    Route::patch('checked_processing/{id}','API\ApiLaboratyController@checked_processing');
+    Route::get('get_deliver_list','API\ApiLaboratyController@get_deliver_list');
+
+
+
+ });
+
+
+
 Route::apiResource('employee','API\ApiEmployeeController');
 
 Route::get('joblist','API\ApiEmployeeController@job_list');

@@ -6926,7 +6926,7 @@ __webpack_require__.r(__webpack_exports__);
     get_patient_by_user_id: function get_patient_by_user_id() {
       var _this = this;
 
-      axios.get("/api/appointment/get_patient/" + this.user_id).then(function (response) {
+      axios.get("/api/appointment/get_patient_by_userID/" + this.user_id).then(function (response) {
         if (response.status == 200) {
           _this.patient_data = response.data;
           _this.aform.patient_id = _this.patient_data.id;
@@ -6993,6 +6993,245 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error);
         });
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    this.get_waiting_app_list();
+    this.get_processing_list();
+    this.get_deliver_list();
+  },
+  mounted: function mounted() {// this.get_waiting_app_list();
+  },
+  data: function data() {
+    return {
+      waiting_list: {},
+      processing_list: {},
+      deliver_list: {}
+    };
+  },
+  methods: {
+    get_waiting_app_list: function get_waiting_app_list() {
+      var _this = this;
+
+      axios.get("/api/laboraty/get_waiting_list").then(function (response) {
+        if (response.status == 200) {
+          _this.waiting_list = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    check_appointment: function check_appointment(id) {
+      var _this2 = this;
+
+      // console.log(id);
+      axios.patch("/api/laboraty/check_appointment/" + id).then(function (response) {
+        if (response.status == 200) {
+          swal.fire(response.data.msg);
+
+          _this2.get_waiting_app_list();
+
+          _this2.get_processing_list();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_processing_list: function get_processing_list() {
+      var _this3 = this;
+
+      axios.get("/api/laboraty/get_processing_list").then(function (response) {
+        if (response.status == 200) {
+          _this3.processing_list = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    checked_processing: function checked_processing(id) {
+      var _this4 = this;
+
+      axios.patch("/api/laboraty/checked_processing/" + id).then(function (response) {
+        if (response.status == 200) {
+          swal.fire(response.data.msg);
+
+          _this4.get_processing_list();
+
+          _this4.get_deliver_list();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_deliver_list: function get_deliver_list() {
+      var _this5 = this;
+
+      axios.get("/api/laboraty/get_deliver_list").then(function (response) {
+        if (response.status == 200) {
+          _this5.deliver_list = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -79055,6 +79294,320 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=template&id=4a7e0f51&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=template&id=4a7e0f51& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.waiting_list, function(data, index) {
+                  return _c("tr", { key: index, staticClass: "zoom" }, [
+                    _c("td", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(data.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(data.report_type.report_type) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-success" }, [
+                      _vm._v(_vm._s(data.patient.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(data.patient.mobile))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(data.payment.type))]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _c("i", {
+                        staticClass: "fa fa-check icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.check_appointment(data.id)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "fa fa-eye text-success icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.modal_appointment_view(_vm.app)
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-3" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.processing_list, function(data, index) {
+                  return _c("tr", { key: index, staticClass: "zoom" }, [
+                    _c("td", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(data.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(data.report_type.report_type) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-success" }, [
+                      _vm._v(_vm._s(data.patient.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(data.patient.mobile))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(data.payment.type))]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _c("i", {
+                        staticClass: "fa fa-check icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.checked_processing(data.id)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "fa fa-eye text-success icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.modal_appointment_view(_vm.app)
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-3" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(4),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(5),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.deliver_list, function(data, index) {
+                  return _c("tr", { key: index, staticClass: "zoom" }, [
+                    _c("td", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(data.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(data.report_type.report_type) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-success" }, [
+                      _vm._v(_vm._s(data.patient.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(data.patient.mobile))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(data.payment.type))]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _c("i", {
+                        staticClass:
+                          "fa fa-upload text-success icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.modal_appointment_view(_vm.app)
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "card-header",
+        staticStyle: { "background-color": "#f64e60" }
+      },
+      [
+        _c("h6", { staticStyle: { color: "white" } }, [
+          _vm._v("Today Appointment List")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Report Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Patient Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Mobile")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "card-header",
+        staticStyle: { "background-color": "#17a2b8" }
+      },
+      [
+        _c("h6", { staticStyle: { color: "white" } }, [
+          _vm._v("Processing List")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Report Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Patient Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Mobile")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "card-header",
+        staticStyle: { "background-color": "#1ee0ac" }
+      },
+      [
+        _c("h6", { staticStyle: { color: "white" } }, [
+          _vm._v("To Be Delivered List")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Report Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Patient Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Mobile")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/patient/AddPatientComponent.vue?vue&type=template&id=ffc074d8&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/patient/AddPatientComponent.vue?vue&type=template&id=ffc074d8& ***!
@@ -99418,6 +99971,7 @@ Vue.component('view-appointment-component', __webpack_require__(/*! ./components
 Vue.component('online-payment-component', __webpack_require__(/*! ./components/appointment/OnlinePaymentComponent.vue */ "./resources/js/components/appointment/OnlinePaymentComponent.vue")["default"]);
 Vue.component('lab-test-appointment-component', __webpack_require__(/*! ./components/lab/LabTestAppointmentComponent.vue */ "./resources/js/components/lab/LabTestAppointmentComponent.vue")["default"]);
 Vue.component('lab-report-type-component', __webpack_require__(/*! ./components/lab/LabReportType.vue */ "./resources/js/components/lab/LabReportType.vue")["default"]);
+Vue.component('laboraty-overview-component', __webpack_require__(/*! ./components/lab/LaboratyOverviewComponent.vue */ "./resources/js/components/lab/LaboratyOverviewComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -100574,6 +101128,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LabTestAppointmentComponent_vue_vue_type_template_id_0b0b5c40___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LabTestAppointmentComponent_vue_vue_type_template_id_0b0b5c40___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/lab/LaboratyOverviewComponent.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/lab/LaboratyOverviewComponent.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LaboratyOverviewComponent_vue_vue_type_template_id_4a7e0f51___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LaboratyOverviewComponent.vue?vue&type=template&id=4a7e0f51& */ "./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=template&id=4a7e0f51&");
+/* harmony import */ var _LaboratyOverviewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LaboratyOverviewComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _LaboratyOverviewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LaboratyOverviewComponent_vue_vue_type_template_id_4a7e0f51___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LaboratyOverviewComponent_vue_vue_type_template_id_4a7e0f51___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/lab/LaboratyOverviewComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LaboratyOverviewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./LaboratyOverviewComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LaboratyOverviewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=template&id=4a7e0f51&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=template&id=4a7e0f51& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LaboratyOverviewComponent_vue_vue_type_template_id_4a7e0f51___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LaboratyOverviewComponent.vue?vue&type=template&id=4a7e0f51& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/lab/LaboratyOverviewComponent.vue?vue&type=template&id=4a7e0f51&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LaboratyOverviewComponent_vue_vue_type_template_id_4a7e0f51___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LaboratyOverviewComponent_vue_vue_type_template_id_4a7e0f51___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -49,6 +49,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('lab/add_lab_report_types','LabTestController@add_lab_report_type')->name('lab.add_reports_type');
 
+    Route::get('lab/lab_dashboard','LabTestController@laboraty_overview')->name('lab.overview');
+
 
 
 

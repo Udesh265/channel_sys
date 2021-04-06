@@ -77,7 +77,7 @@ class ApiLabTestController extends Controller
         if (is_null($data)) return response()->json(['msg' => 'Failed to create payment, rolling back'], 400);
 
         $data->id;
-        $date = Carbon::parse($request->app_date);
+        $date = Carbon::parse($request->app_date)->addDay();
 
         $app_data = Lab_test_appointment::create([
             'date' => $date,

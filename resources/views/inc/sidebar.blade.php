@@ -29,6 +29,15 @@
                 </ul>
             </li>
 
+            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Laboraty Service</a>
+                <ul>
+                    <li class="{{ $page_option['sub'] === 'overview' ? 'active' : '' }}">
+                        <a href="{{ route('lab.overview') }}"><i class="fa fa-rocket"></i>Overview</a>
+                    </li>
+                    <li><a href="{{ route('lab.overview') }}"><i class="icon-layers"></i>Summery</a></li>
+                </ul>
+            </li>
+
             @if (Auth::user()->can('user_management_create') || Auth::user()->can('user_management_view') || Auth::user()->can('user_management_update') || Auth::user()->can('user__management_delete') || Auth::user()->can('role_management_create') || Auth::user()->can('role_management_view') || Auth::user()->can('role_management_update') || Auth::user()->can('role_management_delete'))
 
                 <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Permissions & Users</a>
