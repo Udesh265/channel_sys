@@ -4046,6 +4046,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
   created: function created() {
@@ -4159,6 +4165,29 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    del_lab_app: function del_lab_app(id) {
+      var _this7 = this;
+
+      swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.patch("/api/appointment/del_lab_app/" + id).then(function (response) {
+            if (response.status == 200) {
+              _this7.get_lab_appointments();
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    },
     modal_appointment_view: function modal_appointment_view(app) {
       $("#modal_app_view").modal("show");
       this.selected_appointment = app;
@@ -4168,11 +4197,11 @@ __webpack_require__.r(__webpack_exports__);
       this.selected_lab_appointment_data = app;
     },
     get_lab_appointments: function get_lab_appointments() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get("/api/lab/get_lab_appointment/" + this.user_id).then(function (response) {
         if (response.status == 200) {
-          _this7.lab_app_list = response.data;
+          _this8.lab_app_list = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
@@ -7153,6 +7182,61 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_waiting_app_list();
@@ -7163,12 +7247,31 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      form: new Form({
+        image: "",
+        p_id: "",
+        lab_app_id: ""
+      }),
       waiting_list: {},
       processing_list: {},
       deliver_list: {}
     };
   },
   methods: {
+    upload_file: function upload_file() {
+      this.form.post("/api/laboraty/upload_file").then(function (response) {
+        if (response.status == 200) {
+          console.log(response.data);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    file_upload_modal: function file_upload_modal(p_id, id) {
+      this.form.p_id = p_id;
+      this.form.lab_app_id = id;
+      $("#file_modal").modal("show");
+    },
     get_waiting_app_list: function get_waiting_app_list() {
       var _this = this;
 
@@ -7184,16 +7287,26 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       // console.log(id);
-      axios.patch("/api/laboraty/check_appointment/" + id).then(function (response) {
-        if (response.status == 200) {
-          swal.fire(response.data.msg);
+      swal.fire({
+        title: "Did you checked the Appointment ?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes,I Checked!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.patch("/api/laboraty/check_appointment/" + id).then(function (response) {
+            if (response.status == 200) {
+              _this2.get_waiting_app_list();
 
-          _this2.get_waiting_app_list();
-
-          _this2.get_processing_list();
+              _this2.get_processing_list();
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
         }
-      })["catch"](function (error) {
-        console.log(error);
       });
     },
     get_processing_list: function get_processing_list() {
@@ -7210,16 +7323,26 @@ __webpack_require__.r(__webpack_exports__);
     checked_processing: function checked_processing(id) {
       var _this4 = this;
 
-      axios.patch("/api/laboraty/checked_processing/" + id).then(function (response) {
-        if (response.status == 200) {
-          swal.fire(response.data.msg);
+      swal.fire({
+        title: "Did Process Complete ?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes,I done!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.patch("/api/laboraty/checked_processing/" + id).then(function (response) {
+            if (response.status == 200) {
+              _this4.get_processing_list();
 
-          _this4.get_processing_list();
-
-          _this4.get_deliver_list();
+              _this4.get_deliver_list();
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
         }
-      })["catch"](function (error) {
-        console.log(error);
       });
     },
     get_deliver_list: function get_deliver_list() {
@@ -74087,6 +74210,10 @@ var render = function() {
                 _vm._l(_vm.lab_app_list, function(app, index) {
                   return _c("tr", { key: index, staticClass: "zoom" }, [
                     _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(app.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "row" } }, [
                       _vm._v(_vm._s(app.date))
                     ]),
                     _vm._v(" "),
@@ -74102,6 +74229,14 @@ var render = function() {
                       _vm._v(
                         "\n                  " +
                           _vm._s(app.payment.payment_status) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.status) +
                           "\n                "
                       )
                     ]),
@@ -74308,11 +74443,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Appointment Date")]),
         _vm._v(" "),
         _c("th", [_vm._v("Report Type")]),
         _vm._v(" "),
         _c("th", [_vm._v("Payment Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Report Status")]),
         _vm._v(" "),
         _c("th", [_vm._v("Fee")]),
         _vm._v(" "),
@@ -79306,6 +79445,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function() {
+  var this$1 = this
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -79410,18 +79550,16 @@ var render = function() {
                         staticClass: "fa fa-check icon-button mx-1",
                         on: {
                           click: function($event) {
-                            return _vm.checked_processing(data.id)
+                            return _vm.file_upload_modal(
+                              data.patient_id,
+                              data.id
+                            )
                           }
                         }
                       }),
                       _vm._v(" "),
                       _c("i", {
-                        staticClass: "fa fa-eye text-success icon-button mx-1",
-                        on: {
-                          click: function($event) {
-                            return _vm.modal_appointment_view(_vm.app)
-                          }
-                        }
+                        staticClass: "fa fa-eye text-success icon-button mx-1"
                       })
                     ])
                   ])
@@ -79473,7 +79611,7 @@ var render = function() {
                           "fa fa-upload text-success icon-button mx-1",
                         on: {
                           click: function($event) {
-                            return _vm.modal_appointment_view(_vm.app)
+                            return _vm.file_upload_modal(data)
                           }
                         }
                       })
@@ -79486,7 +79624,96 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "file_modal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(6),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                [
+                  _c(
+                    "file-dialog",
+                    {
+                      attrs: {
+                        isInvalid: _vm.form.errors.errors.hasOwnProperty(
+                          "image"
+                        ),
+                        accept: "",
+                        label: "Upload Lab Report"
+                      },
+                      on: {
+                        output: function(file) {
+                          this$1.form.image = file
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "invalid-feedback d-block",
+                          attrs: { slot: "errorMessage" },
+                          slot: "errorMessage"
+                        },
+                        [
+                          _vm._v(
+                            "\n              File is required\n            "
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("\n            Close\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.upload_file }
+                  },
+                  [_vm._v("Save")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -79600,6 +79827,38 @@ var staticRenderFns = [
         _c("th", [_vm._v("Action")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal-header",
+        staticStyle: { "background-color": "#1e3d73" }
+      },
+      [
+        _c(
+          "h5",
+          { staticClass: "modal-title", staticStyle: { color: "white" } },
+          [_vm._v("Lab Report Upload")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            attrs: {
+              type: "button",
+              "data-dismiss": "modal",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true

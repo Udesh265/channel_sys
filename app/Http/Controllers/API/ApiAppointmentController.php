@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Appointment;
 use App\Http\Controllers\Controller;
+use App\Lab_test_appointment;
 use App\Patient;
 use App\Payment;
 use App\Schedule;
@@ -24,13 +25,13 @@ class ApiAppointmentController extends Controller
     }
     public function get_patient_by_user($patient_id)
     {
-        $p_data = Patient::where('id',$patient_id)->first();
+        $p_data = Patient::where('id', $patient_id)->first();
 
         return response()->json($p_data, 200);
     }
     public function get_patient_by_userID($user_id)
     {
-        $p_data = Patient::where('user_id',$user_id)->first();
+        $p_data = Patient::where('user_id', $user_id)->first();
 
         return response()->json($p_data, 200);
     }
@@ -125,7 +126,19 @@ class ApiAppointmentController extends Controller
     public function delete_appointment($id)
     {
         $data = Appointment::find($id);
-        $data->update(['status' => 'Deleted']);
+        $data->update([
+            'status' => 'Deleted'
+        ]);
+        if (is_null($data)) return response()->json(['msg' => 'Failed to delete Appoitnment, rolling back'], 400);
+
+        return response()->json(['msg' => 'Successfully deleted'], 200);
+    }
+    public function delete_lab_appointment($id)
+    {
+        $data = Lab_test_appointment::find($id);
+        $data->update([
+            'status' => 'Deleted'
+        ]);
         if (is_null($data)) return response()->json(['msg' => 'Failed to delete Appoitnment, rolling back'], 400);
 
         return response()->json(['msg' => 'Successfully deleted'], 200);

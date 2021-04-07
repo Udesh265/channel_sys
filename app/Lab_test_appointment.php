@@ -35,5 +35,10 @@ class Lab_test_appointment extends Model
         return $this->belongsTo(Patient::class,'patient_id');
     }
 
+    public function documents()
+    {
+        return $this->morphMany('App\Document', 'documentable');
+    }
+
 
 }

@@ -103,6 +103,8 @@ Route::group(['prefix' => 'appointment'], function () {
     Route::get('get_pending_pay/{p_id}','API\ApiAppointmentController@get_pending_payment');
     Route::get('get_appointment_list/{p_id}','API\ApiAppointmentController@get_appointment_list');
     Route::patch('del/{id}','API\ApiAppointmentController@delete_appointment');
+    Route::patch('del_lab_app/{id}','API\ApiAppointmentController@delete_lab_appointment');
+
     Route::patch('online_payment/{pay_id}','API\ApiPaymentController@submit_payment');
 });
 
@@ -112,6 +114,9 @@ Route::group(['prefix' => 'laboraty'], function () {
     Route::get('get_processing_list','API\ApiLaboratyController@get_processing_list');
     Route::patch('checked_processing/{id}','API\ApiLaboratyController@checked_processing');
     Route::get('get_deliver_list','API\ApiLaboratyController@get_deliver_list');
+    Route::post('upload_file','API\ApiLaboratyController@upload_file');
+
+
 
 
 

@@ -8,7 +8,6 @@ class Document extends Model
 {
     protected $fillable = [
         'id',
-        'name',
         'path',
         'documentable_id',
         'documentable_type',

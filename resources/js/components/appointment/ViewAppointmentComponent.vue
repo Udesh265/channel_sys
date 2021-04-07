@@ -92,9 +92,11 @@
             <table class="table font-w-600 mb-0">
               <thead>
                 <tr>
+                <th>#</th>
                   <th>Appointment Date</th>
                   <th>Report Type</th>
                   <th>Payment Status</th>
+                  <th>Report Status</th>
                   <th>Fee</th>
                   <th>Action</th>
                 </tr>
@@ -105,12 +107,16 @@
                   v-for="(app, index) in lab_app_list"
                   :key="index"
                 >
+                    <th scope="row">{{ app.id }}</th>
                   <th scope="row">{{ app.date }}</th>
                   <td class="text-success">
                     {{ app.report_type.report_type }}
                   </td>
                   <td class="text-danger">
                     {{ app.payment.payment_status }}
+                  </td>
+                         <td class="text-danger">
+                    {{ app.status }}
                   </td>
                   <td class="text-info">{{ app.report_type.fee }}</td>
 
@@ -354,6 +360,33 @@ export default {
               .then((response) => {
                 if (response.status == 200) {
                   this.get_appointment_list();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+    },
+
+        del_lab_app: function (id) {
+      swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, Delete it!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .patch("/api/appointment/del_lab_app/" + id)
+              .then((response) => {
+                if (response.status == 200) {
+                  this.get_lab_appointments();
                 }
               })
               .catch((error) => {
