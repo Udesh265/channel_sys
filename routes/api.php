@@ -115,6 +115,8 @@ Route::group(['prefix' => 'laboraty'], function () {
     Route::patch('checked_processing/{id}','API\ApiLaboratyController@checked_processing');
     Route::get('get_deliver_list','API\ApiLaboratyController@get_deliver_list');
     Route::post('upload_file','API\ApiLaboratyController@upload_file');
+    Route::get('get_report_by_ducumentable_id/{id}','API\ApiLaboratyController@get_report_by_ducumentable_id');
+
 
 
 

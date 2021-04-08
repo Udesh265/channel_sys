@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Document;
 use App\Http\Controllers\Controller;
 use App\Lab_test_appointment;
 use Carbon\Carbon;
@@ -86,6 +87,7 @@ class ApiLaboratyController extends Controller
             $d->report_type;
             $d->patient;
             $d->payment;
+            $d->documents;
         }
 
 
@@ -104,6 +106,11 @@ class ApiLaboratyController extends Controller
             $lab_test = Lab_test_appointment::find($validated_data['lab_app_id']);
 
 
+
+            $lab_test->update([
+                'status'=>'deliver',
+            ]);
+
          // Image upload
          $has_image = $request->image[0]['file'];
          if ($has_image) {
@@ -120,6 +127,14 @@ class ApiLaboratyController extends Controller
          }
 
          return response()->json(['msg' => 'Documents uploaded!'], 200);
+    }
+
+    public function get_report_by_ducumentable_id($id){
+
+        $data = Document::where('documentable_id',$id)->first();
+
+        return response()->json($data,200);
+
     }
 
 

@@ -81,13 +81,10 @@
                   <td>{{ data.payment.type }}</td>
                   <td class="text-info">
                     <i
-                      class="fa fa-check icon-button mx-1"
-                      @click="file_upload_modal(data.patient_id,data.id)"
+                      class="fa fa-upload icon-button mx-1"
+                      @click="file_upload_modal(data.patient_id, data.id)"
                     ></i>
-                    <i
-                      class="fa fa-eye text-success icon-button mx-1"
-
-                    ></i>
+                    <i class="fa fa-eye text-success icon-button mx-1"></i>
                   </td>
                 </tr>
               </tbody>
@@ -100,7 +97,7 @@
       <div class="col-12">
         <div class="card">
           <div style="background-color: #1ee0ac" class="card-header">
-            <h6 style="color: white">To Be Delivered List</h6>
+            <h6 style="color: white">Delivered List</h6>
           </div>
           <div class="card-body">
             <table class="table">
@@ -129,8 +126,8 @@
                   <td>{{ data.payment.type }}</td>
                   <td class="text-info">
                     <i
-                      class="fa fa-upload text-success icon-button mx-1"
-                      @click="file_upload_modal(data)"
+                      class="fa fa-file text-success icon-button mx-1"
+                      @click="view_report_modal(data)"
                     ></i>
                   </td>
                 </tr>
@@ -189,17 +186,65 @@
             >
               Close
             </button>
-            <button @click="upload_file" type="button" class="btn btn-primary">Save</button>
+            <button @click="upload_file" type="button" class="btn btn-primary">
+              Upload Report
+            </button>
           </div>
         </div>
       </div>
     </div>
     <!-- end file upload modal  -->
+
+    <!-- View file modal  -->
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="view_report"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Lab Report</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+
+                  <img :src="report_file" alt="some_image" class="img-fluid rounded-circle d-flex mr-3" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Print Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- end view file modal  -->
   </div>
 </template>
 
 <script>
-
 export default {
   created() {
     this.get_waiting_app_list();
@@ -211,37 +256,43 @@ export default {
   },
   data() {
     return {
-
-      form:new Form({
-          image:"",
-          p_id:"",
-          lab_app_id:"",
+      form: new Form({
+        image: "",
+        p_id: "",
+        lab_app_id: "",
       }),
 
       waiting_list: {},
       processing_list: {},
       deliver_list: {},
+      report: {},
+
+      report_file:"",
     };
   },
   methods: {
-
-      upload_file: function(){
-          this.form.post("/api/laboraty/upload_file")
-          .then((response)=>{
-              if(response.status == 200){
-                  console.log(response.data);
-              }
-          })
-          .catch((error)=>{
-              console.log(error);
-          });
-      },
+    upload_file: function () {
+      this.form
+        .post("/api/laboraty/upload_file")
+        .then((response) => {
+          if (response.status == 200) {
+            swal.fire(response.data.msg);
+            this.get_processing_list();
+            this.form.reset();
+            $("#file_modal").modal("hide");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
     file_upload_modal: function (p_id, id) {
       this.form.p_id = p_id;
       this.form.lab_app_id = id;
       $("#file_modal").modal("show");
     },
+
     get_waiting_app_list: function () {
       axios
         .get("/api/laboraty/get_waiting_list")
@@ -328,6 +379,24 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             this.deliver_list = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    view_report_modal: function (app) {
+      $("#view_report").modal("show");
+
+      this.id = app.id;
+      axios
+        .get("/api/laboraty/get_report_by_ducumentable_id/" + this.id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.report = response.data;
+
+            this.report_file = this.report.path;
           }
         })
         .catch((error) => {

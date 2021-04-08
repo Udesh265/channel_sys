@@ -7237,6 +7237,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_waiting_app_list();
@@ -7254,14 +7300,24 @@ __webpack_require__.r(__webpack_exports__);
       }),
       waiting_list: {},
       processing_list: {},
-      deliver_list: {}
+      deliver_list: {},
+      report: {},
+      report_file: ""
     };
   },
   methods: {
     upload_file: function upload_file() {
+      var _this = this;
+
       this.form.post("/api/laboraty/upload_file").then(function (response) {
         if (response.status == 200) {
-          console.log(response.data);
+          swal.fire(response.data.msg);
+
+          _this.get_processing_list();
+
+          _this.form.reset();
+
+          $("#file_modal").modal("hide");
         }
       })["catch"](function (error) {
         console.log(error);
@@ -7273,18 +7329,18 @@ __webpack_require__.r(__webpack_exports__);
       $("#file_modal").modal("show");
     },
     get_waiting_app_list: function get_waiting_app_list() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("/api/laboraty/get_waiting_list").then(function (response) {
         if (response.status == 200) {
-          _this.waiting_list = response.data;
+          _this2.waiting_list = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
       });
     },
     check_appointment: function check_appointment(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       // console.log(id);
       swal.fire({
@@ -7299,9 +7355,9 @@ __webpack_require__.r(__webpack_exports__);
         if (result.isConfirmed) {
           axios.patch("/api/laboraty/check_appointment/" + id).then(function (response) {
             if (response.status == 200) {
-              _this2.get_waiting_app_list();
+              _this3.get_waiting_app_list();
 
-              _this2.get_processing_list();
+              _this3.get_processing_list();
             }
           })["catch"](function (error) {
             console.log(error);
@@ -7310,18 +7366,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     get_processing_list: function get_processing_list() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/api/laboraty/get_processing_list").then(function (response) {
         if (response.status == 200) {
-          _this3.processing_list = response.data;
+          _this4.processing_list = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
       });
     },
     checked_processing: function checked_processing(id) {
-      var _this4 = this;
+      var _this5 = this;
 
       swal.fire({
         title: "Did Process Complete ?",
@@ -7335,9 +7391,9 @@ __webpack_require__.r(__webpack_exports__);
         if (result.isConfirmed) {
           axios.patch("/api/laboraty/checked_processing/" + id).then(function (response) {
             if (response.status == 200) {
-              _this4.get_processing_list();
+              _this5.get_processing_list();
 
-              _this4.get_deliver_list();
+              _this5.get_deliver_list();
             }
           })["catch"](function (error) {
             console.log(error);
@@ -7346,11 +7402,25 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     get_deliver_list: function get_deliver_list() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/laboraty/get_deliver_list").then(function (response) {
         if (response.status == 200) {
-          _this5.deliver_list = response.data;
+          _this6.deliver_list = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    view_report_modal: function view_report_modal(app) {
+      var _this7 = this;
+
+      $("#view_report").modal("show");
+      this.id = app.id;
+      axios.get("/api/laboraty/get_report_by_ducumentable_id/" + this.id).then(function (response) {
+        if (response.status == 200) {
+          _this7.report = response.data;
+          _this7.report_file = _this7.report.path;
         }
       })["catch"](function (error) {
         console.log(error);
@@ -79547,7 +79617,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", { staticClass: "text-info" }, [
                       _c("i", {
-                        staticClass: "fa fa-check icon-button mx-1",
+                        staticClass: "fa fa-upload icon-button mx-1",
                         on: {
                           click: function($event) {
                             return _vm.file_upload_modal(
@@ -79607,11 +79677,10 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", { staticClass: "text-info" }, [
                       _c("i", {
-                        staticClass:
-                          "fa fa-upload text-success icon-button mx-1",
+                        staticClass: "fa fa-file text-success icon-button mx-1",
                         on: {
                           click: function($event) {
-                            return _vm.file_upload_modal(data)
+                            return _vm.view_report_modal(data)
                           }
                         }
                       })
@@ -79706,9 +79775,47 @@ var render = function() {
                     attrs: { type: "button" },
                     on: { click: _vm.upload_file }
                   },
-                  [_vm._v("Save")]
+                  [_vm._v("\n            Upload Report\n          ")]
                 )
               ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "view_report",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(7),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("img", {
+                      staticClass: "img-fluid rounded-circle d-flex mr-3",
+                      attrs: { src: _vm.report_file, alt: "some_image" }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(8)
             ])
           ]
         )
@@ -79803,7 +79910,7 @@ var staticRenderFns = [
       },
       [
         _c("h6", { staticStyle: { color: "white" } }, [
-          _vm._v("To Be Delivered List")
+          _vm._v("Delivered List")
         ])
       ]
     )
@@ -79859,6 +79966,48 @@ var staticRenderFns = [
         )
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Lab Report")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("\n            Close\n          ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Print Report")]
+      )
+    ])
   }
 ]
 render._withStripped = true
