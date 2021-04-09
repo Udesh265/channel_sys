@@ -221,8 +221,10 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-12">
+                  <div id="print_this">
 
-                  <img :src="report_file" alt="some_image" class="img-fluid rounded-circle d-flex mr-3" />
+                  <img :src="report_file" alt="some_image" style="width:100%" />
+                  </div>
               </div>
             </div>
           </div>
@@ -234,7 +236,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Print Report</button>
+            <button @click="print()" type="button" class="btn btn-primary">Print Report</button>
           </div>
         </div>
       </div>
@@ -271,6 +273,11 @@ export default {
     };
   },
   methods: {
+
+    print: function(){
+        this.$htmlToPaper('print_this');
+    },
+
     upload_file: function () {
       this.form
         .post("/api/laboraty/upload_file")

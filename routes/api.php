@@ -60,6 +60,7 @@ Route::group(['prefix' => 'patient'], function () {
     Route::post('add_treatment/{patient_id}','API\ApiPatientController@save_treatment_data');
     Route::get('get_treatment_data/{patient_id}','API\ApiPatientController@get_treatment_data_by_patient_id');
     Route::patch('update_treatment/{treatment_id}','API\ApiPatientController@update_treatment_record');
+    Route::get('get_lab_report_data/{patient_id}','API\ApiPatientController@get_lab_report_data');
 
 });
 

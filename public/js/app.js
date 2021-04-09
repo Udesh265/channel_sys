@@ -4915,10 +4915,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
   created: function created() {},
-  mounted: function mounted() {// this.get_biometric_data();
+  mounted: function mounted() {
+    // this.get_biometric_data();
+    $(this.$refs.view_report).on("hidden.bs.modal", this.onModalClose);
   },
   data: function data() {
     return {
@@ -4942,7 +4994,9 @@ __webpack_require__.r(__webpack_exports__);
       }),
       patient_data: {},
       biometric_data: {},
-      treatment_data: {}
+      treatment_data: {},
+      lab_report_data: {},
+      report_file: ""
     };
   },
   methods: {
@@ -4972,6 +5026,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.get_biometric_data();
 
           _this.get_treatment_data_by_patient_id();
+
+          _this.get_lab_report_data();
         }
       })["catch"](function (error) {
         console.log(error);
@@ -5066,6 +5122,26 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    get_lab_report_data: function get_lab_report_data() {
+      var _this8 = this;
+
+      this.patient_id = this.pform.patient_id;
+      axios.get("/api/patient/get_lab_report_data/" + this.patient_id).then(function (response) {
+        if (response.status == 200) {
+          _this8.lab_report_data = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    view_report_modal: function view_report_modal(data) {
+      $("#view_report").modal("show");
+      this.report_file = data[0].path;
+    },
+    onModalClose: function onModalClose() {
+      //  this.report_file = null;
+      console.log("here");
     }
   }
 });
@@ -7283,6 +7359,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.get_waiting_app_list();
@@ -7306,6 +7384,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    print: function print() {
+      this.$htmlToPaper('print_this');
+    },
     upload_file: function upload_file() {
       var _this = this;
 
@@ -71408,6 +71489,17 @@ __vue_component__.install = install; // Export component by default
 
 /***/ }),
 
+/***/ "./node_modules/vue-html-to-paper/dist/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-html-to-paper/dist/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports=function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var n={};return t.m=e,t.c=n,t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,n){"use strict";function r(e,t){t.forEach(function(t){var n=e.document.createElement("link");n.setAttribute("rel","stylesheet"),n.setAttribute("type","text/css"),n.setAttribute("href",t),e.document.getElementsByTagName("head")[0].appendChild(n)})}Object.defineProperty(t,"__esModule",{value:!0}),t.default={install:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};e.prototype.$htmlToPaper=function(e,n){var o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:function(){return!0},l=["fullscreen=yes","titlebar=yes","scrollbars=yes"],u=[],i=t.name,s=void 0===i?"_blank":i,c=t.specs,a=void 0===c?l:c,d=t.replace,p=void 0===d||d,f=t.styles,m=void 0===f?u:f;n&&(n.name&&(s=n.name),n.specs&&(a=n.specs),n.replace&&(p=n.replace),n.styles&&(m=n.styles)),console.warn(m),a=a.length?a.join(","):"";var y=document.getElementById(e);if(!y)return void alert("Element to print #"+e+" not found!");var v=window.open("",s,a,p);return v.document.write("\n        <html>\n          <head>\n            <title>"+document.title+"</title>\n          </head>\n          <body>\n            "+y.innerHTML+"\n          </body>\n        </html>\n      "),r(v,m),setTimeout(function(){v.document.close(),v.focus(),v.print(),v.close(),o()},1e3),!0}}}}]);
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewUserComponent.vue?vue&type=template&id=073ef91d&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewUserComponent.vue?vue&type=template&id=073ef91d& ***!
@@ -75916,61 +76008,123 @@ var render = function() {
                   _c("div", { staticClass: "card-body" }, [
                     _vm._m(16),
                     _vm._v(" "),
-                    _c("table", { staticClass: "table table-striped" }, [
+                    _c("table", { staticClass: "table" }, [
                       _vm._m(17),
                       _vm._v(" "),
-                      _c("tbody", [
-                        _c("tr", { staticClass: "zoom" }, [
-                          _c("td", [
-                            _vm._v(
-                              "\n                        Lorem ipsum dolor sit amet consectetur, adipisicing\n                      "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("2021-08-31")]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("i", {
-                              staticClass:
-                                "fa fa-eye text-success icon-button mx-1",
-                              on: {
-                                click: function($event) {
-                                  return _vm.modal_appointment_view(_vm.app)
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.lab_report_data, function(data, index) {
+                          return _c("tr", { key: index, staticClass: "zoom" }, [
+                            _c("td", { attrs: { scope: "row" } }, [
+                              _vm._v(_vm._s(data.id))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "text-info" }, [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(data.report_type.report_type) +
+                                  "\n                  "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "text-danger" }, [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(data.date) +
+                                  "\n                  "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "text-info" }, [
+                              _c("i", {
+                                staticClass:
+                                  "fa fa-file text-success icon-button mx-1",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.view_report_modal(data.documents)
+                                  }
                                 }
-                              }
-                            })
+                              })
+                            ])
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("td", [
-                            _vm._v(
-                              "\n                        Lorem ipsum dolor sit amet consectetur, adipisicing\n                      "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("2021-08-31")]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("i", {
-                              staticClass:
-                                "fa fa-eye text-success icon-button mx-1",
-                              on: {
-                                click: function($event) {
-                                  return _vm.update_history_record_modal(
-                                    _vm.treat
-                                  )
-                                }
-                              }
-                            })
-                          ])
-                        ])
-                      ])
+                        }),
+                        0
+                      )
                     ])
                   ])
                 ])
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                ref: "view_report",
+                staticClass: "modal fade",
+                attrs: {
+                  id: "view_report",
+                  tabindex: "-1",
+                  role: "dialog",
+                  "aria-labelledby": "modelTitleId",
+                  "aria-hidden": "true"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-dialog modal-lg",
+                    attrs: { role: "document" }
+                  },
+                  [
+                    _c("div", { staticClass: "modal-content" }, [
+                      _vm._m(18),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-12" }, [
+                            _c("div", { attrs: { id: "print_this" } }, [
+                              _c("img", {
+                                staticStyle: { width: "100%" },
+                                attrs: {
+                                  src: _vm.report_file,
+                                  alt: "some_image"
+                                }
+                              })
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary",
+                            attrs: { type: "button", "data-dismiss": "modal" }
+                          },
+                          [_vm._v("\n              Close\n            ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.print()
+                              }
+                            }
+                          },
+                          [_vm._v("Print Report")]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ]
+            )
           ])
         : _vm._e()
     ])
@@ -76239,14 +76393,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-inverse" }, [
+    return _c("thead", [
       _c("tr", [
-        _c("th", { staticStyle: { width: "70%" } }, [_vm._v("Description")]),
+        _c("th", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Date")]),
+        _c("th", [_vm._v("Report Type")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Action")])
+        _c("th", [_vm._v("Report Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Report")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Lab Report")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
@@ -79807,15 +79984,40 @@ var render = function() {
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-12" }, [
-                    _c("img", {
-                      staticClass: "img-fluid rounded-circle d-flex mr-3",
-                      attrs: { src: _vm.report_file, alt: "some_image" }
-                    })
+                    _c("div", { attrs: { id: "print_this" } }, [
+                      _c("img", {
+                        staticStyle: { width: "100%" },
+                        attrs: { src: _vm.report_file, alt: "some_image" }
+                      })
+                    ])
                   ])
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(8)
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("\n            Close\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.print()
+                      }
+                    }
+                  },
+                  [_vm._v("Print Report")]
+                )
+              ])
             ])
           ]
         )
@@ -79985,27 +80187,6 @@ var staticRenderFns = [
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("\n            Close\n          ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Print Report")]
       )
     ])
   }
@@ -100292,6 +100473,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-html-to-paper */ "./node_modules/vue-html-to-paper/dist/index.js");
+/* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_6__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -100349,7 +100532,17 @@ window.Toast = Toast; //Vue New Instance
 
 window.Fire = new Vue(); //Laravel Vue Pagination
 
-Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
+Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js")); //vue printer module
+
+
+var options = {
+  name: '_blank',
+  specs: ['fullscreen=yes', 'titlebar=yes', 'scrollbars=yes'],
+  styles: ['https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', 'https://unpkg.com/kidlat-css/css/kidlat.css']
+};
+Vue.use(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_6___default.a, options); // or, using the defaults with no stylesheet
+
+Vue.use(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_6___default.a);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

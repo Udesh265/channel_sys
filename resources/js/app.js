@@ -72,6 +72,27 @@ window.Fire = new Vue();
 //Laravel Vue Pagination
 Vue.component('pagination', require('laravel-vue-pagination'));
 
+//vue printer module
+
+import VueHtmlToPaper from 'vue-html-to-paper';
+const options = {
+  name: '_blank',
+  specs: [
+    'fullscreen=yes',
+    'titlebar=yes',
+    'scrollbars=yes'
+  ],
+  styles: [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+    'https://unpkg.com/kidlat-css/css/kidlat.css'
+  ]
+}
+Vue.use(VueHtmlToPaper, options);
+// or, using the defaults with no stylesheet
+Vue.use(VueHtmlToPaper);
+
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

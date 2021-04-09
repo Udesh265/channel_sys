@@ -614,45 +614,95 @@
                     <h5>Patient Laboraty Reports</h5>
                   </div>
                 </div>
-                <table class="table table-striped">
-                  <thead class="thead-inverse">
-                    <tr>
-                      <th style="width: 70%">Description</th>
-                      <th>Date</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="zoom">
-                      <td>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                      </td>
-                      <td>2021-08-31</td>
-                      <td>
-                        <i
-                          class="fa fa-eye text-success icon-button mx-1"
-                          @click="modal_appointment_view(app)"
-                        ></i>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                      </td>
-                      <td>2021-08-31</td>
-                      <td>
-                        <i
-                          class="fa fa-eye text-success icon-button mx-1"
-                          @click="update_history_record_modal(treat)"
-                        ></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                 <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Report Type</th>
+                <th>Report Date</th>
+
+
+                  <th>Report</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="zoom"
+                  v-for="(data, index) in lab_report_data"
+                  :key="index"
+                >
+                  <td scope="row">{{ data.id }}</td>
+                  <td class="text-info">
+                    {{ data.report_type.report_type }}
+                  </td>
+                      <td class="text-danger">
+                    {{ data.date }}
+                  </td>
+
+
+                  <td class="text-info">
+                    <i
+                      class="fa fa-file text-success icon-button mx-1"
+                      @click="view_report_modal(data.documents)"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- View file modal  -->
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="view_report"
+      ref="view_report"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Lab Report</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+                  <div id="print_this">
+
+                  <img :src="report_file" alt="some_image" style="width:100%" />
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button @click="print()" type="button" class="btn btn-primary">Print Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- end view file modal  -->
       </div>
     </div>
   </div>
@@ -663,6 +713,7 @@ export default {
   created() {},
   mounted() {
     // this.get_biometric_data();
+    $(this.$refs.view_report).on("hidden.bs.modal", this.onModalClose);
   },
   data() {
     return {
@@ -689,6 +740,8 @@ export default {
       patient_data: {},
       biometric_data: {},
       treatment_data: {},
+      lab_report_data:{},
+      report_file:"",
     };
   },
   methods: {
@@ -717,6 +770,7 @@ export default {
             this.patient_data = response.data;
             this.get_biometric_data();
             this.get_treatment_data_by_patient_id();
+            this.get_lab_report_data();
           }
         })
         .catch((error) => {
@@ -817,7 +871,30 @@ export default {
           console.log(error);
         });
 
-    }
+    },
+
+    get_lab_report_data: function(){
+         this.patient_id = this.pform.patient_id;
+         axios.get("/api/patient/get_lab_report_data/" + this.patient_id)
+         .then((response) => {
+          if (response.status == 200) {
+            this.lab_report_data = response.data;
+
+
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+     view_report_modal: function (data) {
+      $("#view_report").modal("show");
+        this.report_file = data[0].path;
+    },
+    onModalClose: function(){
+        //  this.report_file = null;
+         console.log("here");
+    },
   },
 };
 </script>

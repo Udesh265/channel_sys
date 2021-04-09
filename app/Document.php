@@ -18,4 +18,11 @@ class Document extends Model
     {
         return $this->morphTo();
     }
+
+    protected $filepath = '/storage/documents/';
+
+    public function getPathAttribute($value)
+    {
+        return $this->filepath . $value;
+    }
 }
