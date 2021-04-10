@@ -42,6 +42,26 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="form-control">Room</label>
+              <select
+                v-model="s_form.room_id"
+
+                class="form-control"
+              >
+                <option
+                  v-for="(room, index) in room_list"
+                  :key="index"
+                  :value="room.id"
+                >
+                  {{ room.room_name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-12">
             <div class="form-group">
               <label for="form-control">Add Date & Time</label>
@@ -142,6 +162,7 @@ export default {
       }),
       spec_data: {},
       doc_data: {},
+      room_list:{},
 
       // calnder
 
@@ -149,6 +170,7 @@ export default {
         employee_id: "",
         startDate: "",
         time: "",
+        room_id:""
       }),
 
       showDate: new Date(),
@@ -215,6 +237,7 @@ export default {
           console.log(response);
           if (response.status == 200) {
             this.doc_data = response.data;
+            this.get_room_list();
           }
         })
         .catch((error) => {
@@ -235,14 +258,27 @@ export default {
     },
 
     getEventDetails: function (data) {
-        console.log(data);
+      console.log(data);
     },
+    get_room_list: function(){
+          axios
+          .get('/api/room_list')
+          .then((response) => {
+              if(response.status == 200){
+                  this.room_list = response.data;
+              }
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+      },
+
 
     remove_item: function (data) {
-    //   let id = data.id;
+      //   let id = data.id;
 
-    let {id} = data;
-    console.log(data);
+      let { id } = data;
+      console.log(data);
       swal
         .fire({
           title: "Are you sure?",

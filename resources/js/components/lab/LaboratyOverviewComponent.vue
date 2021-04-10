@@ -142,6 +142,7 @@
 
     <!-- Modal -->
     <div
+
       class="modal fade"
       id="file_modal"
       tabindex="-1"
@@ -198,12 +199,14 @@
     <!-- View file modal  -->
     <!-- Modal -->
     <div
+
       class="modal fade"
       id="view_report"
       tabindex="-1"
       role="dialog"
       aria-labelledby="modelTitleId"
       aria-hidden="true"
+
     >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -221,10 +224,13 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-12">
-                  <div id="print_this">
-
-                  <img :src="report_file" alt="some_image" style="width:100%" />
-                  </div>
+                <div id="print_this">
+                  <img
+                    :src="report_file"
+                    alt="some_image"
+                    style="width: 100%"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -236,7 +242,9 @@
             >
               Close
             </button>
-            <button @click="print()" type="button" class="btn btn-primary">Print Report</button>
+            <button @click="print()" type="button" class="btn btn-primary">
+              Print Report
+            </button>
           </div>
         </div>
       </div>
@@ -269,13 +277,12 @@ export default {
       deliver_list: {},
       report: {},
 
-      report_file:"",
+      report_file: "",
     };
   },
   methods: {
-
-    print: function(){
-        this.$htmlToPaper('print_this');
+    print: function () {
+      this.$htmlToPaper("print_this");
     },
 
     upload_file: function () {
@@ -311,6 +318,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+        //  setTimeout(this.get_waiting_app_list, 50000);
+        //   this.get_waiting_app_list();
+
     },
     check_appointment: function (id) {
       // console.log(id);
@@ -395,6 +405,7 @@ export default {
 
     view_report_modal: function (app) {
       $("#view_report").modal("show");
+
 
       this.id = app.id;
       axios

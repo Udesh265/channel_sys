@@ -39,6 +39,16 @@ class LabTestController extends Controller
 
         return view('page.lab.laboraty_overview', compact('page_name', 'breadcrums', 'page_option'));
     }
+    public function laboraty_report(){
+        $page_option = ['main' => 'laboraty', 'sub' => 'lab_report'];
+        $page_name = "Lab Report";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'Lab Report', 'url' => '#'],
+        ];
+
+        return view('page.lab.laboraty_report', compact('page_name', 'breadcrums', 'page_option'));
+    }
 
 
 }

@@ -51,6 +51,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('lab/lab_dashboard','LabTestController@laboraty_overview')->name('lab.overview');
 
+    Route::get('lab/lab_report','LabTestController@laboraty_report')->name('lab.report');
+
+    Route::get('appointment/rooms','RoomController@add_room')->name('appointment.add_rooms');
+
+    Route::get('system/time','WorkingTimeController@add_time')->name('system.time');
+
 
 
 

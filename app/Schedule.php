@@ -12,9 +12,14 @@ class Schedule extends Model
         "id",
         "employee_id",
         "startDate",
+        "room_id",
     ];
 
     public function employee() {
         return $this->belongsTo(Employee::class);
     }
+    public function room() {
+        return $this->belongsTo(Room::class);
+    }
+
 }

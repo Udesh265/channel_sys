@@ -620,8 +620,6 @@
                   <th>ID</th>
                   <th>Report Type</th>
                 <th>Report Date</th>
-
-
                   <th>Report</th>
                 </tr>
               </thead>

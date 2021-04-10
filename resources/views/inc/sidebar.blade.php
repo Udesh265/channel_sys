@@ -25,7 +25,10 @@
                         <a href="{{ route('lab.new_appointment') }}"><i class="fa fa-rocket"></i> Lab Test
                             Appointment</a>
                     </li>
-                    <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i> Appointment</a></li>
+                    {{-- <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i> Appointment</a></li> --}}
+                    <li class="{{ $page_option['sub'] === 'lab_report' ? 'active' : '' }}"><a href="{{ route('lab.report') }}"><i class="icon-layers"></i>Lab Report</a></li>
+
+
                 </ul>
             </li>
 
@@ -183,6 +186,18 @@
                                 Speciality</a></li>
                         <li><a href="{{ route('lab.add_reports_type') }}"><i class="icon-layers"></i>Add Report Types</a>
                         </li>
+                        <li><a href="{{ route('appointment.add_rooms') }}"><i class="icon-layers"></i>Add Rooms</a>
+                        </li>
+                        <li class="{{ $page_option['sub'] === 'system_time' ? 'active' : '' }}"><a href="{{ route('system.time') }}"><i class="icon-layers"></i>Work Place Time</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Attendance</a>
+                    <ul>
+                        <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
+                                href="{{ route('doctor.speciality') }}"><i class="fa fa-rocket"></i>Attendance</a></li>
+
                     </ul>
                 </li>
 

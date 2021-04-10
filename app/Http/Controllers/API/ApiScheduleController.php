@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Employee;
 use App\Http\Controllers\Controller;
+use App\Room;
 use App\Schedule;
 use Illuminate\Http\Request;
 
@@ -58,6 +59,7 @@ class ApiScheduleController extends Controller
     {
         $validate_data = $request->validate([
             'startDate' => ['required'],
+            'room_id' => ['required'],
             'employee_id' => ['required'],
             'time' => ['required']
         ]);
@@ -67,6 +69,7 @@ class ApiScheduleController extends Controller
         $schedule = Schedule::create([
             'employee_id' => $validate_data['employee_id'],
             'startDate' => $newVal,
+            'room_id' => $validate_data['room_id'],
         ]);
 
         if (is_null($schedule)) return response()->json(['msg' => 'Failed to create schedule!'], 400);
@@ -74,6 +77,24 @@ class ApiScheduleController extends Controller
         $employee_schedules = Schedule::whereEmployeeId($validate_data['employee_id'])->get();
 
         return response()->json($employee_schedules, 200);
+    }
+
+    public function add_room(Request $request){
+
+        $data = Room::create([
+            'room_name' => $request->name,
+
+        ]);
+
+        if (is_null($data)) return response()->json(['msg' => 'Failed to add!'], 400);
+
+        return response()->json(['msg' => 'Added Success !'], 200);
+
+    }
+    public function room_list(){
+        $data = Room::all();
+
+        return response()->json($data,200);
     }
 
     /**

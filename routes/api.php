@@ -119,11 +119,15 @@ Route::group(['prefix' => 'laboraty'], function () {
     Route::get('get_report_by_ducumentable_id/{id}','API\ApiLaboratyController@get_report_by_ducumentable_id');
 
 
-
-
-
-
  });
+
+ Route::group(['prefix' => 'attendance'], function () {
+    Route::post('workplace_time','API\ApiAttendanceController@save_time');
+ });
+
+Route::post('add_room','API\ApiScheduleController@add_room');
+Route::get('room_list','API\ApiScheduleController@room_list');
+
 
 
 

@@ -22,6 +22,10 @@ window.Form = Form;
 import File64 from 'vue-file64';
 Vue.component('file-dialog', File64);
 
+// Vue2 TimePicker
+import VueTimepicker from "vue2-timepicker";
+Vue.component("timepicker", VueTimepicker);
+
 // Vue Simple Calender
 import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
 Vue.component("calendar-view", CalendarView);
@@ -125,6 +129,11 @@ Vue.component('online-payment-component',require('./components/appointment/Onlin
 Vue.component('lab-test-appointment-component',require('./components/lab/LabTestAppointmentComponent.vue').default);
 Vue.component('lab-report-type-component',require('./components/lab/LabReportType.vue').default);
 Vue.component('laboraty-overview-component',require('./components/lab/LaboratyOverviewComponent.vue').default);
+Vue.component('add-room-component',require('./components/schedule/AddRoomComponent.vue').default);
+Vue.component('lab-report-component',require('./components/lab/laboraty_report.vue').default);
+Vue.component('add-workplacetime-component',require('./components/WorkPlaceTimeComponent.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -119,6 +119,7 @@ class ApiAppointmentController extends Controller
 
             $app->payment;
             $app->token;
+            $app->schedule->room;
             $app->schedule->employee->doctor->speciality;
         }
         return response()->json($data, 200);
@@ -137,7 +138,7 @@ class ApiAppointmentController extends Controller
     {
         $data = Lab_test_appointment::find($id);
         $data->update([
-            'status' => 'Deleted'
+            'status' => 'Cancel'
         ]);
         if (is_null($data)) return response()->json(['msg' => 'Failed to delete Appoitnment, rolling back'], 400);
 

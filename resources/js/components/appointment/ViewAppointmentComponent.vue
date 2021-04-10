@@ -41,6 +41,7 @@
               <thead>
                 <tr>
                   <th>Token ID</th>
+                  <th>Room No</th>
                   <th>Speciality</th>
                   <th>Doctor Name</th>
                   <th>Appointment Date</th>
@@ -56,6 +57,7 @@
                   :key="index"
                 >
                   <th scope="row">{{ app.token.token }}</th>
+                  <td class="text-info">{{ app.schedule.room.room_name }}</td>
                   <td class="text-success">
                     {{ app.schedule.employee.doctor.speciality.name }}
                   </td>
@@ -63,7 +65,7 @@
                     {{ app.schedule.employee.first_name }}
                   </td>
                   <td class="text-info">{{ app.schedule.startDate }}</td>
-                  <td class="text-info">{{ app.payment.payment_status }}</td>
+                  <td class="text-danger">{{ app.payment.payment_status }}</td>
                   <td class="text-info">{{ app.payment.type }}</td>
                   <td class="text-info">
                     <i
@@ -123,12 +125,12 @@
                   <td class="text-info">
                     <i
                       class="fa fa-trash text-danger icon-button mx-1"
-                      @click="delete_app(app.id)"
+                      @click="del_lab_app(app.id)"
                     ></i>
-                    <i
+                    <!-- <i
                       class="fa fa-eye text-success icon-button mx-1"
                       @click="modal_lab_app_view(app)"
-                    ></i>
+                    ></i> -->
                   </td>
                 </tr>
               </tbody>
@@ -171,6 +173,10 @@
               Doctor : {{ selected_appointment.schedule.employee.first_name }}
             </h5>
             <br />
+               <h5 v-if="selected_appointment.hasOwnProperty('schedule')">
+              Room : {{ selected_appointment.schedule.room.room_name }}
+            </h5>
+            <br />
             <h3
               class="text-center"
               v-if="selected_appointment.hasOwnProperty('token')"
@@ -195,7 +201,7 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="modal_lab_app_view"
+      id="modal_lab_app"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalCenterTitle"
@@ -218,7 +224,7 @@
           <div class="modal-body">
             <h5>
               Your Appointment at :
-              {{  }}
+                {{ selected_lab_appointment_data.date }}
             </h5>
 
             <br />
@@ -401,7 +407,7 @@ export default {
       this.selected_appointment = app;
     },
     modal_lab_app_view: function (app) {
-      $("#modal_lab_app_view").modal("show");
+      $("#modal_lab_app").modal("show");
       this.selected_lab_appointment_data = app;
     },
 
