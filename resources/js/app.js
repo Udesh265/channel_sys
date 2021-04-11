@@ -132,6 +132,7 @@ Vue.component('laboraty-overview-component',require('./components/lab/LaboratyOv
 Vue.component('add-room-component',require('./components/schedule/AddRoomComponent.vue').default);
 Vue.component('lab-report-component',require('./components/lab/laboraty_report.vue').default);
 Vue.component('add-workplacetime-component',require('./components/WorkPlaceTimeComponent.vue').default);
+Vue.component('mark-attendance-component',require('./components/MarkAttendanceComponent.vue').default);
 
 
 /**

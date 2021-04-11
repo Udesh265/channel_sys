@@ -21,4 +21,6 @@ class WorkingTimeController extends Controller
         return view('page.workplace_time', compact('page_name', 'breadcrums', 'page_option'));
     }
 
+
+
 }

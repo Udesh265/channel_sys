@@ -25,4 +25,5 @@ class ApiAttendanceController extends Controller
 
         return response()->json(['msg'=> 'successfully update time settings'],200);
     }
+
 }

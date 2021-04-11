@@ -26,7 +26,8 @@
                             Appointment</a>
                     </li>
                     {{-- <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i> Appointment</a></li> --}}
-                    <li class="{{ $page_option['sub'] === 'lab_report' ? 'active' : '' }}"><a href="{{ route('lab.report') }}"><i class="icon-layers"></i>Lab Report</a></li>
+                    <li class="{{ $page_option['sub'] === 'lab_report' ? 'active' : '' }}"><a
+                            href="{{ route('lab.report') }}"><i class="icon-layers"></i>Lab Report</a></li>
 
 
                 </ul>
@@ -173,40 +174,43 @@
 
 
 
-                            </ul>
-                        </li>
-                    </ul>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Settings</a>
+                <ul>
+                    <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
+                            href="{{ route('doctor.speciality') }}"><i class="fa fa-rocket"></i> Add Doctors
+                            Speciality</a></li>
+                    <li><a href="{{ route('lab.add_reports_type') }}"><i class="icon-layers"></i>Add Report Types</a>
+                    </li>
+                    <li><a href="{{ route('appointment.add_rooms') }}"><i class="icon-layers"></i>Add Rooms</a>
+                    </li>
+                    <li class="{{ $page_option['sub'] === 'system_time' ? 'active' : '' }}"><a
+                            href="{{ route('system.time') }}"><i class="icon-layers"></i>Work Place Time</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Attendance</a>
+                <ul>
+                    <li class="{{ $page_option['sub'] === 'attendance' ? 'active' : '' }}"><a
+                        href="{{ route('employee.attendance') }}"><i class="icon-layers"></i>Attendance</a>
                 </li>
+                </ul>
+            </li>
 
 
-                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Settings</a>
-                    <ul>
-                        <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
-                                href="{{ route('doctor.speciality') }}"><i class="fa fa-rocket"></i> Add Doctors
-                                Speciality</a></li>
-                        <li><a href="{{ route('lab.add_reports_type') }}"><i class="icon-layers"></i>Add Report Types</a>
-                        </li>
-                        <li><a href="{{ route('appointment.add_rooms') }}"><i class="icon-layers"></i>Add Rooms</a>
-                        </li>
-                        <li class="{{ $page_option['sub'] === 'system_time' ? 'active' : '' }}"><a href="{{ route('system.time') }}"><i class="icon-layers"></i>Work Place Time</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Attendance</a>
-                    <ul>
-                        <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
-                                href="{{ route('doctor.speciality') }}"><i class="fa fa-rocket"></i>Attendance</a></li>
-
-                    </ul>
-                </li>
 
 
-            </ul>
-            <!-- END: Menu-->
-            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0 ml-auto">
-                <li class="breadcrumb-item"><a href="#">Application</a></li>
-                <li class="breadcrumb-item active">Blank Page</li>
-            </ol>
-        </div>
+        </ul>
+        <!-- END: Menu-->
+        <ol class="breadcrumb bg-transparent align-self-center m-0 p-0 ml-auto">
+            <li class="breadcrumb-item"><a href="#">Application</a></li>
+            <li class="breadcrumb-item active">Blank Page</li>
+        </ol>
     </div>
+</div>

@@ -12,19 +12,17 @@ class EmployeeAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function mark_attendance()
     {
-        //
+        $page_option = ['main' => 'room', 'sub' => 'mark_attendance'];
+        $page_name = "Employee Attendance";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'attendance', 'url' => '#'],
+        ];
+
+        return view('page.mark_attendance', compact('page_name', 'breadcrums', 'page_option'));
     }
 
     /**

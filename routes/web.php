@@ -58,7 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/time','WorkingTimeController@add_time')->name('system.time');
 
 
-
+    Route::get('emp/atteandance','EmployeeAttendanceController@mark_attendance')->name('employee.attendance');
 
 
 });

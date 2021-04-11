@@ -1911,6 +1911,93 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MarkAttendanceComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MarkAttendanceComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {},
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      attendance_value: ""
+    };
+  },
+  methods: {
+    mark_attendance: function mark_attendance() {
+      var _this = this;
+
+      if (this.attendance_value == null || this.attendance_value == "") {
+        swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "EMployee number or barcode is required!"
+        });
+        this.isBusy = false;
+        return;
+      }
+
+      axios.post("/api/attendance/mark_attendance/".concat(this.attendance_value, "?time=").concat(moment().format("LTS"))).then(function (response) {
+        if (response.status == 200) {
+          Toast.fire({
+            icon: "success",
+            title: response.data.message
+          });
+          _this.attendance_value = ""; // this.getCustomDateResults();
+        }
+
+        _this.isBusy = false;
+      })["catch"](function (error) {
+        Toast.fire({
+          icon: "error",
+          title: error.data.message
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewUserComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewUserComponent.vue?vue&type=script&lang=js& ***!
@@ -71921,6 +72008,97 @@ module.exports=function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]=
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MarkAttendanceComponent.vue?vue&type=template&id=2723cfec&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MarkAttendanceComponent.vue?vue&type=template&id=2723cfec& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "col-12 mt-5" }, [
+      _c("div", { staticClass: "card", staticStyle: { height: "200px" } }, [
+        _c("img", {
+          staticClass: "card-img-top",
+          attrs: { src: "holder.js/100x180/", alt: "" }
+        }),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row mt-5" }, [
+            _c("div", { staticClass: "col-9" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.attendance_value,
+                    expression: "attendance_value"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Enter Barcode ID or Employee ID"
+                },
+                domProps: { value: _vm.attendance_value },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.attendance_value = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "form-control btn btn-success",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.mark_attendance()
+                    }
+                  }
+                },
+                [_vm._v("\n              Mark Attendance\n            ")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", [_vm._v(" Mark Attendance ")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewUserComponent.vue?vue&type=template&id=073ef91d&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewUserComponent.vue?vue&type=template&id=073ef91d& ***!
@@ -108810,8 +108988,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue_file64__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-file64 */ "./node_modules/vue-file64/dist/vue-file64.esm.js");
-/* harmony import */ var vue2_timepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue2-timepicker */ "./node_modules/vue2-timepicker/dist/VueTimepicker.common.js");
-/* harmony import */ var vue2_timepicker__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue2_timepicker__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var vue2_timepicker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-timepicker */ "./node_modules/vue2-timepicker/dist/VueTimepicker.common.js");
+/* harmony import */ var vue2_timepicker__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_timepicker__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vue_simple_calendar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-simple-calendar */ "./node_modules/vue-simple-calendar/dist/CalendarView.umd.js");
 /* harmony import */ var vue_simple_calendar__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_simple_calendar__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
@@ -108841,7 +109019,7 @@ window.Form = vform__WEBPACK_IMPORTED_MODULE_1__["Form"]; //File64
 Vue.component('file-dialog', vue_file64__WEBPACK_IMPORTED_MODULE_2__["default"]); // Vue2 TimePicker
 
 
-Vue.component("timepicker", vue2_timepicker__WEBPACK_IMPORTED_MODULE_8___default.a); // Vue Simple Calender
+Vue.component("timepicker", vue2_timepicker__WEBPACK_IMPORTED_MODULE_3___default.a); // Vue Simple Calender
 
 
 Vue.component("calendar-view", vue_simple_calendar__WEBPACK_IMPORTED_MODULE_4__["CalendarView"]);
@@ -108924,6 +109102,7 @@ Vue.component('laboraty-overview-component', __webpack_require__(/*! ./component
 Vue.component('add-room-component', __webpack_require__(/*! ./components/schedule/AddRoomComponent.vue */ "./resources/js/components/schedule/AddRoomComponent.vue")["default"]);
 Vue.component('lab-report-component', __webpack_require__(/*! ./components/lab/laboraty_report.vue */ "./resources/js/components/lab/laboraty_report.vue")["default"]);
 Vue.component('add-workplacetime-component', __webpack_require__(/*! ./components/WorkPlaceTimeComponent.vue */ "./resources/js/components/WorkPlaceTimeComponent.vue")["default"]);
+Vue.component('mark-attendance-component', __webpack_require__(/*! ./components/MarkAttendanceComponent.vue */ "./resources/js/components/MarkAttendanceComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -108978,6 +109157,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/MarkAttendanceComponent.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/MarkAttendanceComponent.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MarkAttendanceComponent_vue_vue_type_template_id_2723cfec___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MarkAttendanceComponent.vue?vue&type=template&id=2723cfec& */ "./resources/js/components/MarkAttendanceComponent.vue?vue&type=template&id=2723cfec&");
+/* harmony import */ var _MarkAttendanceComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MarkAttendanceComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/MarkAttendanceComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MarkAttendanceComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MarkAttendanceComponent_vue_vue_type_template_id_2723cfec___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MarkAttendanceComponent_vue_vue_type_template_id_2723cfec___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/MarkAttendanceComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/MarkAttendanceComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/MarkAttendanceComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MarkAttendanceComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MarkAttendanceComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MarkAttendanceComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MarkAttendanceComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/MarkAttendanceComponent.vue?vue&type=template&id=2723cfec&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/MarkAttendanceComponent.vue?vue&type=template&id=2723cfec& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MarkAttendanceComponent_vue_vue_type_template_id_2723cfec___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./MarkAttendanceComponent.vue?vue&type=template&id=2723cfec& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MarkAttendanceComponent.vue?vue&type=template&id=2723cfec&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MarkAttendanceComponent_vue_vue_type_template_id_2723cfec___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MarkAttendanceComponent_vue_vue_type_template_id_2723cfec___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

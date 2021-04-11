@@ -2,6 +2,6 @@
 
 @section('content')
 
-<add-patient-component textz="Hello Udesh" :user_id = "{{ Auth::user()->id }}" />
+<add-patient-component :user_id = "{{ Auth::user()->id }}" />
 
 @endsection
