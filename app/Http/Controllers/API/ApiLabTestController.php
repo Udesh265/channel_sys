@@ -109,5 +109,28 @@ class ApiLabTestController extends Controller
         return response()->json($data, 200);
     }
 
+    public function get_lab_appointment_for_reception($patient_id){
+        $data = Lab_test_appointment::where('patient_id',$patient_id)->whereNotIn('status',['Cancel'])->get();
+
+        if (is_null($data)) return response()->json(['msg' => 'Failed to get list rolling back'], 400);
+
+        foreach ($data as $app) {
+
+            $app->report_type;
+            $app->payment;
+            $app->patient;
+        }
+        return response()->json($data, 200);
+    }
+
+    public function waiting_payment_paid($id){
+
+        $data = Lab_test_appointment::where('id',$id)->get();
+
+        $payment_id = $data->payment_id;
+
+        return($payment_id);
+    }
+
 
 }

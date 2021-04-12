@@ -51,6 +51,21 @@ class AppointmentController extends Controller
         return view('page.appointment.online_payment', compact('page_name', 'breadcrums', 'page_option', 'payment_id'));
     }
 
+    public function waiting_online_payment(){
+
+
+        $page_option = ['main' => 'appointment', 'sub' => 'waiting_online_payment'];
+        $page_name = "Waiting Online Payment Confirmation";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'waiting_payment', 'url' => '#'],
+        ];
+
+        return view('page.appointment.waiting_online_payment', compact('page_name', 'breadcrums', 'page_option'));
+
+    }
+
+
     public function index()
     {
         //

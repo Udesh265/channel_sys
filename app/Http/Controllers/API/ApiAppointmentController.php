@@ -120,7 +120,8 @@ class ApiAppointmentController extends Controller
             $app->payment;
             $app->token;
             $app->schedule->room;
-            $app->schedule->employee->doctor->speciality;
+            $app->schedule->employee->doctor;
+            // $app->schedule->employee->doctor->speciality;
         }
         return response()->json($data, 200);
     }

@@ -79,6 +79,9 @@ Route::group(['prefix' => 'lab'], function () {
     Route::get('get_report_type','API\ApiLabTestController@get_report_type');
     Route::post('submit_appointment','API\ApiLabTestController@submit_appointment');
     Route::get('get_lab_appointment/{patient_id}','API\ApiLabTestController@get_lab_appointment');
+    Route::get('get_lab_appointment_for_reception/{patient_id}','API\ApiLabTestController@get_lab_appointment_for_reception');
+    Route::patch('waiting_payment_paid/{app_id}','API\ApiLabTestController@waiting_payment_paid');
+
 
 
 
@@ -123,6 +126,7 @@ Route::group(['prefix' => 'laboraty'], function () {
 
  Route::group(['prefix' => 'attendance'], function () {
     Route::post('workplace_time','API\ApiAttendanceController@save_time');
+    Route::post('mark_attendance/{value}','API\ApiAttendanceController@mark_attendance');
  });
 
 Route::post('add_room','API\ApiScheduleController@add_room');

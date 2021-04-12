@@ -17,7 +17,9 @@ class Employee extends Model
         'nic',
         'mobile',
         'user_id',
+        'job_type_id',
         'status',
+        'barcode'
     ];
 
     public function user()
@@ -32,7 +34,7 @@ class Employee extends Model
 
     public function doctor()
     {
-        return $this->hasOne(Doctor::class);
+            return $this->hasOne(Doctor::class);
     }
 
 }

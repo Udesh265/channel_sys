@@ -9,12 +9,14 @@
           <div class="card-body">
             <table class="table">
               <thead>
+
                 <tr>
                   <th>ID</th>
                   <th>Report Type</th>
                   <th>Patient Name</th>
                   <th>Mobile</th>
                   <th>Type</th>
+                  <th>Payment</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -31,8 +33,9 @@
                   <td class="text-success">{{ data.patient.name }}</td>
                   <td>{{ data.patient.mobile }}</td>
                   <td>{{ data.payment.type }}</td>
+                  <td class="text-danger">{{ data.payment.payment_status }}</td>
                   <td class="text-info">
-                    <i
+                    <i v-if="data.payment.payment_status == 'Confirm'"
                       class="fa fa-check icon-button mx-1"
                       @click="check_appointment(data.id)"
                     ></i>

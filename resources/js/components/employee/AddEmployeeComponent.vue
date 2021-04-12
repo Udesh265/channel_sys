@@ -13,7 +13,10 @@
                     type="text"
                     class="form-control"
                     v-model="form.first_name"
+                    :class="{ 'is-invalid': form.errors.has('first_name') }"
                   />
+                    <has-error :form="form" field="first_name"></has-error>
+
                 </div>
                 <div class="col-sm-4 col-lg-4 col-md-4">
                   <label for="form-control">Last Name:</label>
@@ -21,11 +24,14 @@
                     type="text"
                     class="form-control"
                     v-model="form.last_name"
+                     :class="{ 'is-invalid': form.errors.has('last_name') }"
                   />
+                  <has-error :form="form" field="last_name"></has-error>
                 </div>
                 <div class="col-sm-4 col-lg-4 col-md-4">
                   <label for="form-control">NIC:</label>
-                  <input type="text" class="form-control" v-model="form.nic" />
+                  <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('nic') }" v-model="form.nic" />
+                  <has-error :form="form" field="nic"></has-error>
                 </div>
               </div>
               <div class="form-group mt-3 row">
@@ -35,7 +41,9 @@
                     type="text"
                     class="form-control"
                     v-model="form.email"
+                    :class="{ 'is-invalid': form.errors.has('email') }"
                   />
+                  <has-error :form="form" field="email"></has-error>
                 </div>
                 <div class="col-sm-4 col-lg-4 col-md-4">
                   <label for="form-control">Mobile:</label>
@@ -43,7 +51,9 @@
                     type="text"
                     class="form-control"
                     v-model="form.mobile"
+                    :class="{ 'is-invalid': form.errors.has('mobile') }"
                   />
+                  <has-error :form="form" field="email"></has-error>
                 </div>
                 <div class="col-sm-4 col-lg-4 col-md-4">
                   <label for="form-control">Job Type:</label>
@@ -437,6 +447,9 @@ export default {
         if (response.status == 200) {
           swal.fire(response.data.msg);
           this.form.reset();
+          this.emp_list();
+          $("#modelId").modal("hide");
+
         }
       } catch (error) {
         console.log(error);

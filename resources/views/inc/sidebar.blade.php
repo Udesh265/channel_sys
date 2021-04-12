@@ -195,11 +195,37 @@
                 </ul>
             </li>
 
+
+            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reception </a>
+                <ul>
+                    <li class="dropdown {{ $page_option['main'] === 'schedule' ? 'active' : '' }}"><a href="#"><i
+                                class="fas fa-sitemap"></i>Cashier</a>
+                        <ul class="sub-menu">
+                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
+                                    href="{{ route('schedule.add_schedule') }}">Doctor Appointments</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
+                                href="{{ route('schedule.add_schedule') }}">Lab Appointments</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
+                                href="{{ route('schedule.add_schedule') }}">Services</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="{{ $page_option['sub'] === 'waiting_online_payment' ? 'active' : '' }}"><a
+                        href="{{ route('appointment.waitpayment') }}"><i class="icon-layers"></i>Waiting Online Payment</a>
+                </li>
+
+                </ul>
+            </li>
+
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Attendance</a>
                 <ul>
                     <li class="{{ $page_option['sub'] === 'attendance' ? 'active' : '' }}"><a
-                        href="{{ route('employee.attendance') }}"><i class="icon-layers"></i>Attendance</a>
-                </li>
+                            href="{{ route('employee.attendance') }}"><i class="icon-layers"></i>Attendance</a>
+                    </li>
                 </ul>
             </li>
 

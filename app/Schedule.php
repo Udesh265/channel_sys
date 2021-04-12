@@ -22,4 +22,10 @@ class Schedule extends Model
         return $this->belongsTo(Room::class);
     }
 
+    public function doctor()
+    {
+            return $this->belongsToMany(Doctor::class,'employee_id');
+    }
+
+
 }

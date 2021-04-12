@@ -60,6 +60,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('emp/atteandance','EmployeeAttendanceController@mark_attendance')->name('employee.attendance');
 
+    Route::get('appoitnment/waiting_online_payment','AppointmentController@waiting_online_payment')->name('appointment.waitpayment');
+
+
+
 
 });
 

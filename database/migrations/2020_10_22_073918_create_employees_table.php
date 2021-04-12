@@ -20,10 +20,11 @@ class CreateEmployeesTable extends Migration
             $table->string('address');
             $table->string('email');
             $table->string('nic');
-            $table->integer('mobile');
+            $table->bigInteger('mobile');
             $table->integer('user_id')->nullable();
             $table->integer('job_type_id');
             $table->integer('status');
+            $table->string('barcode')->nullable()->unique();
 
             $table->timestamps();
         });
