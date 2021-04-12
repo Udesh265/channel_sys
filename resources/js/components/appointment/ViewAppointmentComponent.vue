@@ -50,15 +50,19 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
+
                 <tr
+
                   class="zoom"
                   v-for="(app, index) in appointment_list"
                   :key="index"
+
                 >
+
                   <th scope="row">{{ app.token.token }}</th>
-                  <td class="text-info">{{ app.schedule.room.room_name }}</td>
-                  <td class="text-success">
+                  <td  class="text-info">{{ app.schedule.room.room_name }}</td>
+                  <td v-if="Object.keys(app).length > 0" class="text-success">
                     {{ app.schedule.employee.doctor.speciality.name }}
                   </td>
                   <td class="text-danger">
@@ -77,7 +81,9 @@
                       @click="modal_appointment_view(app)"
                     ></i>
                   </td>
+
                 </tr>
+
               </tbody>
             </table>
           </div>

@@ -4245,6 +4245,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
   created: function created() {
@@ -4538,6 +4544,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {},
   mounted: function mounted() {//   this.get_lab_appointment_list();
@@ -4546,7 +4561,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       patient_id: "",
       lab_app_list: {},
-      appointment_id: ""
+      appointment_id: "",
+      doc_app_list: {}
     };
   },
   methods: {
@@ -4556,6 +4572,19 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/lab/get_lab_appointment_for_reception/" + this.patient_id).then(function (response) {
         if (response.status == 200) {
           _this.lab_app_list = response.data;
+
+          _this.get_doctor_appointment_list();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_doctor_appointment_list: function get_doctor_appointment_list() {
+      var _this2 = this;
+
+      axios.get("/api/lab/get_doc_appointment_for_reception/" + this.patient_id).then(function (response) {
+        if (response.status == 200) {
+          _this2.doc_app_list = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
@@ -75259,13 +75288,17 @@ var render = function() {
                       _vm._v(_vm._s(app.schedule.room.room_name))
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "text-success" }, [
-                      _vm._v(
-                        "\n                  " +
-                          _vm._s(app.schedule.employee.doctor.speciality.name) +
-                          "\n                "
-                      )
-                    ]),
+                    Object.keys(app).length > 0
+                      ? _c("td", { staticClass: "text-success" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(
+                                app.schedule.employee.doctor.speciality.name
+                              ) +
+                              "\n                "
+                          )
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-danger" }, [
                       _vm._v(
@@ -75766,119 +75799,146 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("table", { staticClass: "table" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.waiting_list, function(data, index) {
-                  return _c("tr", { key: index, staticClass: "zoom" }, [
-                    _c("td", { attrs: { scope: "row" } }, [
-                      _vm._v(_vm._s(data.id))
-                    ]),
+    _vm.patient_id == !null
+      ? _c("div", [
+          _c("div", { staticClass: "row mt-3" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("div", { staticClass: "card" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("table", { staticClass: "table font-w-600 mb-0" }, [
+                    _vm._m(1),
                     _vm._v(" "),
-                    _c("td", { staticClass: "text-danger" }, [
-                      _vm._v(
-                        "\n                  " +
-                          _vm._s(data.report_type.report_type) +
-                          "\n                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-success" }, [
-                      _vm._v(_vm._s(data.patient.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(data.payment.amount))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(data.payment.payment_status))]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(data.payment.payment_status))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-info" }, [
-                      data.payment.payment_status == "Confirm"
-                        ? _c("i", {
-                            staticClass: "fa fa-check icon-button mx-1"
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "fa fa-eye text-success icon-button mx-1"
-                      })
-                    ])
-                  ])
-                }),
-                0
-              )
-            ])
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _vm._m(2),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("table", { staticClass: "table" }, [
-              _vm._m(3),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.lab_app_list, function(data, index) {
-                  return _c("tr", { key: index, staticClass: "zoom" }, [
-                    _c("td", { attrs: { scope: "row" } }, [
-                      _vm._v(_vm._s(data.id))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-danger" }, [
-                      _vm._v(
-                        "\n                  " +
-                          _vm._s(data.report_type.report_type) +
-                          "\n                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-success" }, [
-                      _vm._v(_vm._s(data.patient.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(data.payment.amount))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(data.payment.payment_status))]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-info" }, [
-                      data.payment.payment_status == "Pending"
-                        ? _c("i", {
-                            staticClass:
-                              "fa fa-print text-success icon-button mx-1",
-                            on: {
-                              click: function($event) {
-                                return _vm.pay_appointment(data.id)
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.doc_app_list, function(app, index) {
+                        return _c("tr", { key: index, staticClass: "zoom" }, [
+                          _c("th", { attrs: { scope: "row" } }, [
+                            _vm._v(_vm._s(app.token.token))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-info" }, [
+                            _vm._v(_vm._s(app.schedule.room.room_name))
+                          ]),
+                          _vm._v(" "),
+                          Object.keys(app).length > 0
+                            ? _c("td", { staticClass: "text-success" }, [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(
+                                      app.schedule.employee.doctor.speciality
+                                        .name
+                                    ) +
+                                    "\n                  "
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-danger" }, [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(app.schedule.employee.first_name) +
+                                "\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-info" }, [
+                            _vm._v(_vm._s(app.schedule.startDate))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-danger" }, [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(app.payment.payment_status) +
+                                "\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-info" }, [
+                            _vm._v(_vm._s(app.payment.amount))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-info" }, [
+                            _c("i", {
+                              staticClass:
+                                "fa fa-print text-danger icon-button mx-1",
+                              on: {
+                                click: function($event) {
+                                  return _vm.delete_app(app.id)
+                                }
                               }
-                            }
-                          })
-                        : _vm._e()
-                    ])
+                            })
+                          ])
+                        ])
+                      }),
+                      0
+                    )
                   ])
-                }),
-                0
-              )
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mt-3" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("div", { staticClass: "card" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("table", { staticClass: "table" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.lab_app_list, function(data, index) {
+                        return _c("tr", { key: index, staticClass: "zoom" }, [
+                          _c("td", { attrs: { scope: "row" } }, [
+                            _vm._v(_vm._s(data.id))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-danger" }, [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(data.report_type.report_type) +
+                                "\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-success" }, [
+                            _vm._v(_vm._s(data.patient.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(data.payment.amount))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(data.payment.payment_status))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-info" }, [
+                            data.payment.payment_status == "Pending"
+                              ? _c("i", {
+                                  staticClass:
+                                    "fa fa-print text-success icon-button mx-1",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.pay_appointment(data.id)
+                                    }
+                                  }
+                                })
+                              : _vm._e()
+                          ])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                ])
+              ])
             ])
           ])
         ])
-      ])
-    ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -75905,17 +75965,19 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("ID")]),
+        _c("th", [_vm._v("Token ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Report Type")]),
+        _c("th", [_vm._v("Room No")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Patient Name")]),
+        _c("th", [_vm._v("Speciality")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Doctor Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Appointment Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Payment Status")]),
         _vm._v(" "),
         _c("th", [_vm._v("Amount")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Payment")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])

@@ -80,7 +80,10 @@ Route::group(['prefix' => 'lab'], function () {
     Route::post('submit_appointment','API\ApiLabTestController@submit_appointment');
     Route::get('get_lab_appointment/{patient_id}','API\ApiLabTestController@get_lab_appointment');
     Route::get('get_lab_appointment_for_reception/{patient_id}','API\ApiLabTestController@get_lab_appointment_for_reception');
+    Route::get('get_doc_appointment_for_reception/{patient_id}','API\ApiLabTestController@get_doc_appointment_for_reception');
     Route::patch('waiting_payment_paid/{app_id}','API\ApiLabTestController@waiting_payment_paid');
+
+
 
 
 

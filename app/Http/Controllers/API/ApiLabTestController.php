@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Appointment;
 use App\Http\Controllers\Controller;
 use App\Lab_test_appointment;
 use App\LabTest;
@@ -122,14 +123,42 @@ class ApiLabTestController extends Controller
         }
         return response()->json($data, 200);
     }
+    public function get_doc_appointment_for_reception($patient_id){
 
-    public function waiting_payment_paid($id){
+        $data = Appointment::where('patient_id', $patient_id)->where('status', 'active')->get();
+        if (is_null($data)) return response()->json(['msg' => 'Failed to get list rolling back'], 400);
 
-        $data = Lab_test_appointment::where('id',$id)->get();
+        foreach ($data as $app) {
+
+            $app->payment;
+            $app->token;
+            $app->schedule->room;
+            // $app->schedule->employee->doctor;
+            $app->schedule->employee->doctor->speciality;
+        }
+        return response()->json($data, 200);
+    }
+
+    public function waiting_payment_paid($app_id){
+
+        $data = Lab_test_appointment::where('id',$app_id)->first();
 
         $payment_id = $data->payment_id;
 
-        return($payment_id);
+        $data = Payment::find($payment_id);
+
+        $data->update([
+            'payment_status' => 'Confirm',
+        ]);
+
+        if(is_null($data)){
+
+            return response()->json(['msg'=>'faild to update payment'],400);
+        }
+
+            return response()->json(['msg'=>'Payment Successfull'],200);
+
+
     }
 
 

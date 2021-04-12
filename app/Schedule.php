@@ -24,7 +24,7 @@ class Schedule extends Model
 
     public function doctor()
     {
-            return $this->belongsToMany(Doctor::class,'employee_id');
+            return $this->belongsTo(Doctor::class,'employee_id');
     }
 
 
