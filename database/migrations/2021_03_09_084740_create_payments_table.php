@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->float('amount');
             $table->string('type');
             $table->string('payment_status');
-            $table->integer('patient_id');
+            $table->integer('patient_id')->nullable();
             $table->timestamps();
         });
     }

@@ -145,4 +145,25 @@ class ApiAppointmentController extends Controller
 
         return response()->json(['msg' => 'Successfully deleted'], 200);
     }
+
+    // this function for waiting payment confirm by reception
+    public function waiting_payment_paid($appointment_id){
+
+        $data = Appointment::where('id',$appointment_id)->first();
+
+        $payment_id = $data->payment_id;
+
+        $data = Payment::find($payment_id);
+
+        $data->update([
+            'payment_status' => 'Confirm',
+        ]);
+
+        if(is_null($data)){
+
+            return response()->json(['msg'=>'faild to update payment'],400);
+        }
+
+            return response()->json(['msg'=>'Payment Successfull'],200);
+    }
 }

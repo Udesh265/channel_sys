@@ -113,6 +113,8 @@ Route::group(['prefix' => 'appointment'], function () {
     Route::patch('del_lab_app/{id}','API\ApiAppointmentController@delete_lab_appointment');
 
     Route::patch('online_payment/{pay_id}','API\ApiPaymentController@submit_payment');
+
+    Route::patch('waiting_payment_paid/{appointment_id}','API\ApiAppointmentController@waiting_payment_paid');
 });
 
 Route::group(['prefix' => 'laboraty'], function () {
