@@ -115,6 +115,12 @@ Route::group(['prefix' => 'appointment'], function () {
     Route::patch('online_payment/{pay_id}','API\ApiPaymentController@submit_payment');
 
     Route::patch('waiting_payment_paid/{appointment_id}','API\ApiAppointmentController@waiting_payment_paid');
+
+    Route::post('submit_regular_patient_appointment','API\ApiAppointmentController@submit_regular_patient_appointment');
+    Route::patch('regular_doc_app_paid/{payment_id}','API\ApiPaymentController@submit_payment');
+
+
+
 });
 
 Route::group(['prefix' => 'laboraty'], function () {

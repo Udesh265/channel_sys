@@ -62,6 +62,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('appoitnment/waiting_online_payment','AppointmentController@waiting_online_payment')->name('appointment.waitpayment');
 
+    Route::get('appointment/check_doctors','AppointmentController@check_doctors_avalable')->name('appointment.check_doc');
+
+    Route::get('appointment/doc_appointment','AppointmentController@rep_doc_appointment')->name('cashier.doc_app');
+
+
+
+
+
 
 
 

@@ -64,6 +64,34 @@ class AppointmentController extends Controller
         return view('page.appointment.waiting_online_payment', compact('page_name', 'breadcrums', 'page_option'));
 
     }
+    public function check_doctors_avalable(){
+
+
+        $page_option = ['main' => 'appointment', 'sub' => 'check_doc'];
+        $page_name = "Check Doctors Availbility";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'check_doctors', 'url' => '#'],
+        ];
+
+        return view('page.appointment.check_doctors', compact('page_name', 'breadcrums', 'page_option'));
+
+    }
+
+    public function rep_doc_appointment(){
+
+        $page_option = ['main' => 'cashier', 'sub' => 'doctor_appointment'];
+        $page_name = "Doctors Appointments";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'doctors appointment', 'url' => '#'],
+        ];
+
+        return view('page.appointment.cashier.doctor_appointment', compact('page_name', 'breadcrums', 'page_option'));
+
+    }
+
+
 
 
     public function index()

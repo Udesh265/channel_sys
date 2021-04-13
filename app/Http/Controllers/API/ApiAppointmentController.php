@@ -166,4 +166,81 @@ class ApiAppointmentController extends Controller
 
             return response()->json(['msg'=>'Payment Successfull'],200);
     }
+
+
+    public function submit_regular_patient_appointment(Request $request){
+
+        $validated_data = $request->validate(
+            [
+                'name' => ['required'],
+                'age' => ['digits_between:1,3'],
+                'mobile' => ['min:10', 'required', 'numeric',],
+                'email' => ['email'],
+            ],
+        );
+
+        $patient_data = Patient::create([
+            'name' => $validated_data['name'],
+            'nic' => 000000000,
+            'address'=> $request->address,
+            'mobile' => $validated_data['mobile'],
+            'email' => $validated_data['email'],
+            'age' => $validated_data['age'],
+            'p_type' => $request->p_type,
+            'status' => 1,
+            'user_id' => $request->user_id,
+        ]);
+
+        if (is_null($patient_data)) return response()->json(['msg' => 'Failed to create patient, rolling back'], 400);
+
+        $patient_id = $patient_data->id;
+
+        $payment_data = Payment::create([
+            'amount'=> $request->charge_pp,
+            'type' => 'Cash',
+            'payment_status' => 'Pending',
+            'patient_id' => $patient_id,
+
+        ]);
+
+        if (is_null($payment_data)) return response()->json(['msg' => 'Failed to create payment, rolling back'], 400);
+
+        $payment_id = $payment_data->id;
+
+        $appointment_data = Appointment::create([
+            'schedule_id' => $request->schedule_id,
+            'user_id' => $request->user_id,
+            'payment_id' => $payment_id,
+            'patient_id' => $patient_id,
+            'status' => 'active',
+        ]);
+
+        if (is_null($payment_data)) return response()->json(['msg' => 'Failed to create Appointment, rolling back'], 400);
+
+         // Creating the token
+         $current_token_length = Token::where('schedule_id', '=', $request->schedule_id)->count();
+         $next_token = $current_token_length + 1;
+
+         $token = Token::create([
+             'appointment_id' => $appointment_data->id,
+             'schedule_id' => $request->schedule_id,
+             'status' => 'confirm',
+             'token' => $next_token,
+         ]);
+
+        // return response()->json(['msg'=>'Appointment Successfull'],200);
+
+        return response()->json(['msg' => 'Successfully create appoitnment', 'data' => ['payment' => $appointment_data]], 200);
+
+    }
+
+    // public function regular_doc_app_paid($payment_id){
+
+    //     $data = Payment::find($payment_id)->get();
+
+    //     $data->create([
+
+    //     ]);
+
+    // }
 }

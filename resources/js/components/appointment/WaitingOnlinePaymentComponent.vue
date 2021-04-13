@@ -364,8 +364,7 @@ export default {
   computed: {
     balance() {
       return (
-        parseInt(this.billform.paid_amount) -
-        parseInt(this.billform.lab_app_amount)
+        parseInt(this.billform.paid_amount) - parseInt(this.billform.lab_app_amount)
       );
     },
   },

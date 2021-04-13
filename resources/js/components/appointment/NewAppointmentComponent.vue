@@ -249,6 +249,7 @@ export default {
           console.log(error);
         });
     },
+
     get_doc_list: function () {
       axios
         .get("/api/doctor/get_doc_list/" + this.form.spec_id)

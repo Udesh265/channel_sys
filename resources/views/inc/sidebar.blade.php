@@ -198,11 +198,11 @@
 
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reception </a>
                 <ul>
-                    <li class="dropdown {{ $page_option['main'] === 'schedule' ? 'active' : '' }}"><a href="#"><i
+                    <li class="dropdown {{ $page_option['main'] === 'cashier' ? 'active' : '' }}"><a href="#"><i
                                 class="fas fa-sitemap"></i>Cashier</a>
                         <ul class="sub-menu">
-                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
-                                    href="{{ route('schedule.add_schedule') }}">Doctor Appointments</a>
+                            <li class="{{ $page_option['sub'] === 'doctor_appointment' ? 'active' : '' }}"><a
+                                    href="{{ route('cashier.doc_app') }}">Doctor Appointments</a>
                             </li>
                             <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
                                 href="{{ route('schedule.add_schedule') }}">Lab Appointments</a>
@@ -217,6 +217,9 @@
                     <li class="{{ $page_option['sub'] === 'waiting_online_payment' ? 'active' : '' }}"><a
                         href="{{ route('appointment.waitpayment') }}"><i class="icon-layers"></i>Waiting Online Payment</a>
                 </li>
+                <li class="{{ $page_option['sub'] === 'check_doc' ? 'active' : '' }}"><a
+                    href="{{ route('appointment.check_doc') }}"><i class="icon-layers"></i>Check Doctors Avaiablility</a>
+            </li>
 
                 </ul>
             </li>

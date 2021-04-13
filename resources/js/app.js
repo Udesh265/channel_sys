@@ -134,6 +134,11 @@ Vue.component('lab-report-component',require('./components/lab/laboraty_report.v
 Vue.component('add-workplacetime-component',require('./components/WorkPlaceTimeComponent.vue').default);
 Vue.component('mark-attendance-component',require('./components/MarkAttendanceComponent.vue').default);
 Vue.component('wait-online-payment-component',require('./components/appointment/WaitingOnlinePaymentComponent.vue').default);
+Vue.component('check-doctors-component',require('./components/appointment/CheckDoctorsComponent.vue').default);
+Vue.component('rep-doctor-appointment-component',require('./components/appointment/cashier/RepDoctorAppComponent.vue').default);
+
+
+
 
 
 /**
