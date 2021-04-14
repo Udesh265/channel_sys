@@ -91,6 +91,18 @@ class AppointmentController extends Controller
 
     }
 
+    public function view_all_app(){
+        $page_option = ['main' => 'cashier', 'sub' => 'view_all_app'];
+        $page_name = "View All Appointments";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'view all appointment', 'url' => '#'],
+        ];
+
+        return view('page.appointment.cashier.view_all_appointment', compact('page_name', 'breadcrums', 'page_option'));
+
+    }
+
 
 
 

@@ -220,6 +220,9 @@
                 <li class="{{ $page_option['sub'] === 'check_doc' ? 'active' : '' }}"><a
                     href="{{ route('appointment.check_doc') }}"><i class="icon-layers"></i>Check Doctors Avaiablility</a>
             </li>
+            <li class="{{ $page_option['sub'] === 'view_all_app' ? 'active' : '' }}"><a
+                href="{{ route('appointment.view_all') }}"><i class="icon-layers"></i>View All Appointments</a>
+        </li>
 
                 </ul>
             </li>

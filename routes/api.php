@@ -118,6 +118,13 @@ Route::group(['prefix' => 'appointment'], function () {
 
     Route::post('submit_regular_patient_appointment','API\ApiAppointmentController@submit_regular_patient_appointment');
     Route::patch('regular_doc_app_paid/{payment_id}','API\ApiPaymentController@submit_payment');
+    Route::get('get_one_app_list_for_rep/{payment_id}','API\ApiAppointmentController@get_one_app_list_for_rep');
+
+    Route::get('get_all_doc_appointment','API\ApiAppointmentController@get_all_doc_appointments');
+
+    Route::get('get_all_doc_appointment_selected_date','API\ApiAppointmentController@get_all_doc_appointment_selected_date');
+
+
 
 
 

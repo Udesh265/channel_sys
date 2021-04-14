@@ -120,7 +120,6 @@ class ApiAppointmentController extends Controller
             $app->payment;
             $app->token;
             $app->schedule->room;
-            // $app->schedule->employee->doctor;
             $app->schedule->employee->doctor->speciality;
         }
         return response()->json($data, 200);
@@ -234,13 +233,50 @@ class ApiAppointmentController extends Controller
 
     }
 
-    // public function regular_doc_app_paid($payment_id){
+    public function get_one_app_list_for_rep($payment_id){
 
-    //     $data = Payment::find($payment_id)->get();
+        $data = Appointment::where('payment_id',$payment_id)->first();
 
-    //     $data->create([
+        $data->payment;
+        $data->token;
+        $data->schedule->room;
+        $data->schedule->employee->doctor->speciality;
 
-    //     ]);
+        if(is_null($data)){
 
-    // }
+            return response()->json(['msg'=>'no data'],400);
+        }
+
+            return response()->json($data,200);
+    }
+
+    public function get_all_doc_appointments(){
+
+        $data = Appointment::where('status','active')->get();
+
+
+        if (is_null($data)) return response()->json(['msg' => 'Failed to get list rolling back'], 400);
+
+        foreach ($data as $app) {
+
+            $app->payment;
+            $app->token;
+            $app->schedule->room;
+            $app->schedule->employee->doctor->speciality;
+        }
+        return response()->json($data, 200);
+    }
+
+    public function get_all_doc_appointment_selected_date(Request $request){
+
+        $from = $request->from;
+        $to = $request->to;
+        $data = Appointment::where('status','active')->get();
+
+        $data->schedule->whereBetween('startDate', array($from,$to ));
+
+        return response()->json($data,200);
+    }
+
+
 }

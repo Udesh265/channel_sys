@@ -66,6 +66,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('appointment/doc_appointment','AppointmentController@rep_doc_appointment')->name('cashier.doc_app');
 
+    Route::get('appointment/view_all_app','AppointmentController@view_all_app')->name('appointment.view_all');
+
 
 
 

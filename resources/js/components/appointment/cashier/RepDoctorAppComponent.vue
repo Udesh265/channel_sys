@@ -139,9 +139,6 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg">
-              Add Patient
-            </button>
           </form>
         </div>
       </div>
@@ -206,6 +203,7 @@
                       Close
                     </button>
                     <button
+                        v-if="billform.paid_amount >= form.charge_pp"
                       @click="pay_doctor_appointment()"
                       type="button"
                       class="btn btn-primary"
@@ -238,12 +236,12 @@
                 <div>
                   <label style="font-size: 12px">ID:</label>
                   <label style="font-size: 12px">{{
-                    billform.appointment_id
+                    one_appointment.id
                   }}</label>
                   <label style="font-size: 12px; margin-left: 20px"
                     >Date :</label
                   >
-                  <label style="font-size: 12px">{{ billform.date }}</label>
+                  <label style="font-size: 12px">{{ one_appointment.created_at }}</label>
                 </div>
 
                 <table style="width: 250px">
@@ -256,31 +254,36 @@
                   </tr>
                   <tr>
                     <td style="text-align: left; font-size: 10px">
-                      {{ billform.appointment_id }}
+                      {{ one_appointment.id }}
                     </td>
-                    <td style="text-align: left; font-size: 10px">
-                      {{ billform.test_name }}
+                    <td v-if="Object.keys(one_appointment).length > 0" style="text-align: left; font-size: 10px">
+                      {{ one_appointment.schedule.employee.doctor.speciality.name }}
                     </td>
-                    <td style="text-align: left; font-size: 10px">
-                      {{ billform.lab_app_amount }}
+                    <td v-if="Object.keys(one_appointment).length > 0"  style="text-align: left; font-size: 10px">
+                      {{ one_appointment.payment.amount }}
                     </td>
                   </tr>
                 </table>
 
                 <label style="font-size: 12px">Paid Amount:</label>
-                <label style="font-size: 12px; margin-left: 10px"
+                <label  style="font-size: 12px; margin-left: 10px"
                   >Rs: {{ billform.paid_amount }}</label
+                >
+                <br />
+                <label style="font-size: 12px">Balance:</label>
+                <label  style="font-size: 12px; margin-left: 10px"
+                  >Rs: {{ balance }}</label
                 >
                 <br />
 
                 <label style="font-size: 12px">Total :</label>
-                <label style="font-size: 12px; margin-left: 5px"
-                  >Rs: {{ billform.lab_app_amount }}</label
+                <label v-if="Object.keys(one_appointment).length > 0"  style="font-size: 12px; margin-left: 5px"
+                  >Rs: {{ one_appointment.payment.amount }}</label
                 >
                 <br>
                 <label style="font-size: 14px"> Token No : </label>
-                <label style="font-size: 15px; margin-left: 5px"
-                  > {{ billform.token }} </label
+                <label v-if="Object.keys(one_appointment).length > 0"  style="font-size: 15px; margin-left: 5px"
+                  > {{ one_appointment.token.token }} </label
                 >
                 <br />---------------------------------------------
                 <br />
@@ -450,6 +453,7 @@ export default {
           this.payment_id = response.data.data.payment.payment_id;
 
             this.load_modal_pay_for_doc_appointment();
+            this.get_appointment_list();
 
         }
     })
@@ -481,6 +485,20 @@ export default {
     .catch((error)=>{
         console.log(error);
     });
+
+    },
+
+    get_appointment_list: function(){
+
+        axios.get("/api/appointment/get_one_app_list_for_rep/" + this.payment_id)
+        .then((response)=>{
+            if(response.status == 200){
+                this.one_appointment = response.data;
+            }
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
 
     }
 
