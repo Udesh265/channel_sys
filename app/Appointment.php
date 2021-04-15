@@ -20,6 +20,10 @@ class Appointment extends Model
         return $this->belongsTo(Payment::class);
     }
 
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
+
     public function schedule(){
         return $this->belongsTo(Schedule::class);
     }

@@ -192,6 +192,9 @@
                     <li class="{{ $page_option['sub'] === 'system_time' ? 'active' : '' }}"><a
                             href="{{ route('system.time') }}"><i class="icon-layers"></i>Work Place Time</a>
                     </li>
+                    <li class="{{ $page_option['sub'] === 'services' ? 'active' : '' }}"><a
+                        href="{{ route('services.add') }}"><i class="icon-layers"></i>Services</a>
+                </li>
                 </ul>
             </li>
 
@@ -207,8 +210,8 @@
                             <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
                                 href="{{ route('schedule.add_schedule') }}">Lab Appointments</a>
                             </li>
-                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
-                                href="{{ route('schedule.add_schedule') }}">Services</a>
+                            <li class="{{ $page_option['sub'] === 'add_service' ? 'active' : '' }}"><a
+                                href="{{ route('new.service') }}">Services</a>
                             </li>
 
 

@@ -218,13 +218,82 @@
                     <h6 style="color: white">Lab Appointment</h6>
                   </div>
                   <div class="card-body">
-                    <table class="table">
+                    <div class="row">
+                      <div class="col-3">
+                        From :
+                        <input
+                          v-model="t_from_lab"
+                          class="form-control"
+                          type="date"
+                          name=""
+                          id=""
+                        />
+                      </div>
+                      <div class="col-3">
+                        To :
+                        <input
+                          v-model="t_to_lab"
+                          class="form-control"
+                          type="date"
+                          name=""
+                          id=""
+                        />
+                      </div>
+                      <div class="col-3">
+                        Report Type :
+                        <select class="form-control" v-model="report_type">
+                          <option
+                            v-for="(type, index) in report_type_data"
+                            :key="index"
+                            :value="type.id"
+                          >
+                            {{ type.report_type }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-2">
+                        .
+                        <button
+                          v-if="
+                            this.t_from_lab != '' &&
+                            this.t_to_lab != '' &&
+                            this.report_type != ''
+                          "
+                          @click="get_lab_appointment_list_by_selected_date"
+                          class="form-control btn btn-success"
+                          type="date"
+                          name=""
+                          id=""
+                        >
+                          Filter
+                        </button>
+                      </div>
+                      <div class="col-1">
+                        .
+                        <button
+                          v-if="
+                            this.t_from_lab != '' &&
+                            this.t_to_lab != '' &&
+                            this.report_type != ''
+                          "
+                          @click="get_lab_appointment_list"
+                          class="form-control btn btn-danger"
+                          type="date"
+                          name=""
+                          id=""
+                        >
+                          reset
+                        </button>
+                      </div>
+                    </div>
+                    <table class="table mt-2">
                       <thead>
                         <tr>
                           <th>ID</th>
                           <th>Report Type</th>
                           <th>Patient Name</th>
                           <th>Amount</th>
+                          <th>Date</th>
                           <th>Status</th>
                           <th>Action</th>
                         </tr>
@@ -232,7 +301,7 @@
                       <tbody>
                         <tr
                           class="zoom"
-                          v-for="(data, index) in view_all_lab_list"
+                          v-for="(data, index) in selected_lab_app_list"
                           :key="index"
                         >
                           <td scope="row">{{ data.id }}</td>
@@ -241,12 +310,12 @@
                           </td>
                           <td class="text-success">{{ data.patient.name }}</td>
                           <td>{{ data.payment.amount }}</td>
+                          <td class="text-danger">{{ data.date }}</td>
                           <td>{{ data.payment.payment_status }}</td>
-                          <td class="text-info">
+                          <td class="text-danger">
                             <i
                               @click="load_payment_modal(data)"
-                              v-if="data.payment.payment_status == 'Pending'"
-                              class="fa fa-print text-success icon-button mx-1"
+                              class="fa fa-trash text-danger icon-button mx-1"
                             ></i>
                           </td>
                         </tr>
@@ -277,6 +346,7 @@ export default {
   created() {
     this.get_spec();
     this.get_lab_appointment_list();
+    this.get_report_type();
     // this.pay_appointment();
     this.get_doctor_appointment_list();
   },
@@ -287,7 +357,11 @@ export default {
       t_to: "",
       t_from: "",
 
+      t_to_lab:"",
+      t_from_lab:"",
+
       spec_id: "",
+      report_type: "",
 
       doc_spec: "",
 
@@ -295,7 +369,9 @@ export default {
       view_all_lab_list: {},
       doc_app_list: {},
       selected_doc_app_list: {},
+      selected_lab_app_list:{},
       spec_data: {},
+      report_type_data:{},
     };
   },
   methods: {
@@ -317,6 +393,7 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             this.view_all_lab_list = response.data;
+            this.selected_lab_app_list = response.data;
             this.get_doctor_appointment_list();
           }
         })
@@ -337,7 +414,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-
     },
     get_doctor_appointment_list_by_selected_date: function () {
       const docs = this.doc_app_list;
@@ -367,6 +443,35 @@ export default {
 
       this.selected_doc_app_list = filtered_docs;
     },
+    get_lab_appointment_list_by_selected_date: function () {
+      const lists = this.view_all_lab_list;
+      const report_type = this.report_type;
+
+      const to = new Date(this.t_to_lab).getTime();
+      const from = new Date(this.t_from_lab).getTime();
+
+      const filtered_list = lists.filter((list) => {
+        const date = new Date(list.date).getTime();
+        const report_type = list.report_type.id;
+
+        if (date <= to && date >= from) {
+          console.log(true);
+          //   return true;
+          if (report_type == this.report_type) {
+              console.log(true);
+            return true;
+          }
+        }
+        return false;
+      });
+
+      if (filtered_list.length === 0) {
+        // console.log("no records!");
+        swal.fire("No Records Found on this range");
+      }
+
+      this.selected_lab_app_list = filtered_list;
+    },
 
     delete_app: function (id) {
       swal
@@ -394,7 +499,18 @@ export default {
           }
         });
     },
+    get_report_type: function(){
+        axios.get("/api/lab/get_report_type")
+         .then((response) => {
+          if (response.status == 200) {
+            this.report_type_data = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
+    },
 
     print: function () {
       this.$htmlToPaper("printme");

@@ -154,7 +154,8 @@ Route::post('add_room','API\ApiScheduleController@add_room');
 Route::get('room_list','API\ApiScheduleController@room_list');
 
 
-
+Route::post('add_service','API\ApiServiceController@add_service');
+Route::get('get_service_list','API\ApiServiceController@get_service_list');
 
 Route::apiResource('employee','API\ApiEmployeeController');
 
@@ -162,5 +163,5 @@ Route::get('joblist','API\ApiEmployeeController@job_list');
 
 Route::apiResource('jobtype','API\ApiJobTypeController');
 
-
+Route::post('submit_service','API\ApiServiceController@submit_service');
 

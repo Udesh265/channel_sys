@@ -138,6 +138,8 @@ Vue.component('check-doctors-component',require('./components/appointment/CheckD
 Vue.component('rep-doctor-appointment-component',require('./components/appointment/cashier/RepDoctorAppComponent.vue').default);
 Vue.component('view-all-appointment-component',require('./components/appointment/cashier/ViewAllAppointment.vue').default);
 Vue.component('view-all-lab-app-component',require('./components/appointment/cashier/ViewAllLabAppointment.vue').default);
+Vue.component('service-component',require('./components/ServicesComponent.vue').default);
+Vue.component('new-service-component',require('./components/appointment/cashier/NewServiceComponent.vue').default);
 
 
 

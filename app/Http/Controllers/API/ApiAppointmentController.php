@@ -260,6 +260,7 @@ class ApiAppointmentController extends Controller
         foreach ($data as $app) {
 
             $app->payment;
+            $app->patient;
             $app->token;
             $app->schedule->room;
             $app->schedule->employee->doctor->speciality;
