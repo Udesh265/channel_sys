@@ -68,6 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('appointment/view_all_app','AppointmentController@view_all_app')->name('appointment.view_all');
 
+    Route::get('appointment/view_all_lab','AppointmentController@view_all_lab')->name('appointment.view_all_lab');
+
 
 
 

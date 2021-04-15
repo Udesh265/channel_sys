@@ -128,7 +128,7 @@ class ApiAppointmentController extends Controller
     {
         $data = Appointment::find($id);
         $data->update([
-            'status' => 'Deleted'
+            'status' => 'Cancel'
         ]);
         if (is_null($data)) return response()->json(['msg' => 'Failed to delete Appoitnment, rolling back'], 400);
 

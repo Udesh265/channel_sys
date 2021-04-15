@@ -137,6 +137,7 @@ Vue.component('wait-online-payment-component',require('./components/appointment/
 Vue.component('check-doctors-component',require('./components/appointment/CheckDoctorsComponent.vue').default);
 Vue.component('rep-doctor-appointment-component',require('./components/appointment/cashier/RepDoctorAppComponent.vue').default);
 Vue.component('view-all-appointment-component',require('./components/appointment/cashier/ViewAllAppointment.vue').default);
+Vue.component('view-all-lab-app-component',require('./components/appointment/cashier/ViewAllLabAppointment.vue').default);
 
 
 

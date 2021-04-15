@@ -102,6 +102,16 @@ class AppointmentController extends Controller
         return view('page.appointment.cashier.view_all_appointment', compact('page_name', 'breadcrums', 'page_option'));
 
     }
+    public function view_all_lab(){
+        $page_option = ['main' => 'cashier', 'sub' => 'view_all_lab'];
+        $page_name = "View All Lab Appointments";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'view all lab appointment', 'url' => '#'],
+        ];
+
+        return view('page.appointment.cashier.view_all_lab_appointment', compact('page_name', 'breadcrums', 'page_option'));
+    }
 
 
 

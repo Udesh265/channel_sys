@@ -7,9 +7,50 @@
             <h6 style="color: white">Today Appointment List</h6>
           </div>
           <div class="card-body">
-            <table class="table">
-              <thead>
+            <div class="row">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-3">
+                    Search :
+                    <input
+                      v-model="search_value"
+                      placeholder="Enter Barcode or Mobile"
+                      class="form-control"
+                      type="text"
+                      name=""
+                      id=""
+                    />
+                  </div>
+                  <div class="col-3">
+                    .
+                    <button
+                      @click="get_waiting_list_by_search"
+                      class="form-control btn btn-success"
+                      type="text"
+                      name=""
+                      id=""
+                    >
+                      Search
+                    </button>
+                  </div>
+                  <div class="col-2">
+                    .
+                    <button
+                      @click="get_waiting_app_list"
+                      class="form-control btn btn-danger"
+                      type="text"
+                      name=""
+                      id=""
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <table class="table mt-1">
+              <thead>
                 <tr>
                   <th>ID</th>
                   <th>Report Type</th>
@@ -23,7 +64,7 @@
               <tbody>
                 <tr
                   class="zoom"
-                  v-for="(data, index) in waiting_list"
+                  v-for="(data, index) in filtered_wait_list"
                   :key="index"
                 >
                   <td scope="row">{{ data.id }}</td>
@@ -35,7 +76,8 @@
                   <td>{{ data.payment.type }}</td>
                   <td class="text-danger">{{ data.payment.payment_status }}</td>
                   <td class="text-info">
-                    <i v-if="data.payment.payment_status == 'Confirm'"
+                    <i
+                      v-if="data.payment.payment_status == 'Confirm'"
                       class="fa fa-check icon-button mx-1"
                       @click="check_appointment(data.id)"
                     ></i>
@@ -145,7 +187,6 @@
 
     <!-- Modal -->
     <div
-
       class="modal fade"
       id="file_modal"
       tabindex="-1"
@@ -202,14 +243,12 @@
     <!-- View file modal  -->
     <!-- Modal -->
     <div
-
       class="modal fade"
       id="view_report"
       tabindex="-1"
       role="dialog"
       aria-labelledby="modelTitleId"
       aria-hidden="true"
-
     >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -276,11 +315,13 @@ export default {
       }),
 
       waiting_list: {},
+      filtered_wait_list: {},
       processing_list: {},
       deliver_list: {},
       report: {},
 
       report_file: "",
+      search_value: "",
     };
   },
   methods: {
@@ -316,14 +357,14 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             this.waiting_list = response.data;
+            this.filtered_wait_list = response.data;
           }
         })
         .catch((error) => {
           console.log(error);
         });
-        //  setTimeout(this.get_waiting_app_list, 50000);
-        //   this.get_waiting_app_list();
-
+      //  setTimeout(this.get_waiting_app_list, 50000);
+      //   this.get_waiting_app_list();
     },
     check_appointment: function (id) {
       // console.log(id);
@@ -409,7 +450,6 @@ export default {
     view_report_modal: function (app) {
       $("#view_report").modal("show");
 
-
       this.id = app.id;
       axios
         .get("/api/laboraty/get_report_by_ducumentable_id/" + this.id)
@@ -423,6 +463,29 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    get_waiting_list_by_search: function () {
+      const wait_list = this.waiting_list;
+      const search_value = this.search_value;
+
+      const filtered_list = wait_list.filter((row) => {
+        const mobile = row.patient.mobile;
+
+        if (mobile == this.search_value) {
+          console.log(true);
+          return true;
+        }
+        return false;
+      });
+
+      if (filtered_list.length === 0) {
+        // console.log("no records!");
+        swal.fire("No Records Found on this range");
+      }
+
+      this.filtered_wait_list = filtered_list;
+      this.search_value = "";
     },
   },
 };

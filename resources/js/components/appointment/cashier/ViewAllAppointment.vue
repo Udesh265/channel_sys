@@ -71,8 +71,6 @@
                   <div class="col-3">
                     To :
                     <input
-                      v-if="this.t_from != ''"
-                      @change="get_doctor_appointment_list_by_selected_date"
                       v-model="t_to"
                       class="form-control"
                       type="date"
@@ -82,11 +80,7 @@
                   </div>
                   <div class="col-3">
                     Doctor Speciality :
-                    <select
-                      v-model="spec_id"
-                      @change="get_doctor_appointment_list_by_selected_speciality"
-                      class="form-control"
-                    >
+                    <select v-model="spec_id" class="form-control">
                       <option
                         v-for="(spec, index) in spec_data"
                         :key="index"
@@ -95,6 +89,40 @@
                         {{ spec.name }}
                       </option>
                     </select>
+                  </div>
+                  <div class="col-2">
+                    .
+                    <button
+                      v-if="
+                        this.t_from != '' &&
+                        this.t_to != '' &&
+                        this.spec_id != ''
+                      "
+                      @click="get_doctor_appointment_list_by_selected_date"
+                      class="form-control btn btn-success"
+                      type="date"
+                      name=""
+                      id=""
+                    >
+                      Filter
+                    </button>
+                  </div>
+                  <div class="col-1">
+                    .
+                    <button
+                      v-if="
+                        this.t_from != '' &&
+                        this.t_to != '' &&
+                        this.spec_id != ''
+                      "
+                      @click="get_doctor_appointment_list"
+                      class="form-control btn btn-danger"
+                      type="date"
+                      name=""
+                      id=""
+                    >
+                      reset
+                    </button>
                   </div>
                 </div>
                 <div class="card mt-2">
@@ -161,8 +189,8 @@
                           </td>
                           <td class="text-info">
                             <i
-                              class="fa fa-print text-danger icon-button mx-1"
-                              @click="load_doc_appointment_pay_modal(app)"
+                              class="fa fa-trash text-danger icon-button mx-1"
+                              @click="delete_app(app.id)"
                               v-if="app.payment.payment_status == 'Pending'"
                             ></i>
                           </td>
@@ -204,7 +232,7 @@
                       <tbody>
                         <tr
                           class="zoom"
-                          v-for="(data, index) in lab_app_list"
+                          v-for="(data, index) in view_all_lab_list"
                           :key="index"
                         >
                           <td scope="row">{{ data.id }}</td>
@@ -247,7 +275,7 @@
 <script>
 export default {
   created() {
-      this.get_spec();
+    this.get_spec();
     this.get_lab_appointment_list();
     // this.pay_appointment();
     this.get_doctor_appointment_list();
@@ -259,12 +287,12 @@ export default {
       t_to: "",
       t_from: "",
 
-      spec_id:"",
+      spec_id: "",
 
       doc_spec: "",
 
       patient_id: "",
-      lab_app_list: {},
+      view_all_lab_list: {},
       doc_app_list: {},
       selected_doc_app_list: {},
       spec_data: {},
@@ -285,10 +313,10 @@ export default {
     },
     get_lab_appointment_list: function () {
       axios
-        .get("/api/appointment/get_lab_appointment_for_reception")
+        .get("/api/lab/get_all_lab_appointment")
         .then((response) => {
           if (response.status == 200) {
-            this.lab_app_list = response.data;
+            this.view_all_lab_list = response.data;
             this.get_doctor_appointment_list();
           }
         })
@@ -309,19 +337,25 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
     },
     get_doctor_appointment_list_by_selected_date: function () {
       const docs = this.doc_app_list;
+      const spec = this.doc_spec;
 
       const to = new Date(this.t_to).getTime();
       const from = new Date(this.t_from).getTime();
 
       const filtered_docs = docs.filter((doc) => {
         const date = new Date(doc.schedule.startDate).getTime();
+        const spec = doc.schedule.employee.doctor.speciality.name;
 
         if (date <= to && date >= from) {
           console.log(true);
-          return true;
+          //   return true;
+          if (spec == this.spec_id) {
+            return true;
+          }
         }
         return false;
       });
@@ -334,21 +368,33 @@ export default {
       this.selected_doc_app_list = filtered_docs;
     },
 
-    get_doctor_appointment_list_by_selected_speciality: function () {
-      const docs = this.doc_app_list;
-
-      const spec = this.doc_spec;
-
-      const filtered_app_list = docs.filter((doc) => {
-        const spec = doc.schedule.employee.doctor.speciality.name;
-
-        if (spec == this.spec_id) {
-          return true;
-        }
-      });
-
-      this.selected_doc_app_list = filtered_app_list;
+    delete_app: function (id) {
+      swal
+        .fire({
+          title: "Are you sure?You want yo Cancel Appointment?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, Cancel it!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .patch("/api/appointment/del/" + id)
+              .then((response) => {
+                if (response.status == 200) {
+                  this.get_doctor_appointment_list();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
     },
+
 
     print: function () {
       this.$htmlToPaper("printme");

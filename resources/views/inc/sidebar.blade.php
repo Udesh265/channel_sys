@@ -223,6 +223,9 @@
             <li class="{{ $page_option['sub'] === 'view_all_app' ? 'active' : '' }}"><a
                 href="{{ route('appointment.view_all') }}"><i class="icon-layers"></i>View All Appointments</a>
         </li>
+        {{-- <li class="{{ $page_option['sub'] === 'view_all_lab' ? 'active' : '' }}"><a
+            href="{{ route('appointment.view_all_lab') }}"><i class="icon-layers"></i>View Lab Appointments</a>
+    </li> --}}
 
                 </ul>
             </li>

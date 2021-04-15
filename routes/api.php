@@ -83,6 +83,7 @@ Route::group(['prefix' => 'lab'], function () {
     Route::get('get_doc_appointment_for_reception/{patient_id}','API\ApiLabTestController@get_doc_appointment_for_reception');
     Route::patch('waiting_payment_paid/{app_id}','API\ApiLabTestController@waiting_payment_paid');
 
+    Route::get('get_all_lab_appointment','API\ApiLabTestController@get_all_lab_appointment');
 
 
 
@@ -123,6 +124,8 @@ Route::group(['prefix' => 'appointment'], function () {
     Route::get('get_all_doc_appointment','API\ApiAppointmentController@get_all_doc_appointments');
 
     Route::get('get_all_doc_appointment_selected_date','API\ApiAppointmentController@get_all_doc_appointment_selected_date');
+
+
 
 
 

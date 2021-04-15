@@ -161,5 +161,18 @@ class ApiLabTestController extends Controller
 
     }
 
+    public function get_all_lab_appointment(){
+
+        $data = Lab_test_appointment::get();
+
+        foreach($data as $d){
+            $d->report_type;
+            $d->patient;
+            $d->payment;
+        }
+
+        return response()->json($data,200);
+    }
+
 
 }
