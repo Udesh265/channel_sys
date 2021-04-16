@@ -55,6 +55,8 @@ class ApiScheduleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //  store schdule data to schdule table
     public function store(Request $request)
     {
         $validate_data = $request->validate([
@@ -78,6 +80,8 @@ class ApiScheduleController extends Controller
 
         return response()->json($employee_schedules, 200);
     }
+
+    //  add room data to room table
 
     public function add_room(Request $request){
 

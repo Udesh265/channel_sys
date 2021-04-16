@@ -49,6 +49,33 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'doctordash_management_update']);
         Permission::create(['name' => 'doctordash_management_delete']);
 
+        Permission::create(['name' => 'appointment_management_create']);
+        Permission::create(['name' => 'appointment_management_view']);
+        Permission::create(['name' => 'appointment_management_update']);
+        Permission::create(['name' => 'appointment_management_delete']);
+
+        Permission::create(['name' => 'labtest_management_create']);
+        Permission::create(['name' => 'labtest_management_view']);
+        Permission::create(['name' => 'labtest_management_update']);
+        Permission::create(['name' => 'labtest_management_delete']);
+
+        Permission::create(['name' => 'laboraty_management_create']);
+        Permission::create(['name' => 'laboraty_management_view']);
+        Permission::create(['name' => 'laboraty_management_update']);
+        Permission::create(['name' => 'laboraty_management_delete']);
+
+        Permission::create(['name' => 'settings_management_create']);
+        Permission::create(['name' => 'settings_management_view']);
+        Permission::create(['name' => 'settings_management_update']);
+        Permission::create(['name' => 'settings_management_delete']);
+
+
+
+
+
+
+
+
 
 
 

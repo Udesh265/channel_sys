@@ -15,6 +15,8 @@ class ApiJobTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //  Get job type data using decending order
     public function index()
     {
         $job_list = JobType::select('id','name')->orderByDesc('id')->get();
@@ -41,6 +43,9 @@ class ApiJobTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //  create job data fields to Job type table
+
     public function store(Request $request)
     {
        $job = JobType::create($request->all());
@@ -91,6 +96,8 @@ class ApiJobTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //   delete job data
     public function destroy($id)
     {
         $del_job = JobType::find($id);

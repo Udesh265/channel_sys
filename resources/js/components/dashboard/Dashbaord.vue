@@ -1,7 +1,7 @@
 <template>
   <div>
 
-      <PatientDash v-if="$can('dashboard_management_view')" />
+      <PatientDash :user_id="this.user_id" v-if="$can('dashboard_management_view')" />
       <DoctorDash :user_id="this.user_id" v-if="$can('doctordash_management_view')"/>
 
   </div>

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class ApiServiceController extends Controller
 {
 
+    //  create service table to store service data
     public function add_service(Request $request){
 
         $data = Service::create([
@@ -27,13 +28,17 @@ class ApiServiceController extends Controller
 
     }
 
+    // get service list from Service table
     public function get_service_list(){
         $data = Service::all();
 
         return response()->json($data, 200);
     }
 
+    //  Submit patient services via reception
+
     public function submit_service(Request $request){
+
         $services = $request->selected_service_list;
 
         $patient_data = Patient::create([
@@ -71,6 +76,10 @@ class ApiServiceController extends Controller
             $serviceList_data[] = ['service_name' => $service['name'], 'service_fee' => $service['fee'], 'payment_id' => $payment_id];
         }
 
-        ServiceList::insert($serviceList_data);
+        $data = ServiceList::insert($serviceList_data);
+
+        if (is_null($data)) return response()->json(['msg' => 'Failed to add rolling back'], 400);
+
+        return response()->json(['msg' => 'Payment Success'], 200);
     }
 }

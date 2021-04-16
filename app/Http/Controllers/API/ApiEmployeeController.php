@@ -25,6 +25,8 @@ class ApiEmployeeController extends Controller
         return response()->json($emplist, 200);
     }
 
+    // Search employee from serach value
+
     public function search_all_emp($keyword)
     {
 
@@ -32,12 +34,16 @@ class ApiEmployeeController extends Controller
 
         return response()->json($emp, 200);
     }
+
+    //  get all employee data active employees data
     public function all_emp_data()
     {
 
         $emp = Employee::with('job')->where('status', 1)->get();
         return response()->json($emp, 200);
     }
+
+    //  get one employee record by user id
 
     public function get_one_employee($id)
     {
@@ -49,6 +55,8 @@ class ApiEmployeeController extends Controller
         }
         return response()->json($emp, 200);
     }
+
+    // get employee job list from Job type table
 
     public function job_list()
     {

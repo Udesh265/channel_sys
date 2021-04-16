@@ -11,6 +11,8 @@
                 </ul>
             </li>
 
+
+            @if (Auth::user()->can('appointment_management_create') || Auth::user()->can('appointment_management_view') || Auth::user()->can('appointment_management_update') || Auth::user()->can('appointment_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Appointment</a>
                 <ul>
                     <li class="{{ $page_option['sub'] === 'new_appointment' ? 'active' : '' }}"><a
@@ -19,6 +21,9 @@
                     <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i>View Appointment</a></li>
                 </ul>
             </li>
+            @endif
+
+            @if (Auth::user()->can('labtest_management_create') || Auth::user()->can('labtest_management_view') || Auth::user()->can('labtest_management_update') || Auth::user()->can('labtest_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Lab Tests</a>
                 <ul>
                     <li class="{{ $page_option['sub'] === 'new_lab_test' ? 'active' : '' }}">
@@ -32,7 +37,9 @@
 
                 </ul>
             </li>
+            @endif
 
+            @if (Auth::user()->can('laboraty_management_create') || Auth::user()->can('laboraty_management_view') || Auth::user()->can('laboraty_management_update') || Auth::user()->can('laboraty_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Laboraty Service</a>
                 <ul>
                     <li class="{{ $page_option['sub'] === 'overview' ? 'active' : '' }}">
@@ -41,6 +48,7 @@
                     <li><a href="{{ route('lab.overview') }}"><i class="icon-layers"></i>Summery</a></li>
                 </ul>
             </li>
+            @endif
 
             @if (Auth::user()->can('user_management_create') || Auth::user()->can('user_management_view') || Auth::user()->can('user_management_update') || Auth::user()->can('user__management_delete') || Auth::user()->can('role_management_create') || Auth::user()->can('role_management_view') || Auth::user()->can('role_management_update') || Auth::user()->can('role_management_delete'))
 
@@ -179,7 +187,7 @@
                 </ul>
             </li>
 
-
+            @if (Auth::user()->can('settings_management_create') || Auth::user()->can('settings_management_view') || Auth::user()->can('settings_management_update') || Auth::user()->can('settings_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Settings</a>
                 <ul>
                     <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
@@ -197,6 +205,7 @@
                 </li>
                 </ul>
             </li>
+            @endif
 
 
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reception </a>

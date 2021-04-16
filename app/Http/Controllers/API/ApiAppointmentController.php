@@ -15,6 +15,7 @@ use SebastianBergmann\Environment\Console;
 
 class ApiAppointmentController extends Controller
 {
+    // get_schedule_appointment data from Schedule tbl
 
     public function get_schedule_appointment($employee_id)
     {
@@ -23,18 +24,25 @@ class ApiAppointmentController extends Controller
 
         return response()->json($employee_schedules, 200);
     }
+
+    // get_patient_by_user fata ftom patient table
+
     public function get_patient_by_user($patient_id)
     {
         $p_data = Patient::where('id', $patient_id)->first();
 
         return response()->json($p_data, 200);
     }
+
+    // get_patient_by_userID not from pateint id
     public function get_patient_by_userID($user_id)
     {
         $p_data = Patient::where('user_id', $user_id)->first();
 
         return response()->json($p_data, 200);
     }
+
+    // Submit appointment to total 3 tables
 
     public function submit_appointment(Request $request)
     {
@@ -85,6 +93,8 @@ class ApiAppointmentController extends Controller
         return response()->json(['msg' => 'Successfully create appoitnment', 'data' => ['payment' => $appointment_data]], 200);
     }
 
+    // get_appoitment_by_userID for count dashboard
+
     public function get_appoitment_by_userID($user_id)
     {
 
@@ -93,6 +103,9 @@ class ApiAppointmentController extends Controller
 
         return response()->json($data, 200);
     }
+
+    // get_app_total_amount for count dashboard
+
     public function get_app_total_amount($p_id)
     {
         $data = Payment::where('patient_id', $p_id)->where('payment_status', 'Confirm')->sum('amount');
@@ -102,6 +115,7 @@ class ApiAppointmentController extends Controller
         return response()->json($data, 200);
     }
 
+    // get get_pending_payment for count dashboard
     public function get_pending_payment($p_id)
     {
         $data = Payment::where('patient_id', $p_id)->where('payment_status', 'pending')->sum('amount');
@@ -110,6 +124,8 @@ class ApiAppointmentController extends Controller
 
         return response()->json($data, 200);
     }
+
+
     public function get_appointment_list($p_id)
     {
         $data = Appointment::where('patient_id', $p_id)->where('status', 'active')->get();

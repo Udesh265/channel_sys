@@ -30,6 +30,8 @@ class ApiUserController extends Controller
         //
     }
 
+    //  assign  user as system user
+
     public function assign_emp(Request $request){
 
         // return $request;
@@ -73,6 +75,9 @@ class ApiUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    // submit roles ,users photos to user related data
+
     public function store(Request $request)
     {
         // return $request;
@@ -130,6 +135,8 @@ class ApiUserController extends Controller
         //
     }
 
+    // view profile data
+
     public function profile()
     {
         $user = auth('api')->user();
@@ -158,6 +165,9 @@ class ApiUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //   update user informations user data
+
     public function update(Request $request, $id)
     {
         // return $request;
@@ -190,6 +200,8 @@ class ApiUserController extends Controller
             return  response()->json(['message' => 'Unable to update, authentication failed!'], 400);
         }
     }
+
+    // Update profile picture in user area
 
     public function update_profile_pic(Request $request, $id)
     {

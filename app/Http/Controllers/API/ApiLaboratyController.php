@@ -16,6 +16,9 @@ class ApiLaboratyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //  get waitng lab appointments list
+
     public function get_waiting_list(){
 
         $date = Carbon::now()->format('Y-m-d');
@@ -33,6 +36,8 @@ class ApiLaboratyController extends Controller
         return $data;
     }
 
+    // mark appointment done after getting patients test
+
     public function check_appointment($id){
 
         $data = Lab_test_appointment::find($id);
@@ -45,6 +50,8 @@ class ApiLaboratyController extends Controller
 
         return  response()->json(['msg'=>'updated success'],200);
     }
+
+    // move to processing stage data as changing status as processing
 
     public function get_processing_list(){
 
@@ -63,6 +70,9 @@ class ApiLaboratyController extends Controller
         return $data;
     }
 
+
+    // change status to deliver
+
     public function checked_processing($id){
 
         $data = Lab_test_appointment::find($id);
@@ -76,6 +86,7 @@ class ApiLaboratyController extends Controller
         return  response()->json(['msg'=>'updated success'],200);
     }
 
+    // getting status value diliver data from the table
 
     public function get_deliver_list(){
 
@@ -94,6 +105,8 @@ class ApiLaboratyController extends Controller
 
         return $data;
     }
+
+    // file uploading lab report upload to documents common storage table
 
     public function upload_file(Request $request){
 

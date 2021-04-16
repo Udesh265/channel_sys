@@ -16,6 +16,8 @@ class ApiDoctorController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    // get_doc_list_by doctors specility id from Doctor table
+
     public function get_doc_list_by_spec_id($spec_id)
     {
 

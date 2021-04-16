@@ -13,6 +13,8 @@ use Illuminate\Support\Carbon;
 class ApiAttendanceController extends Controller
 {
 
+//  save attedance time for system employess
+
   public function  save_time(Request $request){
 
 
@@ -33,7 +35,7 @@ class ApiAttendanceController extends Controller
         // ]);
     }
 
-
+// Mark attencece using barcode id
 
     public function mark_attendance($value, Request $request){
 

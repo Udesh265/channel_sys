@@ -296,7 +296,62 @@ export default {
             delete: false,
           },
         },
+        appointment: {
+          data: {
+            all: false,
+            name: "Appointment Management",
+            phrase: "appointment_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
 
+        labtest: {
+          data: {
+            all: false,
+            name: "Lab Test Management",
+            phrase: "labtest_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+        laboraty: {
+          data: {
+            all: false,
+            name: "Laboraty Management",
+            phrase: "laboraty_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+
+          settings: {
+          data: {
+            all: false,
+            name: "Settings Management",
+            phrase: "settings_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
 
       },
     };
@@ -319,7 +374,7 @@ export default {
           let value = slug[2];
 
           this.permissions[key].permissions[value] = true;
-        //   console.log(prev_permissions[i].name);
+          //   console.log(prev_permissions[i].name);
 
           if (
             this.permissions[key].permissions.create == true &&

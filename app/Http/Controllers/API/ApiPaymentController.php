@@ -13,6 +13,8 @@ class ApiPaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // submit payment to payment table , as update payment status as confirm
    public function submit_payment($pay_id){
         $data = Payment::find($pay_id);
 

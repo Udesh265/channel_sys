@@ -16,7 +16,7 @@ class AddSpecialityController extends Controller
      * @return \Illuminate\Http\Response
      *
      */
-
+//   add specility doctors data
     public function add_speciality(Request $request)
     {
 
@@ -27,6 +27,8 @@ class AddSpecialityController extends Controller
         }
             return response()->json(['msg' => 'success'], 200);
     }
+
+// get speciality from spec data table
     public function get_spec(){
         $addspec = AddSpeciality::select('id','name')->orderByDesc('id')->get();
 
@@ -36,6 +38,7 @@ class AddSpecialityController extends Controller
             return response()->json($addspec,200);
     }
 
+    // delete specility
     public function del_spec($id){
 
         $del_spec = AddSpeciality::find($id);

@@ -25,6 +25,8 @@ class ApiRoleController extends Controller
     {
     }
 
+    // update role based permisson for system users
+
     public function getRolesBasedOnPermission($id)
     {
         $roles = null;
@@ -124,6 +126,8 @@ class ApiRoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //   update role base perssimmion control
     public function update(Request $request, $id)
     {
         // return response()->json($request, 400);

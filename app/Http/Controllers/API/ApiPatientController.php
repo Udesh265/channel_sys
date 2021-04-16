@@ -21,9 +21,12 @@ class ApiPatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //   add patient data from requesting form to patient table
     public function add_patient(Request $request)
     {
 
+        // data validation
         $validated_data = $request->validate(
             [
                 'name' => ['required'],
@@ -56,6 +59,8 @@ class ApiPatientController extends Controller
         return response()->json(["msg", "ok"], 200);
     }
 
+    // get all patients data
+
     public function get_all_patient()
     {
 
@@ -67,7 +72,7 @@ class ApiPatientController extends Controller
     }
 
 
-
+// get search patient by using seach value
 
     public function get_by_search($search_keyword)
     {
@@ -79,6 +84,8 @@ class ApiPatientController extends Controller
         return response()->json($patient, 200);
     }
 
+//
+// get search patient by using seach value
 
     public function get_patient_by_search($search_keyword)
     {
@@ -90,12 +97,17 @@ class ApiPatientController extends Controller
         return response()->json($patient, 200);
     }
 
+
+// get search patient profle data by id
+
     public function get_patient_profile($id)
     {
         $patient = Patient::find($id);
         return response()->json($patient, 200);
     }
 
+
+// assign patients as system user
 
     public function assign_user(Request $request, $id)
     {
@@ -135,6 +147,8 @@ class ApiPatientController extends Controller
 
         return response()->json(['msg' => 'Failed to assign user!'], 400);
     }
+
+    //  change the status as deatvice soft delete
 
     public function delete_patient($id)
     {
@@ -206,7 +220,7 @@ class ApiPatientController extends Controller
         return response()->json(["msg", "ok"], 200);
     }
 
-
+//  assign patients as system user in online
 
     public function assign_user_online(Request $request, $id)
     {
@@ -220,7 +234,7 @@ class ApiPatientController extends Controller
                 'password' => ['required', 'min:8', 'confirmed']
             ]
         );
-
+// fill data to user table
         $user = User::create([
             'username' => $validated_data['username'],
             'email' => $validated_data['email'],
@@ -247,6 +261,8 @@ class ApiPatientController extends Controller
         return response()->json(['msg' => 'Failed to assign user!'], 400);
     }
 
+    // submit_patient_biometric_data
+
     public function submit_patient_biometric_data(Request $request,$patient_id){
 
         $data = Patient_biometric_data::where('patient_id',$patient_id);
@@ -258,6 +274,8 @@ class ApiPatientController extends Controller
         return response()->json(['msg' => 'recored added suceess!'],200);
 
     }
+
+    // save_biometric_data
 
     public function save_biometric_data(Request $request){
 
@@ -275,6 +293,7 @@ class ApiPatientController extends Controller
 
         return response()->json(['msg'=>'record added successfull'],200);
     }
+    // get_biometric_data_by_patientID
 
     public function get_biometric_data_by_patientID($patient_id){
 
@@ -316,6 +335,8 @@ class ApiPatientController extends Controller
         return response()->json($data,200);
 
     }
+
+    // update_treatment_record by doctor
 
     public function update_treatment_record(Request $request, $treatment_id){
 

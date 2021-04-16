@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 class ApiLabTestController extends Controller
 {
 
+    //  add report types to the system
     public function add_report_type(Request $request){
 
         $data = Report_type::create([
@@ -27,11 +28,14 @@ class ApiLabTestController extends Controller
 
     }
 
+    //  get all report type to display in appointent area
     public function get_all_report_type(){
         $data = Report_type::get();
 
         return  response()->json($data,200);
     }
+
+    //  change report type name or fees
 
     public function update_report_type(Request $request, $id){
 
@@ -49,11 +53,15 @@ class ApiLabTestController extends Controller
         return  response()->json(['msg'=>'updated success'],200);
     }
 
+    //  get reports type data from report type table
+
     public function get_report_type(){
         $data = Report_type::get();
 
         return response()->json($data,200);
     }
+
+    // save appointment data
 
     public function submit_appointment(Request $request){
         // return $request;
@@ -96,6 +104,8 @@ class ApiLabTestController extends Controller
 
     }
 
+    //  get laboraty appointment data by using patient id
+
     public function get_lab_appointment(Request $request, $patient_id){
 
         $data = Lab_test_appointment::where('user_id',$patient_id)->whereNotIn('status',['Cancel'])->get();
@@ -110,6 +120,8 @@ class ApiLabTestController extends Controller
         return response()->json($data, 200);
     }
 
+    // get lab appointement data by patient id for reception
+
     public function get_lab_appointment_for_reception($patient_id){
         $data = Lab_test_appointment::where('patient_id',$patient_id)->whereNotIn('status',['Cancel'])->get();
 
@@ -123,6 +135,9 @@ class ApiLabTestController extends Controller
         }
         return response()->json($data, 200);
     }
+
+    // get_doc_appointment_for_reception
+
     public function get_doc_appointment_for_reception($patient_id){
 
         $data = Appointment::where('patient_id', $patient_id)->where('status', 'active')->get();
@@ -138,6 +153,9 @@ class ApiLabTestController extends Controller
         }
         return response()->json($data, 200);
     }
+
+
+// waiting_payment_paid
 
     public function waiting_payment_paid($app_id){
 
@@ -160,6 +178,8 @@ class ApiLabTestController extends Controller
 
 
     }
+
+    // get_all_lab_appointment
 
     public function get_all_lab_appointment(){
 

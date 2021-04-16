@@ -3144,6 +3144,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             update: false,
             "delete": false
           }
+        },
+        appointment: {
+          data: {
+            all: false,
+            name: "Appointment Management",
+            phrase: "appointment_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        labtest: {
+          data: {
+            all: false,
+            name: "Lab Test Management",
+            phrase: "labtest_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        laboraty: {
+          data: {
+            all: false,
+            name: "Laboraty Management",
+            phrase: "laboraty_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        settings: {
+          data: {
+            all: false,
+            name: "Settings Management",
+            phrase: "settings_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
         }
       }
     };
@@ -7559,19 +7611,224 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
   created: function created() {
     this.get_total_appointment();
     this.get_patient_by_user_id();
+    this.get_lab_appointments();
   },
   mounted: function mounted() {// this.get_total_appointment_amount();
   },
   data: function data() {
     return {
       appointment_data: {},
+      patient_data: {},
       total_app_amount: {},
       panding_amount: {},
+      appointment_list: {},
+      selected_appointment: {},
+      lab_app_list: {},
+      display_appointment_date: "",
+      selected_lab_appointment_data: {},
       vform: new Form({
         p_id: "",
         app_id: ""
@@ -7593,7 +7850,7 @@ __webpack_require__.r(__webpack_exports__);
     get_patient_by_user_id: function get_patient_by_user_id() {
       var _this2 = this;
 
-      axios.get("/api/appointment/get_patient/" + this.user_id).then(function (response) {
+      axios.get("/api/appointment/get_patient_by_userID/" + this.user_id).then(function (response) {
         if (response.status == 200) {
           _this2.patient_data = response.data;
           _this2.vform.p_id = _this2.patient_data.id;
@@ -7625,6 +7882,83 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/appointment/get_pending_pay/" + this.vform.p_id).then(function (response) {
         if (response.status == 200) {
           _this4.panding_amount = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    get_appointment_list: function get_appointment_list() {
+      var _this5 = this;
+
+      axios.get("/api/appointment/get_appointment_list/" + this.vform.p_id).then(function (response) {
+        if (response.status == 200) {
+          _this5.appointment_list = response.data; // let new_date = moment(this.appointment_list.).format("LL");
+          // this.display_doctor_appointment_date = new_date;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    delete_app: function delete_app(id) {
+      var _this6 = this;
+
+      swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.patch("/api/appointment/del/" + id).then(function (response) {
+            if (response.status == 200) {
+              _this6.get_appointment_list();
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    },
+    del_lab_app: function del_lab_app(id) {
+      var _this7 = this;
+
+      swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.patch("/api/appointment/del_lab_app/" + id).then(function (response) {
+            if (response.status == 200) {
+              _this7.get_lab_appointments();
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    },
+    modal_appointment_view: function modal_appointment_view(app) {
+      $("#modal_app_view").modal("show");
+      this.selected_appointment = app;
+    },
+    modal_lab_app_view: function modal_lab_app_view(app) {
+      $("#modal_lab_app").modal("show");
+      this.selected_lab_appointment_data = app;
+    },
+    get_lab_appointments: function get_lab_appointments() {
+      var _this8 = this;
+
+      axios.get("/api/lab/get_lab_appointment/" + this.user_id).then(function (response) {
+        if (response.status == 200) {
+          _this8.lab_app_list = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
@@ -81803,7 +82137,9 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.$can("dashboard_management_view") ? _c("PatientDash") : _vm._e(),
+      _vm.$can("dashboard_management_view")
+        ? _c("PatientDash", { attrs: { user_id: this.user_id } })
+        : _vm._e(),
       _vm._v(" "),
       _vm.$can("doctordash_management_view")
         ? _c("DoctorDash", { attrs: { user_id: this.user_id } })
@@ -83509,7 +83845,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-12" }, [
+  return _c("div", [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 col-sm-6 col-xl-4 mt-3" }, [
         _c("div", { staticClass: "card" }, [
@@ -83525,7 +83861,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("h6", { staticClass: "text-center" }, [
-                _vm._v("Total Appointments")
+                _vm._v("Total Doctors Appointments")
               ])
             ]
           )
@@ -83575,9 +83911,281 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 mt-3" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table font-w-600 mb-0" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.appointment_list, function(app, index) {
+                  return _c("tr", { key: index, staticClass: "zoom" }, [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(app.token.token))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.schedule.room.room_name))
+                    ]),
+                    _vm._v(" "),
+                    Object.keys(app).length > 0
+                      ? _c("td", { staticClass: "text-success" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(
+                                app.schedule.employee.doctor.speciality.name
+                              ) +
+                              "\n                "
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.schedule.employee.first_name) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.schedule.startDate))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(app.payment.payment_status))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.payment.type))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _c("i", {
+                        staticClass: "fa fa-trash text-danger icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.delete_app(app.id)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "fa fa-eye text-success icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.modal_appointment_view(app)
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
-    _vm._m(1)
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 mt-3" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table font-w-600 mb-0" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.lab_app_list, function(app, index) {
+                  return _c("tr", { key: index, staticClass: "zoom" }, [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(app.id))
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(app.date))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-success" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.report_type.report_type) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.payment.payment_status) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(app.status) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _vm._v(_vm._s(app.report_type.fee))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-info" }, [
+                      _c("i", {
+                        staticClass: "fa fa-trash text-danger icon-button mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.del_lab_app(app.id)
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modal_app_view",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalCenterTitle",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm.selected_appointment.hasOwnProperty("schedule")
+                  ? _c("h5", [
+                      _vm._v(
+                        "\n            Your Appointment at :\n            " +
+                          _vm._s(_vm.selected_appointment.schedule.startDate) +
+                          "\n          "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.selected_appointment.hasOwnProperty("schedule")
+                  ? _c("h5", [
+                      _vm._v(
+                        "\n            Doctor : " +
+                          _vm._s(
+                            _vm.selected_appointment.schedule.employee
+                              .first_name
+                          ) +
+                          "\n          "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.selected_appointment.hasOwnProperty("schedule")
+                  ? _c("h5", [
+                      _vm._v(
+                        "\n            Room : " +
+                          _vm._s(
+                            _vm.selected_appointment.schedule.room.room_name
+                          ) +
+                          "\n          "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.selected_appointment.hasOwnProperty("token")
+                  ? _c("h3", { staticClass: "text-center" }, [
+                      _vm._v(
+                        "\n            TOKEN ID: " +
+                          _vm._s(_vm.selected_appointment.token.token) +
+                          "\n          "
+                      )
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._m(5)
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "modal_lab_app",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "exampleModalCenterTitle",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-dialog modal-dialog-centered",
+                attrs: { role: "document" }
+              },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("h5", [
+                      _vm._v(
+                        "\n            Your Appointment at :\n              " +
+                          _vm._s(_vm.selected_lab_appointment_data.date) +
+                          "\n          "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("br")
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(7)
+                ])
+              ]
+            )
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -83585,45 +84193,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-6" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card shadow  bg-white",
-            staticStyle: { height: "180px" }
-          },
-          [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: { src: "holder.js/100x180/", alt: "" }
-            }),
-            _vm._v(" "),
-            _c("div", {
-              staticClass: "card-body border-bottom border-success border-w-5"
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-6" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card shadow  bg-white rounded",
-            staticStyle: { height: "180px" }
-          },
-          [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: { src: "holder.js/100x180/", alt: "" }
-            }),
-            _vm._v(" "),
-            _c("div", {
-              staticClass: "card-body border-bottom border-success border-w-5"
-            })
-          ]
-        )
+    return _c(
+      "div",
+      { staticClass: "card-header justify-content-between align-items-center" },
+      [
+        _c("h6", { staticClass: "card-title" }, [
+          _vm._v("View Doctors Appointments")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Token ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Room No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Speciality")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Doctor Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Appointment Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Payment Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
     ])
   },
@@ -83631,24 +84231,132 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card shadow bg-white rounded",
-            staticStyle: { height: "180px" }
-          },
-          [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: { src: "holder.js/100x180/", alt: "" }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" })
-          ]
-        )
+    return _c(
+      "div",
+      { staticClass: "card-header justify-content-between align-items-center" },
+      [
+        _c("h6", { staticClass: "card-title" }, [
+          _vm._v("View Lab Appointments")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Appointment Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Report Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Payment Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Report Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fee")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal-header",
+        staticStyle: { "background-color": "#001638" }
+      },
+      [
+        _c(
+          "h5",
+          { staticClass: "modal-title", staticStyle: { color: "white" } },
+          [_vm._v("Doctor Appointment")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            staticStyle: { color: "white" },
+            attrs: {
+              type: "button",
+              "data-dismiss": "modal",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("\n            Close\n          ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal-header",
+        staticStyle: { "background-color": "#001638" }
+      },
+      [
+        _c(
+          "h5",
+          { staticClass: "modal-title", staticStyle: { color: "white" } },
+          [_vm._v("Lab Appointment")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            staticStyle: { color: "white" },
+            attrs: {
+              type: "button",
+              "data-dismiss": "modal",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("\n            Close\n          ")]
+      )
     ])
   }
 ]
