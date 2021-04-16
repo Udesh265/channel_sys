@@ -6,10 +6,12 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Lab_test_appointment;
 use App\Patient;
+use App\Photo;
 use App\Patient_biometric_data;
 use App\Treatment;
 use App\User;
 use Carbon\Carbon;
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 
 use function GuzzleHttp\Promise\all;
@@ -30,10 +32,10 @@ class ApiPatientController extends Controller
         $validated_data = $request->validate(
             [
                 'name' => ['required'],
-                'nic' => ['required', 'min:10'],
-                'email' => ['required', 'email'],
+                'nic' => ['required', 'min:10','unique:patients'],
+                'email' => ['required', 'email','unique:patients'],
                 'age' => ['digits_between:1,3'],
-                'mobile' => ['min:10', 'required', 'numeric',],
+                'mobile' => ['min:10', 'required', 'numeric','unique:patients'],
                 'p_type' => ['required']
 
             ],
@@ -116,8 +118,8 @@ class ApiPatientController extends Controller
         $validated_data = $request->validate(
             [
                 'role_id' => ['required'],
-                'username' => ['required'],
-                'email' => ['required', 'email'],
+                'username' => ['required','unique:users',],
+                'email' => ['required', 'email','unique:users'],
                 'password' => ['required', 'min:8', 'confirmed']
             ]
         );
@@ -129,9 +131,29 @@ class ApiPatientController extends Controller
             'is_active' => 1,
         ]);
 
+        // add patient photo
+
         if (is_null($user)) return response()->json(['msg' => 'Failed to create user, rolling back'], 400);
         $role = Role::find($validated_data['role_id']);
         $user->syncRoles($role);
+
+        // save image profile photo
+        $has_photo = $request->photo['file'];
+        if ($has_photo) {
+            $name = time() . explode('.', $request->photo['name'])[0]  . '.' . explode('/', explode(':', substr($request->photo['file'], 0, strpos($request->photo['file'], ';')))[1])[1];
+            Image::make($request->photo['file'])->resize(720, 720, function ($constraint) {
+                $constraint->aspectRatio();
+            })->crop(600, 600)->save(storage_path('app/public/images/profile/') . $name);
+
+            Photo::create([
+                'user_id' => $user->id,
+                'path' => $name
+            ]);
+        } else {
+            Photo::create([
+                'user_id' => $user->id,
+            ]);
+        }
 
         $patient = Patient::find($id);
         if (is_null($patient)) return response()->json(['msg' => 'Unable to locate patient!'], 404);
@@ -173,11 +195,11 @@ class ApiPatientController extends Controller
         $validated_data = $request->validate(
             [
                 'name' => ['required'],
-                'nic' => ['min:10'],
+                'nic' => ['min:10','unique:patients'],
                 'age' => ['digits_between:1,3'],
-                'mobile' => ['min:10', 'required', 'numeric',],
-                'email' => ['required', 'email'],
-                'username' => ['required'],
+                'mobile' => ['min:10', 'required', 'numeric','unique:patients'],
+                'email' => ['required', 'email','unique:users'],
+                'username' => ['required','unique:users'],
                 'password' => ['required', 'min:8', 'confirmed'],
 
                 'role_id' => ['required'],
@@ -199,6 +221,23 @@ class ApiPatientController extends Controller
         $user->syncRoles($role);
 
         $user->id;
+
+        $has_photo = $request->photo['file'];
+        if ($has_photo) {
+            $name = time() . explode('.', $request->photo['name'])[0]  . '.' . explode('/', explode(':', substr($request->photo['file'], 0, strpos($request->photo['file'], ';')))[1])[1];
+            Image::make($request->photo['file'])->resize(720, 720, function ($constraint) {
+                $constraint->aspectRatio();
+            })->crop(600, 600)->save(storage_path('app/public/images/profile/') . $name);
+
+            Photo::create([
+                'user_id' => $user->id,
+                'path' => $name
+            ]);
+        } else {
+            Photo::create([
+                'user_id' => $user->id,
+            ]);
+        }
 
 
         $patient = new Patient();
@@ -224,14 +263,15 @@ class ApiPatientController extends Controller
 
     public function assign_user_online(Request $request, $id)
     {
-        // return $request;
+        return $request;
         // $input = $request->all();
         $validated_data = $request->validate(
             [
                 'role_id' => ['required'],
-                'username' => ['required'],
-                'email' => ['required', 'email'],
-                'password' => ['required', 'min:8', 'confirmed']
+                'username' => ['required','unique:users'],
+                'email' => ['required', 'email','unique:users'],
+                'password' => ['required', 'min:8', 'confirmed'],
+                'photo' => ['required'],
             ]
         );
 // fill data to user table
@@ -245,6 +285,23 @@ class ApiPatientController extends Controller
         if (is_null($user)) return response()->json(['msg' => 'Failed to create user, rolling back'], 400);
         $role = Role::find($validated_data['role_id']);
         $user->syncRoles($role);
+
+        $has_photo = $request->photo['file'];
+        if ($has_photo) {
+            $name = time() . explode('.', $request->photo['name'])[0]  . '.' . explode('/', explode(':', substr($request->photo['file'], 0, strpos($request->photo['file'], ';')))[1])[1];
+            Image::make($request->photo['file'])->resize(720, 720, function ($constraint) {
+                $constraint->aspectRatio();
+            })->crop(600, 600)->save(storage_path('app/public/images/profile/') . $name);
+
+            Photo::create([
+                'user_id' => $user->id,
+                'path' => $name
+            ]);
+        } else {
+            Photo::create([
+                'user_id' => $user->id,
+            ]);
+        }
 
         $patient = Patient::find($id);
         if (is_null($patient)) return response()->json(['msg' => 'Unable to locate patient!'], 404);

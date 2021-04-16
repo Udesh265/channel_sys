@@ -12,6 +12,7 @@
                   type="text"
                   placeholder="Enter Full name"
                   class="form-control"
+                  required
                   :class="{ 'is-invalid': form.errors.has('name') }"
                   v-model="form.name"
                 />
@@ -20,6 +21,7 @@
               <div class="col-sm-3 col-lg-3 col-md-3">
                 <label for="form-control">Mobile:</label>
                 <input
+                  required
                   type="text"
                   placeholder="077*******"
                   class="form-control"
@@ -31,6 +33,7 @@
               <div class="col-sm-3 col-lg-3 col-md-3">
                 <label for="form-control">Email</label>
                 <input
+                  required
                   type="text"
                   placeholder="example@gmail.com"
                   class="form-control"
@@ -42,6 +45,7 @@
               <div class="col-sm-2 col-lg-2 col-md-2">
                 <label for="form-control">Age:</label>
                 <input
+                  required
                   type="text"
                   placeholder="Ex: 65"
                   class="form-control"
@@ -125,19 +129,163 @@
                 </tr>
               </tbody>
             </table>
+            <div class="row">
+              <div class="col-6"></div>
+              <div class="col-6">
+                <label for="form-control"
+                  ><h5>Total : {{ total }}</h5>
+                </label>
+              </div>
+            </div>
 
-            <button class="form-control btn btn-primary" @click="submit_service">Submit</button>
+            <button
+              class="form-control btn btn-success"
+              @click="submit_service"
+            >
+              Pay Bill
+            </button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Start printed bill for lab appointment  -->
+    <div
+      class="modal fade"
+      id="payment"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #1e3d73">
+            <h5 class="modal-title" style="color: white">
+              Payment For Doctor Appointment
+            </h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group mt-2">
+              <label for=""><h5>Total Service Fee :</h5></label>
+              <label for=""
+                ><h5>{{ total }} LKR</h5></label
+              >
+            </div>
+            <div class="form-group">
+              <label for=""><h6>Balance</h6></label>
+              <input
+                type="text"
+                class="form-control"
+                disabled
+                v-model="balance"
+              />
+            </div>
+            <div class="form-group">
+              <label for=""><h6>Paid Amount</h6></label>
+              <input
+                type="text"
+                v-model="billform.paid_amount"
+                class="form-control"
+                placeholder=""
+                aria-describedby="helpId"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              v-if="billform.paid_amount >= total"
+              @click="pay_bill()"
+              type="button"
+              class="btn btn-primary"
+            >
+              Pay & Print Bill
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End doc pay appointment modal  -->
+
+    <!-- Show Bill Modal -->
+    <div
+      id="printme"
+      class="modal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div id="invoice-POS">
+        <!-- <p style="margin-left: 85px; margin-top:0px;">බිල්පත</p> -->
+        <p style="margin-left: 15px; font-size: 14px">
+          --- Nawamini Channelling Centre ----
+          <br />New Town, Digana, Rajawella <br />Tel: 0552268036/0719362359
+        </p>
+        ---------------------------------------------
+        <div>
+          <label style="font-size: 12px">ID:</label>
+          <label style="font-size: 12px">{{ payment_id }}</label>
+          <label style="font-size: 12px; margin-left: 20px">Date :</label>
+          <label style="font-size: 12px">{{          }}</label>
+        </div>
+
+        <table style="width: 250px">
+          <tr>
+            <th style="text-align: left; font-size: 12px">#</th>
+            <th style="text-align: left; font-size: 12px">Description</th>
+            <th style="text-align: left; font-size: 12px">Fee</th>
+          </tr>
+          <tr v-for="(list,index) in form.selected_service_list" :key="index">
+            <td style="text-align: left; font-size: 10px">
+              {{ list.id }}
+            </td>
+            <td
+              style="text-align: left; font-size: 10px"
+            >
+              {{ list.name }}
+            </td>
+            <td
+              style="text-align: left; font-size: 10px"
+            >
+              {{ list.fee }}
+            </td>
+          </tr>
+        </table>
+
+        <label style="font-size: 12px">Paid Amount:</label>
+        <label style="font-size: 12px; margin-left: 10px"
+          >Rs: {{ billform.paid_amount }}</label
+        >
+        <br />
+        <label style="font-size: 12px">Balance:</label>
+        <label style="font-size: 12px; margin-left: 10px"
+          >Rs: {{ balance }}</label
+        >
+        <br />
+
+        <label style="font-size: 12px">Total :</label>
+        <label
+          style="font-size: 12px; margin-left: 5px"
+          >Rs: {{ total }}</label
+        >
+        <br />
+
+        <br />---------------------------------------------
+        <br />
+        <div style="margin-left: 55px; font-size: 12px">Thank You,Welcome!</div>
+
+        <p style="font-size: 10px; margin-left: 15px">
+          Software Developed by Udesh / For BIT Project
+        </p>
+      </div>
+    </div>
+    <!--  End Modal -->
   </div>
 </template>
 
 <script>
 export default {
-
-    props:["user_id"],
+  props: ["user_id"],
   computed: {
     service_fee() {
       if (this.form.service_type) {
@@ -149,6 +297,17 @@ export default {
       }
 
       return { fee: null };
+    },
+
+    total() {
+      var sum = 0;
+      this.form.selected_service_list.forEach((item) => {
+        sum += item.fee;
+      });
+      return sum;
+    },
+    balance() {
+      return parseInt(this.billform.paid_amount) - parseInt(this.total);
     },
   },
   created() {
@@ -164,8 +323,14 @@ export default {
         age: "",
         service_type: "",
         selected_service_list: [],
-        user_id:this.user_id,
+        user_id: this.user_id,
       }),
+      billform: new Form({
+        balance: "",
+        paid_amount: "",
+      }),
+
+      payment_id: "",
       selected_service: {},
       // [{service_type: "eco_test", fee: 1999,}]
       service_list: {},
@@ -187,14 +352,40 @@ export default {
     },
 
     submit_service: function () {
-        this.form.post("/api/submit_service")
-        .then((response)=>{
-            if(response.status == 200){
-
-            }
+      this.form
+        .post("/api/submit_service")
+        .then((response) => {
+          if (response.status == 200) {
+            this.payment_id = response.data;
+            this.load_payment_modal();
+          }
         })
-        .catch(()=>{
-            console.log(error)
+        .catch(() => {
+          console.log(error);
+        });
+    },
+
+    load_payment_modal: function () {
+      // $("#payment").modal("show");
+      $("#payment").modal({
+        backdrop: "static",
+        keyboard: false,
+      });
+    },
+
+    pay_bill: function () {
+      axios
+        .patch("/api/service_payment_confirm/" + this.payment_id)
+        .then((response) => {
+          if (response.status == 200) {
+            swal.fire(response.data.msg);
+            $("#payment").modal("hide");
+            this.$htmlToPaper("printme");
+            this.form.reset();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
 

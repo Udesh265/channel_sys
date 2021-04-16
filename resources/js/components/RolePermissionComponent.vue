@@ -338,8 +338,7 @@ export default {
           },
         },
 
-
-          settings: {
+        settings: {
           data: {
             all: false,
             name: "Settings Management",
@@ -352,6 +351,121 @@ export default {
             delete: false,
           },
         },
+
+        schedule: {
+          data: {
+            all: false,
+            name: "Schedule Management",
+            phrase: "schedule_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+        doctor: {
+          data: {
+            all: false,
+            name: "Doctor Management",
+            phrase: "doctor_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+        reception: {
+          data: {
+            all: false,
+            name: "Reception Management",
+            phrase: "reception_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+        attendance: {
+          data: {
+            all: false,
+            name: "Attendance Management",
+            phrase: "attendance_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+        report: {
+          data: {
+            all: false,
+            name: "Report Management",
+            phrase: "report_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+        managerdashboard: {
+          data: {
+            all: false,
+            name: "Manager Dashboard Management",
+            phrase: "managerdashboard_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+
+        labdashboard: {
+          data: {
+            all: false,
+            name: "Lab Dashboard Management",
+            phrase: "labdashboard_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
+
+               repdashboard: {
+          data: {
+            all: false,
+            name: "Reception Dashboard Management",
+            phrase: "repdashboard_management_",
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            delete: false,
+          },
+        },
+
 
       },
     };

@@ -39,14 +39,45 @@ class ApiUserController extends Controller
 
         $emp = Employee::find($request->emp_id);
 
+        $validated_data = $request->validate([
+            'role_id' => ['required'],
+            'username' => ['required', 'unique:users', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        // $user = User::create([
+        //    'username' => $request->username,
+        //     'email' => $request->email,
+        //     'password' => $request->password,
+        //     'is_active' => 1,
+        // ]);
         $user = User::create([
-           'username' => $request->username,
-            'email' => $request->email,
-            'password' => $request->password,
+            'username' => $validated_data['username'],
+            'email' => $validated_data['email'],
+            'password' => $validated_data['password'],
             'is_active' => 1,
         ]);
 
         $user->syncRoles($role);
+
+        $has_photo = $request->photo['file'];
+        if ($has_photo) {
+
+            $name = time() . explode('.', $request->photo['name'])[0]  . '.' . explode('/', explode(':', substr($request->photo['file'], 0, strpos($request->photo['file'], ';')))[1])[1];
+            Image::make($request->photo['file'])->resize(720, 720, function ($constraint) {
+                $constraint->aspectRatio();
+            })->crop(600, 600)->save(storage_path('app/public/images/profile/') . $name);
+
+            Photo::create([
+                'user_id' => $user->id,
+                'path' => $name
+            ]);
+        } else {
+            Photo::create([
+                'user_id' => $user->id,
+            ]);
+        }
 
         $emp->user_id = $user->id;
         $emp->save();

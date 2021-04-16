@@ -47,7 +47,7 @@ Route::group(['prefix' => 'patient'], function () {
 
     Route::post('addpatient','API\ApiPatientController@add_patient');
     Route::get('get_all','API\ApiPatientController@get_all_patient');
-    Route::post('assign/user/{patient_id}','API\ApiPatientController@assign_user');
+    Route::post('assign_offline/user/{patient_id}','API\ApiPatientController@assign_user');
     Route::get('get_by_search/{search_keyword}','API\ApiPatientController@get_by_search');
     Route::patch('update/{id}','API\ApiPatientController@update');
     Route::patch('del/{id}','API\ApiPatientController@delete_patient');
@@ -164,4 +164,5 @@ Route::get('joblist','API\ApiEmployeeController@job_list');
 Route::apiResource('jobtype','API\ApiJobTypeController');
 
 Route::post('submit_service','API\ApiServiceController@submit_service');
+Route::patch('service_payment_confirm/{payment_id}','API\ApiServiceController@service_payment_confirm');
 

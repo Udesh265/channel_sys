@@ -96,6 +96,26 @@
                 />
                 <has-error :form="form" field="email"></has-error>
               </div>
+
+              <div class="col-md-4">
+                <label for="validationDefault05"
+                  >Profile Pic (600px X 600px Recommended)</label
+                >
+                <div class="custom-file overflow-hidden mb-5">
+                  <input
+                    id="customFile1"
+                    @change="uploadFile"
+                    type="file"
+                    name="Photo"
+                    class="custom-file-input"
+                    required
+                  />
+
+                  <label for="customFile1" class="custom-file-label">{{
+                    img_name
+                  }}</label>
+                </div>
+              </div>
             </div>
             <div class="form-group mt-2 row">
               <div class="col-md-4 mb-3">
@@ -142,6 +162,7 @@ export default {
   mounted() {},
   data() {
     return {
+        img_name: "Choose File",
       form: new Form({
         id: "",
         name: "",
@@ -154,10 +175,14 @@ export default {
         status: "1",
 
         user_id: "",
-        role_id: "4",
+        role_id: "5",
         username: "",
         password: "",
         password_confirmation: "",
+         photo: {
+          name: "",
+          file: "",
+        },
         // photo: {},
       }),
       patient_data: {},
@@ -197,6 +222,22 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+        // upload profile user image to system
+    uploadFile: function (event) {
+      let file = event.target.files[0];
+
+      this.img_name = file.name;
+      this.form.photo.name = file.name;
+
+      let reader = new FileReader();
+
+      reader.onloadend = (file) => {
+        this.form.photo.file = reader.result;
+      };
+
+      reader.readAsDataURL(file);
     },
 
     hide_form: function (id) {

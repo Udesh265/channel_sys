@@ -490,12 +490,12 @@ export default {
       let file = event.target.files[0];
 
       this.img_name = file.name;
-      this.form.photo.name = file.name;
+      this.mform.photo.name = file.name;
 
       let reader = new FileReader();
 
       reader.onloadend = (file) => {
-        this.form.photo.file = reader.result;
+        this.mform.photo.file = reader.result;
       };
 
       reader.readAsDataURL(file);

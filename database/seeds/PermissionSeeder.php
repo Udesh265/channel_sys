@@ -69,6 +69,55 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'settings_management_update']);
         Permission::create(['name' => 'settings_management_delete']);
 
+        Permission::create(['name' => 'schedule_management_create']);
+        Permission::create(['name' => 'schedule_management_view']);
+        Permission::create(['name' => 'schedule_management_update']);
+        Permission::create(['name' => 'schedule_management_delete']);
+
+        Permission::create(['name' => 'doctor_management_create']);
+        Permission::create(['name' => 'doctor_management_view']);
+        Permission::create(['name' => 'doctor_management_update']);
+        Permission::create(['name' => 'doctor_management_delete']);
+
+        Permission::create(['name' => 'reception_management_create']);
+        Permission::create(['name' => 'reception_management_view']);
+        Permission::create(['name' => 'reception_management_update']);
+        Permission::create(['name' => 'reception_management_delete']);
+
+
+        Permission::create(['name' => 'attendance_management_create']);
+        Permission::create(['name' => 'attendance_management_view']);
+        Permission::create(['name' => 'attendance_management_update']);
+        Permission::create(['name' => 'attendance_management_delete']);
+
+
+
+        Permission::create(['name' => 'report_management_create']);
+        Permission::create(['name' => 'report_management_view']);
+        Permission::create(['name' => 'report_management_update']);
+        Permission::create(['name' => 'report_management_delete']);
+
+        Permission::create(['name' => 'managerdashboard_management_create']);
+        Permission::create(['name' => 'managerdashboard_management_view']);
+        Permission::create(['name' => 'managerdashboard_management_update']);
+        Permission::create(['name' => 'managerdashboard_management_delete']);
+
+        Permission::create(['name' => 'labdashboard_management_create']);
+        Permission::create(['name' => 'labdashboard_management_view']);
+        Permission::create(['name' => 'labdashboard_management_update']);
+        Permission::create(['name' => 'labdashboard_management_delete']);
+
+        Permission::create(['name' => 'repdashboard_management_create']);
+        Permission::create(['name' => 'repdashboard_management_view']);
+        Permission::create(['name' => 'repdashboard_management_update']);
+        Permission::create(['name' => 'repdashboard_management_delete']);
+
+
+
+
+
+
+
 
 
 

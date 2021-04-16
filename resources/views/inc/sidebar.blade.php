@@ -7,7 +7,7 @@
                 <ul>
                     <li class="{{ $page_option['sub'] === 'dash' ? 'active' : '' }}"><a
                             href="{{ route('home') }}"><i class="fa fa-rocket"></i> Dashboard</a></li>
-                    <li><a href="index-account.html"><i class="icon-layers"></i> My Account</a></li>
+                    <li><a href="{{ route('home') }}"><i class="icon-layers"></i> My Account</a></li>
                 </ul>
             </li>
 
@@ -101,7 +101,7 @@
                                 </li>
                             </ul>
                         </li>
-
+{{--
                         <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
                                     class="fas fa-user-tie"></i>Attendence</a>
                             <ul class="sub-menu">
@@ -112,7 +112,7 @@
                                         href="{{ route('user.index') }}">Manage</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
             @endif
@@ -150,6 +150,8 @@
                 </li>
             @endif
 
+
+            @if (Auth::user()->can('schedule_management_create') || Auth::user()->can('schedule_management_view') || Auth::user()->can('schedule_management_update') || Auth::user()->can('schedule_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Schedule Management</a>
                 <ul>
                     <li class="dropdown {{ $page_option['main'] === 'schedule' ? 'active' : '' }}"><a href="#"><i
@@ -166,8 +168,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
-            {{-- @if (Auth::user()->can('user_management_create') || Auth::user) --}}
+            @if (Auth::user()->can('doctor_management_create') || Auth::user()->can('doctor_management_view') || Auth::user()->can('doctor_management_update') || Auth::user()->can('doctor_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Doctors Management</a>
                 <ul>
                     <li class="dropdown {{ $page_option['main'] === 'doctor' ? 'active' : '' }}"><a href="#"><i
@@ -186,6 +189,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
             @if (Auth::user()->can('settings_management_create') || Auth::user()->can('settings_management_view') || Auth::user()->can('settings_management_update') || Auth::user()->can('settings_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Settings</a>
@@ -208,6 +212,7 @@
             @endif
 
 
+            @if (Auth::user()->can('reception_management_create') || Auth::user()->can('reception_management_view') || Auth::user()->can('reception_management_update') || Auth::user()->can('reception_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reception </a>
                 <ul>
                     <li class="dropdown {{ $page_option['main'] === 'cashier' ? 'active' : '' }}"><a href="#"><i
@@ -241,7 +246,31 @@
 
                 </ul>
             </li>
+            @endif
 
+            @if (Auth::user()->can('report_management_create') || Auth::user()->can('report_management_view') || Auth::user()->can('report_management_update') || Auth::user()->can('report_management_delete'))
+            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reports </a>
+                <ul>
+                    <li class="dropdown {{ $page_option['main'] === 'cashier' ? 'active' : '' }}"><a href="#"><i
+                                class="fas fa-sitemap"></i>Employee Reports</a>
+                        <ul class="sub-menu">
+                            <li class="{{ $page_option['sub'] === 'doctor_appointment' ? 'active' : '' }}"><a
+                                    href="{{ route('cashier.doc_app') }}">Doctor Appointments</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
+                                href="{{ route('schedule.add_schedule') }}">Lab Appointments</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'add_service' ? 'active' : '' }}"><a
+                                href="{{ route('new.service') }}">Services</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            @endif
+
+
+            @if (Auth::user()->can('attendance_management_create') || Auth::user()->can('attendance_management_view') || Auth::user()->can('attendance_management_update') || Auth::user()->can('attendance_management_delete'))
             <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Attendance</a>
                 <ul>
                     <li class="{{ $page_option['sub'] === 'attendance' ? 'active' : '' }}"><a
@@ -249,6 +278,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
 
 

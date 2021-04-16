@@ -8,30 +8,55 @@
             <div class="form-group row">
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Full Name:</label>
-                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }" v-model="form.name" />
-                 <has-error :form="form" field="name"></has-error>
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('name') }"
+                  v-model="form.name"
+                />
+                <has-error :form="form" field="name"></has-error>
               </div>
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">NIC:</label>
-                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('nic') }" v-model="form.nic" />
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('nic') }"
+                  v-model="form.nic"
+                />
                 <has-error :form="form" field="nic"></has-error>
               </div>
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Email</label>
-                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }" v-model="form.email" />
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('email') }"
+                  v-model="form.email"
+                />
                 <has-error :form="form" field="email"></has-error>
               </div>
             </div>
             <div class="form-group mt-3 row">
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Mobile:</label>
-                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('mobile') }" v-model="form.mobile" />
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('mobile') }"
+                  v-model="form.mobile"
+                />
                 <has-error :form="form" field="mobile"></has-error>
               </div>
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Age:</label>
-                <input type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('age') }"  v-model="form.age" />
-                 <has-error :form="form" field="age"></has-error>
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('age') }"
+                  v-model="form.age"
+                />
+                <has-error :form="form" field="age"></has-error>
               </div>
               <div class="col-sm-4 col-lg-4 col-md-4">
                 <label for="form-control">Patient Type:</label>
@@ -226,13 +251,33 @@
                       ></has-error>
                     </div>
                   </div>
+
                   <div class="form-row pt-3">
+                    <div class="col-md-4">
+                      <label for="validationDefault05"
+                        >Profile Pic (600px X 600px Recommended)</label
+                      >
+                      <div class="custom-file overflow-hidden mb-5">
+                        <input
+                          id="customFile1"
+                          @change="uploadFile"
+                          type="file"
+                          name="Photo"
+                          class="custom-file-input"
+                        />
+                        <label for="customFile1" class="custom-file-label">{{
+                          img_name
+                        }}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="form-row pt-3">
                     <div class="col-md-4 mb-3">
                      <file-dialog @output="(files) => {
                         this.mform.photo = files;
                          }" />
                     </div>
-                  </div>
+                  </div> -->
 
                   <button
                     class="btn btn-primary"
@@ -255,16 +300,17 @@
 
 <script>
 export default {
-    props: ['user_id'],
+  props: ["user_id"],
   created() {
     this.get_patient_list();
     this.getAllRoles();
   },
   mounted() {
-      this.get_patient_list();
+    this.get_patient_list();
   },
   data() {
     return {
+      img_name: "Choose File",
       form: new Form({
         id: "",
         name: "",
@@ -285,7 +331,10 @@ export default {
         email: "",
         password: "",
         password_confirmation: "",
-        photo: {},
+        photo: {
+          name: "",
+          file: "",
+        },
       }),
       role_list: {},
     };
@@ -336,19 +385,36 @@ export default {
     },
     submitUpdate: async function () {
       try {
-        const response = await this.mform.post(`/api/patient/assign/user/${this.mform.user_id}`
+        const response = await this.mform.post(
+          `/api/patient/assign_offline/user/${this.mform.user_id}`
         );
         if (response.status == 200) {
-               swal.fire("Success!", "Access Granted", "success");
-              $("#assign_user_model").modal("hide");
-              this.mform.clear();
-              this.mform.reset();
-               this.get_patient_list();
+          swal.fire("Success!", "Access Granted", "success");
+          $("#assign_user_model").modal("hide");
+          this.mform.clear();
+          this.mform.reset();
+          this.get_patient_list();
           console.log("Success message");
         }
       } catch (error) {
         console.log(error.message);
       }
+    },
+
+    // upload profile user image to system
+    uploadFile: function (event) {
+      let file = event.target.files[0];
+
+      this.img_name = file.name;
+      this.mform.photo.name = file.name;
+
+      let reader = new FileReader();
+
+      reader.onloadend = (file) => {
+        this.mform.photo.file = reader.result;
+      };
+
+      reader.readAsDataURL(file);
     },
   },
 };

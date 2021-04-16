@@ -2112,6 +2112,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.getAllRoles();
@@ -2225,6 +2255,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return submitForm;
     }(),
+    // upload profile user image to system
     uploadFile: function uploadFile(event) {
       var _this = this;
 
@@ -3189,6 +3220,110 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             all: false,
             name: "Settings Management",
             phrase: "settings_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        schedule: {
+          data: {
+            all: false,
+            name: "Schedule Management",
+            phrase: "schedule_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        doctor: {
+          data: {
+            all: false,
+            name: "Doctor Management",
+            phrase: "doctor_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        reception: {
+          data: {
+            all: false,
+            name: "Reception Management",
+            phrase: "reception_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        attendance: {
+          data: {
+            all: false,
+            name: "Attendance Management",
+            phrase: "attendance_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        report: {
+          data: {
+            all: false,
+            name: "Report Management",
+            phrase: "report_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        managerdashboard: {
+          data: {
+            all: false,
+            name: "Manager Dashboard Management",
+            phrase: "managerdashboard_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        labdashboard: {
+          data: {
+            all: false,
+            name: "Lab Dashboard Management",
+            phrase: "labdashboard_management_"
+          },
+          permissions: {
+            create: false,
+            view: false,
+            update: false,
+            "delete": false
+          }
+        },
+        repdashboard: {
+          data: {
+            all: false,
+            name: "Reception Dashboard Management",
+            phrase: "repdashboard_management_"
           },
           permissions: {
             create: false,
@@ -5428,6 +5563,155 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user_id"],
   computed: {
@@ -5444,6 +5728,16 @@ __webpack_require__.r(__webpack_exports__);
       return {
         fee: null
       };
+    },
+    total: function total() {
+      var sum = 0;
+      this.form.selected_service_list.forEach(function (item) {
+        sum += item.fee;
+      });
+      return sum;
+    },
+    balance: function balance() {
+      return parseInt(this.billform.paid_amount) - parseInt(this.total);
     }
   },
   created: function created() {
@@ -5461,6 +5755,11 @@ __webpack_require__.r(__webpack_exports__);
         selected_service_list: [],
         user_id: this.user_id
       }),
+      billform: new Form({
+        balance: "",
+        paid_amount: ""
+      }),
+      payment_id: "",
       selected_service: {},
       // [{service_type: "eco_test", fee: 1999,}]
       service_list: {}
@@ -5480,18 +5779,47 @@ __webpack_require__.r(__webpack_exports__);
       this.form.selected_service_list = services;
     },
     submit_service: function submit_service() {
+      var _this = this;
+
       this.form.post("/api/submit_service").then(function (response) {
-        if (response.status == 200) {}
+        if (response.status == 200) {
+          _this.payment_id = response.data;
+
+          _this.load_payment_modal();
+        }
       })["catch"](function () {
         console.log(error);
       });
     },
+    load_payment_modal: function load_payment_modal() {
+      // $("#payment").modal("show");
+      $("#payment").modal({
+        backdrop: "static",
+        keyboard: false
+      });
+    },
+    pay_bill: function pay_bill() {
+      var _this2 = this;
+
+      axios.patch("/api/service_payment_confirm/" + this.payment_id).then(function (response) {
+        if (response.status == 200) {
+          swal.fire(response.data.msg);
+          $("#payment").modal("hide");
+
+          _this2.$htmlToPaper("printme");
+
+          _this2.form.reset();
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     get_service_list: function get_service_list() {
-      var _this = this;
+      var _this3 = this;
 
       axios.get("/api/get_service_list").then(function (response) {
         if (response.status == 200) {
-          _this.service_list = response.data;
+          _this3.service_list = response.data;
         }
       })["catch"](function (error) {
         console.log(error);
@@ -8680,11 +9008,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var file = event.target.files[0];
       this.img_name = file.name;
-      this.form.photo.name = file.name;
+      this.mform.photo.name = file.name;
       var reader = new FileReader();
 
       reader.onloadend = function (file) {
-        _this5.form.photo.file = reader.result;
+        _this5.mform.photo.file = reader.result;
       };
 
       reader.readAsDataURL(file);
@@ -10710,8 +11038,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user_id'],
+  props: ["user_id"],
   created: function created() {
     this.get_patient_list();
     this.getAllRoles();
@@ -10721,6 +11094,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      img_name: "Choose File",
       form: new Form({
         id: "",
         name: "",
@@ -10740,7 +11114,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         email: "",
         password: "",
         password_confirmation: "",
-        photo: {}
+        photo: {
+          name: "",
+          file: ""
+        }
       }),
       role_list: {}
     };
@@ -10825,7 +11202,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return this.mform.post("/api/patient/assign/user/".concat(this.mform.user_id));
+                return this.mform.post("/api/patient/assign_offline/user/".concat(this.mform.user_id));
 
               case 3:
                 response = _context2.sent;
@@ -10860,7 +11237,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return submitUpdate;
-    }()
+    }(),
+    // upload profile user image to system
+    uploadFile: function uploadFile(event) {
+      var _this3 = this;
+
+      var file = event.target.files[0];
+      this.img_name = file.name;
+      this.mform.photo.name = file.name;
+      var reader = new FileReader();
+
+      reader.onloadend = function (file) {
+        _this3.mform.photo.file = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
   }
 });
 
@@ -11012,12 +11404,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //   props: ["user_id"],
   created: function created() {},
   mounted: function mounted() {},
   data: function data() {
     return {
+      img_name: "Choose File",
       form: new Form({
         id: "",
         name: "",
@@ -11029,10 +11442,14 @@ __webpack_require__.r(__webpack_exports__);
         p_type: "online",
         status: "1",
         user_id: "",
-        role_id: "4",
+        role_id: "5",
         username: "",
         password: "",
-        password_confirmation: "" // photo: {},
+        password_confirmation: "",
+        photo: {
+          name: "",
+          file: ""
+        } // photo: {},
 
       }),
       patient_data: {}
@@ -11071,6 +11488,21 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    // upload profile user image to system
+    uploadFile: function uploadFile(event) {
+      var _this = this;
+
+      var file = event.target.files[0];
+      this.img_name = file.name;
+      this.form.photo.name = file.name;
+      var reader = new FileReader();
+
+      reader.onloadend = function (file) {
+        _this.form.photo.file = reader.result;
+      };
+
+      reader.readAsDataURL(file);
     },
     hide_form: function hide_form(id) {
       $("#hi").hide();
@@ -75451,7 +75883,13 @@ var render = function() {
                               return _c(
                                 "option",
                                 { key: index, domProps: { value: role.id } },
-                                [_vm._v(_vm._s(role.name))]
+                                [
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(role.name) +
+                                      "\n                      "
+                                  )
+                                ]
                               )
                             }),
                             0
@@ -75700,7 +76138,7 @@ var render = function() {
                         staticClass: "btn btn-primary",
                         attrs: { disabled: _vm.submit_disabled, type: "submit" }
                       },
-                      [_vm._v("Create")]
+                      [_vm._v("\n                  Create\n                ")]
                     )
                   ]
                 )
@@ -80138,7 +80576,11 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     class: { "is-invalid": _vm.form.errors.has("name") },
-                    attrs: { type: "text", placeholder: "Enter Full name" },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Enter Full name",
+                      required: ""
+                    },
                     domProps: { value: _vm.form.name },
                     on: {
                       input: function($event) {
@@ -80174,7 +80616,11 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     class: { "is-invalid": _vm.form.errors.has("mobile") },
-                    attrs: { type: "text", placeholder: "077*******" },
+                    attrs: {
+                      required: "",
+                      type: "text",
+                      placeholder: "077*******"
+                    },
                     domProps: { value: _vm.form.mobile },
                     on: {
                       input: function($event) {
@@ -80212,7 +80658,11 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     class: { "is-invalid": _vm.form.errors.has("email") },
-                    attrs: { type: "text", placeholder: "example@gmail.com" },
+                    attrs: {
+                      required: "",
+                      type: "text",
+                      placeholder: "example@gmail.com"
+                    },
                     domProps: { value: _vm.form.email },
                     on: {
                       input: function($event) {
@@ -80248,7 +80698,11 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     class: { "is-invalid": _vm.form.errors.has("age") },
-                    attrs: { type: "text", placeholder: "Ex: 65" },
+                    attrs: {
+                      required: "",
+                      type: "text",
+                      placeholder: "Ex: 65"
+                    },
                     domProps: { value: _vm.form.age },
                     on: {
                       input: function($event) {
@@ -80415,18 +80869,286 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("label", { attrs: { for: "form-control" } }, [
+                  _c("h5", [_vm._v("Total : " + _vm._s(_vm.total))])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
             _c(
               "button",
               {
-                staticClass: "form-control btn btn-primary",
+                staticClass: "form-control btn btn-success",
                 on: { click: _vm.submit_service }
               },
-              [_vm._v("Submit")]
+              [_vm._v("\n            Pay Bill\n          ")]
             )
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "payment",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group mt-2" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "" } }, [
+                    _c("h5", [_vm._v(_vm._s(_vm.total) + " LKR")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.balance,
+                        expression: "balance"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", disabled: "" },
+                    domProps: { value: _vm.balance },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.balance = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.billform.paid_amount,
+                        expression: "billform.paid_amount"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "",
+                      "aria-describedby": "helpId"
+                    },
+                    domProps: { value: _vm.billform.paid_amount },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.billform,
+                          "paid_amount",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _vm.billform.paid_amount >= _vm.total
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.pay_bill()
+                          }
+                        }
+                      },
+                      [_vm._v("\n            Pay & Print Bill\n          ")]
+                    )
+                  : _vm._e()
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "printme",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { attrs: { id: "invoice-POS" } }, [
+          _vm._m(5),
+          _vm._v(
+            "\n      ---------------------------------------------\n      "
+          ),
+          _c("div", [
+            _c("label", { staticStyle: { "font-size": "12px" } }, [
+              _vm._v("ID:")
+            ]),
+            _vm._v(" "),
+            _c("label", { staticStyle: { "font-size": "12px" } }, [
+              _vm._v(_vm._s(_vm.payment_id))
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticStyle: { "font-size": "12px", "margin-left": "20px" } },
+              [_vm._v("Date :")]
+            ),
+            _vm._v(" "),
+            _c("label", { staticStyle: { "font-size": "12px" } }, [
+              _vm._v(_vm._s())
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticStyle: { width: "250px" } },
+            [
+              _vm._m(6),
+              _vm._v(" "),
+              _vm._l(_vm.form.selected_service_list, function(list, index) {
+                return _c("tr", { key: index }, [
+                  _c(
+                    "td",
+                    {
+                      staticStyle: { "text-align": "left", "font-size": "10px" }
+                    },
+                    [
+                      _vm._v(
+                        "\n            " + _vm._s(list.id) + "\n          "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticStyle: { "text-align": "left", "font-size": "10px" }
+                    },
+                    [
+                      _vm._v(
+                        "\n            " + _vm._s(list.name) + "\n          "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticStyle: { "text-align": "left", "font-size": "10px" }
+                    },
+                    [
+                      _vm._v(
+                        "\n            " + _vm._s(list.fee) + "\n          "
+                      )
+                    ]
+                  )
+                ])
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("label", { staticStyle: { "font-size": "12px" } }, [
+            _vm._v("Paid Amount:")
+          ]),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticStyle: { "font-size": "12px", "margin-left": "10px" } },
+            [_vm._v("Rs: " + _vm._s(_vm.billform.paid_amount))]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", { staticStyle: { "font-size": "12px" } }, [
+            _vm._v("Balance:")
+          ]),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticStyle: { "font-size": "12px", "margin-left": "10px" } },
+            [_vm._v("Rs: " + _vm._s(_vm.balance))]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", { staticStyle: { "font-size": "12px" } }, [
+            _vm._v("Total :")
+          ]),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticStyle: { "font-size": "12px", "margin-left": "5px" } },
+            [_vm._v("Rs: " + _vm._s(_vm.total))]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v("---------------------------------------------\n      "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticStyle: { "margin-left": "55px", "font-size": "12px" } },
+            [_vm._v("Thank You,Welcome!")]
+          ),
+          _vm._v(" "),
+          _c(
+            "p",
+            { staticStyle: { "font-size": "10px", "margin-left": "15px" } },
+            [
+              _vm._v(
+                "\n        Software Developed by Udesh / For BIT Project\n      "
+              )
+            ]
+          )
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -80443,6 +81165,81 @@ var staticRenderFns = [
         _c("th", [_vm._v("Amount")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal-header",
+        staticStyle: { "background-color": "#1e3d73" }
+      },
+      [
+        _c(
+          "h5",
+          { staticClass: "modal-title", staticStyle: { color: "white" } },
+          [_vm._v("\n            Payment For Doctor Appointment\n          ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "" } }, [
+      _c("h5", [_vm._v("Total Service Fee :")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "" } }, [_c("h6", [_vm._v("Balance")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "" } }, [
+      _c("h6", [_vm._v("Paid Amount")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "p",
+      { staticStyle: { "margin-left": "15px", "font-size": "14px" } },
+      [
+        _vm._v("\n        --- Nawamini Channelling Centre ----\n        "),
+        _c("br"),
+        _vm._v("New Town, Digana, Rajawella "),
+        _c("br"),
+        _vm._v("Tel: 0552268036/0719362359\n      ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", { staticStyle: { "text-align": "left", "font-size": "12px" } }, [
+        _vm._v("#")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { "text-align": "left", "font-size": "12px" } }, [
+        _vm._v("Description")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { "text-align": "left", "font-size": "12px" } }, [
+        _vm._v("Fee")
       ])
     ])
   }
@@ -88301,7 +89098,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function() {
-  var this$1 = this
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -88998,20 +89794,44 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-row pt-3" }, [
-                          _c(
-                            "div",
-                            { staticClass: "col-md-4 mb-3" },
-                            [
-                              _c("file-dialog", {
-                                on: {
-                                  output: function(files) {
-                                    this$1.mform.photo = files
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "validationDefault05" } },
+                              [
+                                _vm._v(
+                                  "Profile Pic (600px X 600px Recommended)"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "custom-file overflow-hidden mb-5"
+                              },
+                              [
+                                _c("input", {
+                                  staticClass: "custom-file-input",
+                                  attrs: {
+                                    id: "customFile1",
+                                    type: "file",
+                                    name: "Photo"
+                                  },
+                                  on: { change: _vm.uploadFile }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-file-label",
+                                    attrs: { for: "customFile1" }
+                                  },
+                                  [_vm._v(_vm._s(_vm.img_name))]
+                                )
+                              ]
+                            )
+                          ])
                         ]),
                         _vm._v(" "),
                         _c(
@@ -89418,7 +90238,39 @@ var render = function() {
                     })
                   ],
                   1
-                )
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("label", { attrs: { for: "validationDefault05" } }, [
+                    _vm._v("Profile Pic (600px X 600px Recommended)")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "custom-file overflow-hidden mb-5" },
+                    [
+                      _c("input", {
+                        staticClass: "custom-file-input",
+                        attrs: {
+                          id: "customFile1",
+                          type: "file",
+                          name: "Photo",
+                          required: ""
+                        },
+                        on: { change: _vm.uploadFile }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "custom-file-label",
+                          attrs: { for: "customFile1" }
+                        },
+                        [_vm._v(_vm._s(_vm.img_name))]
+                      )
+                    ]
+                  )
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group mt-2 row" }, [

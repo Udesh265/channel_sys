@@ -39,16 +39,26 @@ class ApiServiceController extends Controller
 
     public function submit_service(Request $request){
 
+        $validated_data = $request->validate(
+            [
+                'name' => ['required'],
+                'age' => ['digits_between:1,3'],
+                'mobile' => ['min:10', 'required', 'numeric','unique:patients'],
+                'email' => ['required', 'email','unique:patients'],
+
+            ],
+        );
+
         $services = $request->selected_service_list;
 
         $patient_data = Patient::create([
-            'name' => $request->name,
+            'name' => $validated_data['name'],
             'nic' => '0',
-            'email' => $request->email,
+            'email' => $validated_data['email'],
             'p_type'=>'Regular',
             'address' => 'no address',
-            'mobile' => $request->mobile,
-            'age' => $request->age,
+            'mobile' => $validated_data['mobile'],
+            'age' => $validated_data['age'],
             'user_id' => $request->user_id,
             'status' => 1,
         ]);
@@ -64,7 +74,7 @@ class ApiServiceController extends Controller
         $payment_data = Payment::create([
             'amount' => $total,
             'type' => 'Services',
-            'payment_status' => 'Confirm',
+            'payment_status' => 'Pending',
             'patient_id' => $patient_id,
         ]);
 
@@ -80,6 +90,26 @@ class ApiServiceController extends Controller
 
         if (is_null($data)) return response()->json(['msg' => 'Failed to add rolling back'], 400);
 
-        return response()->json(['msg' => 'Payment Success'], 200);
+        // return response()->json(['msg' => 'Payment Success'], 200);
+
+        return response()->json($payment_id, 200);
+
     }
+
+    public function service_payment_confirm($payment_id){
+        $data = Payment::find($payment_id);
+
+        $data->update([
+            'payment_status' => 'Confirm',
+        ]);
+
+        if(is_null($data)){
+
+            return response()->json(['msg'=>'faild to update payment'],400);
+        }
+
+            return response()->json(['msg'=>'Payment Successfull'],200);
+
+   }
+
 }
