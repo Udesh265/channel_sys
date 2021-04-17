@@ -20,7 +20,17 @@ class ApiScheduleController extends Controller
     {
 
 
-        $employee_schedules = Schedule::whereEmployeeId($employee_id)->get();
+        $employee_schedules = Schedule::with('employee')->whereEmployeeId($employee_id)->get();
+
+        return response()->json($employee_schedules, 200);
+    }
+
+    public function get_by_room_id(Request $request, $room_id){
+
+        $employee_id = $request->query('emp_id');
+        // return $employee_id;
+
+        $employee_schedules = Schedule::with('employee')->where('room_id',$room_id)->get();
 
         return response()->json($employee_schedules, 200);
     }

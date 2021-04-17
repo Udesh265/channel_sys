@@ -18,6 +18,12 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 window.Form = Form;
 
+//apex chart
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
+
 //File64
 import File64 from 'vue-file64';
 Vue.component('file-dialog', File64);

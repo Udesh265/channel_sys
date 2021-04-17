@@ -23,6 +23,7 @@
                   <th>Name</th>
                   <th>NIC</th>
                   <th>Mobile</th>
+                  <th>Type</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -32,6 +33,7 @@
                   <td>{{ patient.name }}</td>
                   <td>{{ patient.nic }}</td>
                   <td>{{ patient.mobile }}</td>
+                  <td>{{ patient.p_type }}</td>
                   <td>
                     <a
                       style="cursor: pointer"

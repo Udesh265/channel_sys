@@ -135,17 +135,7 @@
                             </ul>
                         </li>
 
-                        <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
-                                    class="fas fa-user-tie"></i>Attendence</a>
-                            <ul class="sub-menu">
-                                <li class="{{ $page_option['sub'] === 'user_create' ? 'active' : '' }}"><a
-                                        href="{{ route('user.create') }}">View</a>
-                                </li>
-                                <li class="{{ $page_option['sub'] === 'user_index' ? 'active' : '' }}"><a
-                                        href="{{ route('user.index') }}">Manage</a>
-                                </li>
-                            </ul>
-                        </li>
+
                     </ul>
                 </li>
             @endif

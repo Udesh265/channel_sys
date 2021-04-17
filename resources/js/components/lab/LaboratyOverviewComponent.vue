@@ -127,7 +127,7 @@
                   <td class="text-info">
                     <i
                       class="fa fa-upload icon-button mx-1"
-                      @click="file_upload_modal(data.patient_id, data.id)"
+                      @click="file_upload_modal(data.patient_id, data.id, data.patient.email)"
                     ></i>
                     <i class="fa fa-eye text-success icon-button mx-1"></i>
                   </td>
@@ -312,6 +312,7 @@ export default {
         image: "",
         p_id: "",
         lab_app_id: "",
+        email:"",
       }),
 
       waiting_list: {},
@@ -345,9 +346,10 @@ export default {
         });
     },
 
-    file_upload_modal: function (p_id, id) {
+    file_upload_modal: function (p_id, id,email) {
       this.form.p_id = p_id;
       this.form.lab_app_id = id;
+      this.form.email = email;
       $("#file_modal").modal("show");
     },
 

@@ -8,6 +8,7 @@ use App\Payment;
 use App\Service;
 use App\ServiceList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ApiServiceController extends Controller
 {
@@ -97,6 +98,8 @@ class ApiServiceController extends Controller
     }
 
     public function service_payment_confirm($payment_id){
+
+
         $data = Payment::find($payment_id);
 
         $data->update([

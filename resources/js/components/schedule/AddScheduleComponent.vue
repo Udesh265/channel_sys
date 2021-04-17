@@ -46,6 +46,7 @@
             <div class="form-group">
               <label for="form-control">Room</label>
               <select
+              @change="get_all_schedule"
                 v-model="s_form.room_id"
 
                 class="form-control"
@@ -208,7 +209,27 @@ export default {
                 id: item.id,
                 startDate: item.startDate,
                 classes: "bg-event",
-                title: "Scheduled",
+                title: `Scheduled - ${item.employee.first_name}`,
+              };
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+        get_all_schedule: function () {
+
+      axios
+        .get("/api/schedule/get_by_room_id/" + this.s_form.room_id, {params: {emp_id: this.s_form.employee_id}} )
+        .then((response) => {
+          if (response.status == 200) {
+            this.items = response.data.map((item) => {
+              return {
+                id: item.id,
+                startDate: item.startDate,
+                classes: "bg-event",
+                title: `${item.employee.first_name}`,
               };
             });
           }

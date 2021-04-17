@@ -25,10 +25,12 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
+        "apexcharts": "^3.26.0",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.27.0",
         "sweetalert2": "^9.17.2",
         "vform": "^1.0.1",
+        "vue-apexcharts": "^1.6.1",
         "vue-file64": "^1.0.2",
         "vue-html-to-paper": "^1.3.1",
         "vue-router": "^3.4.7",

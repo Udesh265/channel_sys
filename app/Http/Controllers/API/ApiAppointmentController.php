@@ -8,6 +8,7 @@ use App\Lab_test_appointment;
 use App\Patient;
 use App\Payment;
 use App\Schedule;
+use App\ServiceList;
 use App\Token;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -294,6 +295,27 @@ class ApiAppointmentController extends Controller
 
         return response()->json($data,200);
     }
+
+    public function total_doc_app(){
+
+        $data = Appointment::where('status','active')->count();
+
+        return response()->json($data,200);
+    }
+
+    public function total_lab_app(){
+
+        $data = Lab_test_appointment::count();
+
+        return response()->json($data,200);
+    }
+    public function total_services_count(){
+
+        $data = ServiceList::count();
+
+        return response()->json($data,200);
+    }
+
 
 
 }

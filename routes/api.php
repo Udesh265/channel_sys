@@ -97,6 +97,7 @@ Route::group(['prefix' => 'schedule'], function () {
    Route::get('get/{employee_id}','API\ApiScheduleController@get_schedule');
    Route::delete('del/{id}','API\ApiScheduleController@destroy');
    Route::get('get_one_schedule/{id}','API\ApiScheduleController@get_one_schedule');
+   Route::get('get_by_room_id/{room_id}','API\ApiScheduleController@get_by_room_id');
 });
 
 
@@ -124,6 +125,12 @@ Route::group(['prefix' => 'appointment'], function () {
     Route::get('get_all_doc_appointment','API\ApiAppointmentController@get_all_doc_appointments');
 
     Route::get('get_all_doc_appointment_selected_date','API\ApiAppointmentController@get_all_doc_appointment_selected_date');
+
+    Route::get('total_doc_app','API\ApiAppointmentController@total_doc_app');
+    Route::get('total_lab_app','API\ApiAppointmentController@total_lab_app');
+    Route::get('total_services_count','API\ApiAppointmentController@total_services_count');
+
+
 
 
 
@@ -165,4 +172,6 @@ Route::apiResource('jobtype','API\ApiJobTypeController');
 
 Route::post('submit_service','API\ApiServiceController@submit_service');
 Route::patch('service_payment_confirm/{payment_id}','API\ApiServiceController@service_payment_confirm');
+
+Route::get('get_all_payment_data','API\ApiPaymentController@get_all_payment_data');
 

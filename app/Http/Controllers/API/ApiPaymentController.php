@@ -30,4 +30,10 @@ class ApiPaymentController extends Controller
             return response()->json(['msg'=>'Payment Successfull'],200);
 
    }
+
+   public function get_all_payment_data(){
+       $data = Payment::get();
+
+       return response()->json($data,200);
+   }
 }

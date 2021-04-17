@@ -5,9 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Document;
 use App\Http\Controllers\Controller;
 use App\Lab_test_appointment;
+use App\Mail\SendEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Mail;
 
 class ApiLaboratyController extends Controller
 {
@@ -118,11 +120,16 @@ class ApiLaboratyController extends Controller
 
             $lab_test = Lab_test_appointment::find($validated_data['lab_app_id']);
 
-
-
             $lab_test->update([
                 'status'=>'deliver',
             ]);
+
+        $email = $request->email;
+
+        Mail::to($request->email)->send(new SendEmail());
+
+
+
 
          // Image upload
          $has_image = $request->image[0]['file'];
