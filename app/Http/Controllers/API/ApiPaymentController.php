@@ -32,7 +32,7 @@ class ApiPaymentController extends Controller
    }
 
    public function get_all_payment_data(){
-       $data = Payment::get();
+       $data = Payment::orderBy('created_at', 'ASC')->get();
 
        return response()->json($data,200);
    }

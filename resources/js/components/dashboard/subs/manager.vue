@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-3">
       <div class="col-8">
         <div id="chart">
           <apexchart
@@ -52,57 +52,66 @@ export default {
     this.get_total_doc_appointment();
     this.get_total_lab_appointment();
     this.get_total_services();
+    this.get_payment_data_for_chart();
+    // console.log(payment_data);
+    // console.log();
   },
 
   mounted() {
     // this.get_total_appointment_amount();
+    // console.log(this.payment_data);
   },
   data() {
-
     return {
-
-
-          series: [{
-              name: "Desktops",
-            //   data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-            data:
-          }],
-          chartOptions: {
-            chart: {
-              height: 350,
-              type: 'line',
-              zoom: {
-                enabled: false
-              }
-            },
-            dataLabels: {
-              enabled: false
-            },
-            stroke: {
-              curve: 'straight'
-            },
-            title: {
-              text: 'Product Trends by Month',
-              align: 'left'
-            },
-            grid: {
-              row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5
-              },
-            },
-            xaxis: {
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-            }
+      series: [
+        {
+          name: "Desktops",
+          data: [],
+        },
+      ],
+      chartOptions: {
+        chart: {
+          height: 350,
+          type: "line",
+          zoom: {
+            enabled: false,
           },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: "straight",
+        },
+        title: {
+          text: "Product Trends by Month",
+          align: "left",
+        },
+        grid: {
+          row: {
+            colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+            opacity: 0.5,
+          },
+        },
+        xaxis: {
+          categories: [],
+        },
+      },
 
       total_doc_appointment: "",
       total_lab_appointment: "",
       total_services_count: "",
-      payment_data:{},
+      payment_data: {},
     };
   },
   methods: {
+    updateTheme(e) {
+      this.chartOptions = {
+        theme: {
+          palette: "palette2",
+        },
+      };
+    },
     get_total_doc_appointment: function () {
       axios
         .get("/api/appointment/total_doc_app")
@@ -142,12 +151,39 @@ export default {
         });
     },
 
-    get_payment_data_for_chart: function(){
-              axios
+    get_payment_data_for_chart: function () {
+        const months = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
+      axios
         .get("/api/get_all_payment_data")
         .then((response) => {
           if (response) {
             this.payment_data = response.data;
+            const paymentData = response.data;
+            const monthPay = {};
+            paymentData.forEach(p => {
+                const numericMonth = new Date(p.created_at).getMonth();
+                const month = months[numericMonth];
+                if (monthPay[month] === undefined) {
+                    monthPay[month] = p.amount
+                } else {
+                    monthPay[month] += p.amount
+                }
+            });
+            console.log(Object.keys(monthPay));
+            this.chartOptions = {
+              ...this.chartOptions,
+              ...{
+                xaxis: {
+                  categories: Object.keys(monthPay),
+                },
+              },
+            };
+            this.series = [
+              {
+                name: "Amount",
+                data: Object.values(monthPay),
+              },
+            ];
           }
         })
         .catch((error) => {
