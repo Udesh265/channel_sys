@@ -305,6 +305,8 @@ export default {
   },
   mounted() {
     // this.get_waiting_app_list();
+     this.get_deliver_list();
+
   },
   data() {
     return {
@@ -331,6 +333,7 @@ export default {
     },
 
     upload_file: function () {
+        this.disabled = true;
       this.form
         .post("/api/laboraty/upload_file")
         .then((response) => {

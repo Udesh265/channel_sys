@@ -293,6 +293,7 @@
                       >
                       <div class="custom-file overflow-hidden mb-5">
                         <input
+                        required
                           id="customFile1"
                           @change="uploadFile"
                           type="file"
@@ -446,7 +447,7 @@ export default {
         const response = await this.mform.post("/api/user/assign");
         if (response.status == 200) {
           swal.fire(response.data.msg);
-          this.form.reset();
+          this.mform.reset();
           this.emp_list();
           $("#modelId").modal("hide");
 

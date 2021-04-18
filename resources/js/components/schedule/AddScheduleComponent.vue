@@ -193,6 +193,8 @@ export default {
               };
             });
             $("#s_model").modal("hide");
+            this.get_all_schedule();
+
           }
         })
         .catch((error) => {

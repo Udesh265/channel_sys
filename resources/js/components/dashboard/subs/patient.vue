@@ -145,6 +145,42 @@
         </div>
       </div>
     </div>
+    <!-- start patient history record  -->
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="card shadow bg-white rounded">
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-9">
+                    <h5>Future Treatment Records</h5>
+                  </div>
+                </div>
+                <table class="table table-striped">
+                  <thead class="thead-inverse">
+                    <tr>
+                      <th style="width: 70%">Future Treatments</th>
+                      <th style="width: 20%">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class="zoom"
+                      v-for="(treat, index) in treatment_data"
+                      :key="index"
+                    >
+                      <td>
+                        {{ treat.next_treatment }}
+                      </td>
+
+                      <td>{{ treat.next_treatment_date }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Start add patient history records  -->
     <!-- appoitnment view modal start -->
     <!-- Modal -->
     <div
@@ -259,6 +295,7 @@ export default {
     this.get_total_appointment();
     this.get_patient_by_user_id();
     this.get_lab_appointments();
+
   },
 
   mounted() {
@@ -275,6 +312,8 @@ export default {
       lab_app_list: {},
       display_appointment_date:"",
       selected_lab_appointment_data:{},
+
+      treatment_data:{},
 
       vform: new Form({
         p_id: "",
@@ -347,6 +386,7 @@ export default {
             this.appointment_list = response.data;
             // let new_date = moment(this.appointment_list.).format("LL");
             // this.display_doctor_appointment_date = new_date;
+            this.get_treatment_data_by_patient_id();
 
           }
         })
@@ -432,6 +472,23 @@ export default {
           console.log(error);
         });
     },
+
+    get_treatment_data_by_patient_id: function () {
+      this.patient_id = this.vform.p_id;
+
+      axios
+        .get("/api/patient/get_treatment_data/" + this.patient_id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.treatment_data = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+
   },
 };
 </script>

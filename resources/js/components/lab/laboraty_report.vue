@@ -109,6 +109,9 @@ export default {
       patient_data: {},
 
       p_id: "",
+      report_file:"",
+
+
     };
   },
   methods: {

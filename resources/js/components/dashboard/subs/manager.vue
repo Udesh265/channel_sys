@@ -84,7 +84,7 @@ export default {
           curve: "straight",
         },
         title: {
-          text: "Product Trends by Month",
+          text: "Total Payments Trend",
           align: "left",
         },
         grid: {

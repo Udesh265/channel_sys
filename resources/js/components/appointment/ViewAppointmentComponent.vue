@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-12 col-sm-6 col-xl-4 mt-3">
         <div class="card">
           <div class="card-body text-info border-bottom border-info border-w-5">
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <div class="col-12 mt-3">
         <div class="card">
