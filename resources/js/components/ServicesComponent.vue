@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="row">
     <div class="col-6">
       <div class="card">
@@ -53,6 +54,28 @@
       </table>
     </div>
   </div>
+  <div class="row">
+          <div class="col-6">
+      <div class="card">
+        <img class="card-img-top" src="holder.js/100x180/" alt="" />
+        <div class="card-body">
+          <form action="" @submit.prevent="add_channel_charge()">
+            <div class="form-group">
+              <label for="form-control">Channeling Charge</label>
+              <input
+                placeholder="Example: ECG"
+                class="form-control"
+                type="text"
+                v-model="cform.c_charge"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -70,10 +93,29 @@ export default {
           fee:"",
       }),
 
+      cform: new Form({
+          c_charge:"",
+      }),
+
       service_list: {},
     };
   },
   methods: {
+
+    add_channel_charge: function(){
+         this.cform
+        .post("/api/add_channeling_charge")
+        .then((response) => {
+          if (response.status == 200) {
+            this.form.reset();
+            swal.fire(response.data.msg);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     add_service: function () {
       this.form
         .post("/api/add_service")

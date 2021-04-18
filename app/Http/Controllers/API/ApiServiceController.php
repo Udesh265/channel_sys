@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\ChannelingCharges;
 use App\Http\Controllers\Controller;
 use App\Patient;
 use App\Payment;
@@ -112,6 +113,21 @@ class ApiServiceController extends Controller
         }
 
             return response()->json(['msg'=>'Payment Successfull'],200);
+
+   }
+
+   public function add_channeling_charge(Request $request){
+
+    $data = ChannelingCharges::create([
+        'charge_amount' => $request->c_charge,
+    ]);
+
+    if(is_null($data)){
+
+        return response()->json(['msg'=>'faild to add'],400);
+    }
+
+        return response()->json(['msg'=>'Add Successfull'],200);
 
    }
 

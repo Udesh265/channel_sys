@@ -255,6 +255,10 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="{{ $page_option['sub'] === 'visiting_doc_sal' ? 'active' : '' }}"><a
+                        href="{{ route('report.visiting_doc_sal') }}"><i class="icon-layers"></i>Pay Visiting Doctors</a>
+                </li>
+
                 </ul>
             </li>
             @endif

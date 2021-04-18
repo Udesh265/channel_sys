@@ -75,6 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('service/new_service','ServiceController@service_appointment')->name('new.service');
 
+    Route::get('pay/visiting_doc','VisitingDoctorSalaryController@visiting_doc_sal')->name('report.visiting_doc_sal');
+
 
 
 

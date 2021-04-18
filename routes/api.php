@@ -152,6 +152,16 @@ Route::group(['prefix' => 'laboraty'], function () {
 
  });
 
+ Route::group(['prefix' => 'reports'], function () {
+
+    Route::get('get_doc_salary/{search_value}','API\ApiSalaryController@get_doc_salary');
+    Route::get('get_channel_charge','API\ApiSalaryController@get_channel_charge');
+    Route::get('get_doc_app_count/{search_value}','API\ApiSalaryController@get_doc_app_count');
+    Route::get('get_doc_data/{search_value}','API\ApiSalaryController@get_doc_data');
+    Route::post('save_salary','API\ApiSalaryController@save_salary');
+
+ });
+
  Route::group(['prefix' => 'attendance'], function () {
     Route::post('workplace_time','API\ApiAttendanceController@save_time');
     Route::post('mark_attendance/{value}','API\ApiAttendanceController@mark_attendance');
@@ -162,6 +172,7 @@ Route::get('room_list','API\ApiScheduleController@room_list');
 
 
 Route::post('add_service','API\ApiServiceController@add_service');
+Route::post('add_channeling_charge','API\ApiServiceController@add_channeling_charge');
 Route::get('get_service_list','API\ApiServiceController@get_service_list');
 
 Route::apiResource('employee','API\ApiEmployeeController');
@@ -174,4 +185,6 @@ Route::post('submit_service','API\ApiServiceController@submit_service');
 Route::patch('service_payment_confirm/{payment_id}','API\ApiServiceController@service_payment_confirm');
 
 Route::get('get_all_payment_data','API\ApiPaymentController@get_all_payment_data');
+
+
 

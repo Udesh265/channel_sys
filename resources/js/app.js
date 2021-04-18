@@ -146,6 +146,7 @@ Vue.component('view-all-appointment-component',require('./components/appointment
 Vue.component('view-all-lab-app-component',require('./components/appointment/cashier/ViewAllLabAppointment.vue').default);
 Vue.component('service-component',require('./components/ServicesComponent.vue').default);
 Vue.component('new-service-component',require('./components/appointment/cashier/NewServiceComponent.vue').default);
+Vue.component('visiting-doc-salary-component',require('./components/report/PayVisitingDoctorSalaryComponent.vue').default);
 
 
 
