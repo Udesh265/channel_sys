@@ -160,6 +160,25 @@ Route::group(['prefix' => 'laboraty'], function () {
     Route::get('get_doc_data/{search_value}','API\ApiSalaryController@get_doc_data');
     Route::post('save_salary','API\ApiSalaryController@save_salary');
 
+    Route::get('get_active_emp_count','API\ApiReportController@get_active_emp_count');
+    Route::get('get_suspended_emp_count','API\ApiReportController@get_suspended_emp_count');
+    Route::get('get_active_user_count','API\ApiReportController@get_active_user_count');
+    Route::get('get_all_emp','API\ApiReportController@get_all_emp');
+    Route::get('get_job_role','API\ApiReportController@get_job_role');
+    Route::get('get_today_new_patients_count','API\ApiReportController@get_today_new_patients_count');
+    Route::get('get_monthly_new_patients_count','API\ApiReportController@get_monthly_new_patients_count');
+    Route::get('get_online_patients_count','API\ApiReportController@get_online_patients_count');
+    Route::post('get_top_paid_patient_list','API\ApiReportController@get_top_paid_patient_list');
+
+
+
+
+
+
+
+
+
+
  });
 
  Route::group(['prefix' => 'attendance'], function () {

@@ -54,6 +54,7 @@ Vue.filter('currency', function (amount) {
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
 
+
 Vue.filter('billDate', function (date) {
     return moment(date).format("DD-MM-YYYY H:mm");
 });
@@ -148,6 +149,8 @@ Vue.component('service-component',require('./components/ServicesComponent.vue').
 Vue.component('new-service-component',require('./components/appointment/cashier/NewServiceComponent.vue').default);
 Vue.component('visiting-doc-salary-component',require('./components/report/PayVisitingDoctorSalaryComponent.vue').default);
 
+Vue.component('employee-report-component',require('./components/report/EmployeeManagementReportComponent.vue').default);
+Vue.component('patient-report-component',require('./components/report/PatientManagementReportComponent.vue').default);
 
 
 

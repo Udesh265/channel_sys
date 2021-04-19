@@ -417,7 +417,7 @@ export default {
     },
     get_doctor_appointment_list_by_selected_date: function () {
       const docs = this.doc_app_list;
-      const spec = this.doc_spec;
+    //   const spec = this.doc_spec;
 
       const to = new Date(this.t_to).getTime();
       const from = new Date(this.t_from).getTime();

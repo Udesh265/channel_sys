@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permission', 'PermissionController');
 
     Route::get('emp_manage','EmployeeController@manage_emp')->name('employee.manage_emp');
+
     Route::resource('employee', 'EmployeeController');
 
     Route::resource('jobtype', 'JobTypeController');
@@ -77,10 +78,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('pay/visiting_doc','VisitingDoctorSalaryController@visiting_doc_sal')->name('report.visiting_doc_sal');
 
+    Route::get('employee_report/report','ReportController@emp_report_overview')->name('emp.report_mgt');
 
-
-
-
+    Route::get('patient_report/report','ReportController@patient_report_overview')->name('patient_rep.report_mgt');
 
 
 

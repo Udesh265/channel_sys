@@ -2,10 +2,11 @@
     <!-- START: Main Content-->
     @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row mt-5">
                 <form method="POST" action="{{ route('login') }}" class="row row-eq-height lockscreen mt-5 mb-5">
                     @csrf
                     <div class="lock-image col-6"><img style="width: 100%" src="{{asset('dist/images/health.png')}}" alt="ncc"></div>
+
                     <div class="login-form col-6">
                         <div class="form-group mb-3">
                             <label for="emailaddress">Email | Username</label>

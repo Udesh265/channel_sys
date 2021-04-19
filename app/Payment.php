@@ -19,5 +19,9 @@ class Payment extends Model
         return $this->hasOne(Payment::class);
     }
 
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
+
 
 }

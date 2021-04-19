@@ -13,41 +13,43 @@
 
 
             @if (Auth::user()->can('appointment_management_create') || Auth::user()->can('appointment_management_view') || Auth::user()->can('appointment_management_update') || Auth::user()->can('appointment_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Appointment</a>
-                <ul>
-                    <li class="{{ $page_option['sub'] === 'new_appointment' ? 'active' : '' }}"><a
-                            href="{{ route('appointment.create') }}"><i class="fa fa-rocket"></i> New Appointment</a>
-                    </li>
-                    <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i>View Appointment</a></li>
-                </ul>
-            </li>
+                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Appointment</a>
+                    <ul>
+                        <li class="{{ $page_option['sub'] === 'new_appointment' ? 'active' : '' }}"><a
+                                href="{{ route('appointment.create') }}"><i class="fa fa-rocket"></i> New
+                                Appointment</a>
+                        </li>
+                        <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i>View Appointment</a>
+                        </li>
+                    </ul>
+                </li>
             @endif
 
             @if (Auth::user()->can('labtest_management_create') || Auth::user()->can('labtest_management_view') || Auth::user()->can('labtest_management_update') || Auth::user()->can('labtest_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Lab Tests</a>
-                <ul>
-                    <li class="{{ $page_option['sub'] === 'new_lab_test' ? 'active' : '' }}">
-                        <a href="{{ route('lab.new_appointment') }}"><i class="fa fa-rocket"></i> Lab Test
-                            Appointment</a>
-                    </li>
-                    {{-- <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i> Appointment</a></li> --}}
-                    <li class="{{ $page_option['sub'] === 'lab_report' ? 'active' : '' }}"><a
-                            href="{{ route('lab.report') }}"><i class="icon-layers"></i>Lab Report</a></li>
+                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Lab Tests</a>
+                    <ul>
+                        <li class="{{ $page_option['sub'] === 'new_lab_test' ? 'active' : '' }}">
+                            <a href="{{ route('lab.new_appointment') }}"><i class="fa fa-rocket"></i> Lab Test
+                                Appointment</a>
+                        </li>
+                        {{-- <li><a href="{{ route('appointment.view') }}"><i class="icon-layers"></i> Appointment</a></li> --}}
+                        <li class="{{ $page_option['sub'] === 'lab_report' ? 'active' : '' }}"><a
+                                href="{{ route('lab.report') }}"><i class="icon-layers"></i>Lab Report</a></li>
 
 
-                </ul>
-            </li>
+                    </ul>
+                </li>
             @endif
 
             @if (Auth::user()->can('laboraty_management_create') || Auth::user()->can('laboraty_management_view') || Auth::user()->can('laboraty_management_update') || Auth::user()->can('laboraty_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Laboraty Service</a>
-                <ul>
-                    <li class="{{ $page_option['sub'] === 'overview' ? 'active' : '' }}">
-                        <a href="{{ route('lab.overview') }}"><i class="fa fa-rocket"></i>Overview</a>
-                    </li>
-                    <li><a href="{{ route('lab.overview') }}"><i class="icon-layers"></i>Summery</a></li>
-                </ul>
-            </li>
+                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Laboraty Service</a>
+                    <ul>
+                        <li class="{{ $page_option['sub'] === 'overview' ? 'active' : '' }}">
+                            <a href="{{ route('lab.overview') }}"><i class="fa fa-rocket"></i>Overview</a>
+                        </li>
+                        <li><a href="{{ route('lab.overview') }}"><i class="icon-layers"></i>Summery</a></li>
+                    </ul>
+                </li>
             @endif
 
             @if (Auth::user()->can('user_management_create') || Auth::user()->can('user_management_view') || Auth::user()->can('user_management_update') || Auth::user()->can('user__management_delete') || Auth::user()->can('role_management_create') || Auth::user()->can('role_management_view') || Auth::user()->can('role_management_update') || Auth::user()->can('role_management_delete'))
@@ -101,8 +103,7 @@
                                 </li>
                             </ul>
                         </li>
-{{--
-                        <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
+                        {{-- <li class="dropdown {{ $page_option['main'] === 'user' ? 'active' : '' }}"><a href="#"><i
                                     class="fas fa-user-tie"></i>Attendence</a>
                             <ul class="sub-menu">
                                 <li class="{{ $page_option['sub'] === 'user_create' ? 'active' : '' }}"><a
@@ -142,136 +143,154 @@
 
 
             @if (Auth::user()->can('schedule_management_create') || Auth::user()->can('schedule_management_view') || Auth::user()->can('schedule_management_update') || Auth::user()->can('schedule_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Schedule Management</a>
-                <ul>
-                    <li class="dropdown {{ $page_option['main'] === 'schedule' ? 'active' : '' }}"><a href="#"><i
-                                class="fas fa-sitemap"></i>Schedule</a>
-                        <ul class="sub-menu">
-                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
-                                    href="{{ route('schedule.add_schedule') }}">Add Schedule</a>
-                            </li>
-                            {{-- <li class="{{ $page_option['sub'] === 'patient_manage' ? 'active' : '' }}"><a
+                <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Schedule Management</a>
+                    <ul>
+                        <li class="dropdown {{ $page_option['main'] === 'schedule' ? 'active' : '' }}"><a href="#"><i
+                                    class="fas fa-sitemap"></i>Schedule</a>
+                            <ul class="sub-menu">
+                                <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
+                                        href="{{ route('schedule.add_schedule') }}">Add Schedule</a>
+                                </li>
+                                {{-- <li class="{{ $page_option['sub'] === 'patient_manage' ? 'active' : '' }}"><a
                             href="{{ route('schedule.manage') }}">Manage</a>
                     </li> --}}
 
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             @endif
 
             @if (Auth::user()->can('doctor_management_create') || Auth::user()->can('doctor_management_view') || Auth::user()->can('doctor_management_update') || Auth::user()->can('doctor_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Doctors Management</a>
-                <ul>
-                    <li class="dropdown {{ $page_option['main'] === 'doctor' ? 'active' : '' }}"><a href="#"><i
-                                class="fas fa-sitemap"></i>Doctors</a>
-                        <ul class="sub-menu">
+                <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Doctors Management</a>
+                    <ul>
+                        <li class="dropdown {{ $page_option['main'] === 'doctor' ? 'active' : '' }}"><a href="#"><i
+                                    class="fas fa-sitemap"></i>Doctors</a>
+                            <ul class="sub-menu">
 
 
 
-                            <li class="{{ $page_option['sub'] === 'employee_manage' ? 'active' : '' }}"><a
-                                    href="{{ route('employee.manage_emp') }}">Manage</a>
-                            </li>
+                                <li class="{{ $page_option['sub'] === 'employee_manage' ? 'active' : '' }}"><a
+                                        href="{{ route('employee.manage_emp') }}">Manage</a>
+                                </li>
 
 
 
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             @endif
 
             @if (Auth::user()->can('settings_management_create') || Auth::user()->can('settings_management_view') || Auth::user()->can('settings_management_update') || Auth::user()->can('settings_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Settings</a>
-                <ul>
-                    <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
-                            href="{{ route('doctor.speciality') }}"><i class="fa fa-rocket"></i> Add Doctors
-                            Speciality</a></li>
-                    <li><a href="{{ route('lab.add_reports_type') }}"><i class="icon-layers"></i>Add Report Types</a>
-                    </li>
-                    <li><a href="{{ route('appointment.add_rooms') }}"><i class="icon-layers"></i>Add Rooms</a>
-                    </li>
-                    <li class="{{ $page_option['sub'] === 'system_time' ? 'active' : '' }}"><a
-                            href="{{ route('system.time') }}"><i class="icon-layers"></i>Work Place Time</a>
-                    </li>
-                    <li class="{{ $page_option['sub'] === 'services' ? 'active' : '' }}"><a
-                        href="{{ route('services.add') }}"><i class="icon-layers"></i>Services</a>
+                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Settings</a>
+                    <ul>
+                        <li class="{{ $page_option['sub'] === 'add_speciality' ? 'active' : '' }}"><a
+                                href="{{ route('doctor.speciality') }}"><i class="fa fa-rocket"></i> Add Doctors
+                                Speciality</a></li>
+                        <li><a href="{{ route('lab.add_reports_type') }}"><i class="icon-layers"></i>Add Report
+                                Types</a>
+                        </li>
+                        <li><a href="{{ route('appointment.add_rooms') }}"><i class="icon-layers"></i>Add Rooms</a>
+                        </li>
+                        <li class="{{ $page_option['sub'] === 'system_time' ? 'active' : '' }}"><a
+                                href="{{ route('system.time') }}"><i class="icon-layers"></i>Work Place Time</a>
+                        </li>
+                        <li class="{{ $page_option['sub'] === 'services' ? 'active' : '' }}"><a
+                                href="{{ route('services.add') }}"><i class="icon-layers"></i>Services</a>
+                        </li>
+                    </ul>
                 </li>
-                </ul>
-            </li>
             @endif
 
 
             @if (Auth::user()->can('reception_management_create') || Auth::user()->can('reception_management_view') || Auth::user()->can('reception_management_update') || Auth::user()->can('reception_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reception </a>
-                <ul>
-                    <li class="dropdown {{ $page_option['main'] === 'cashier' ? 'active' : '' }}"><a href="#"><i
-                                class="fas fa-sitemap"></i>Cashier</a>
-                        <ul class="sub-menu">
-                            <li class="{{ $page_option['sub'] === 'doctor_appointment' ? 'active' : '' }}"><a
-                                    href="{{ route('cashier.doc_app') }}">Doctor Appointments</a>
-                            </li>
-                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
-                                href="{{ route('schedule.add_schedule') }}">Lab Appointments</a>
-                            </li>
-                            <li class="{{ $page_option['sub'] === 'add_service' ? 'active' : '' }}"><a
-                                href="{{ route('new.service') }}">Services</a>
-                            </li>
-
-
-                        </ul>
-                    </li>
-                    <li class="{{ $page_option['sub'] === 'waiting_online_payment' ? 'active' : '' }}"><a
-                        href="{{ route('appointment.waitpayment') }}"><i class="icon-layers"></i>Waiting Online Payment</a>
-                </li>
-                <li class="{{ $page_option['sub'] === 'check_doc' ? 'active' : '' }}"><a
-                    href="{{ route('appointment.check_doc') }}"><i class="icon-layers"></i>Check Doctors Avaiablility</a>
-            </li>
-            <li class="{{ $page_option['sub'] === 'view_all_app' ? 'active' : '' }}"><a
-                href="{{ route('appointment.view_all') }}"><i class="icon-layers"></i>View All Appointments</a>
-        </li>
-        {{-- <li class="{{ $page_option['sub'] === 'view_all_lab' ? 'active' : '' }}"><a
+                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reception </a>
+                    <ul>
+                        <li class="dropdown {{ $page_option['main'] === 'cashier' ? 'active' : '' }}"><a href="#"><i
+                                    class="fas fa-sitemap"></i>Cashier</a>
+                            <ul class="sub-menu">
+                                <li class="{{ $page_option['sub'] === 'doctor_appointment' ? 'active' : '' }}"><a
+                                        href="{{ route('cashier.doc_app') }}">Doctor Appointments</a>
+                                </li>
+                                <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
+                                        href="{{ route('schedule.add_schedule') }}">Lab Appointments</a>
+                                </li>
+                                <li class="{{ $page_option['sub'] === 'add_service' ? 'active' : '' }}"><a
+                                        href="{{ route('new.service') }}">Services</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="{{ $page_option['sub'] === 'waiting_online_payment' ? 'active' : '' }}"><a
+                                href="{{ route('appointment.waitpayment') }}"><i class="icon-layers"></i>Waiting
+                                Online Payment</a>
+                        </li>
+                        <li class="{{ $page_option['sub'] === 'check_doc' ? 'active' : '' }}"><a
+                                href="{{ route('appointment.check_doc') }}"><i class="icon-layers"></i>Check Doctors
+                                Avaiablility</a>
+                        </li>
+                        <li class="{{ $page_option['sub'] === 'view_all_app' ? 'active' : '' }}"><a
+                                href="{{ route('appointment.view_all') }}"><i class="icon-layers"></i>View All
+                                Appointments</a>
+                        </li>
+                        {{-- <li class="{{ $page_option['sub'] === 'view_all_lab' ? 'active' : '' }}"><a
             href="{{ route('appointment.view_all_lab') }}"><i class="icon-layers"></i>View Lab Appointments</a>
     </li> --}}
 
-                </ul>
-            </li>
+                    </ul>
+                </li>
             @endif
 
             @if (Auth::user()->can('report_management_create') || Auth::user()->can('report_management_view') || Auth::user()->can('report_management_update') || Auth::user()->can('report_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reports </a>
-                <ul>
-                    <li class="dropdown {{ $page_option['main'] === 'cashier' ? 'active' : '' }}"><a href="#"><i
-                                class="fas fa-sitemap"></i>Employee Reports</a>
+                <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reports </a>
+                    <ul>
+                        <li class="dropdown {{ $page_option['main'] === 'employee_report' ? 'active' : '' }}"><a
+                                href="#"><i class="fas fa-sitemap"></i>Employee Management Reports</a>
+                            <ul class="sub-menu">
+                                <li class="{{ $page_option['sub'] === 'report_overview' ? 'active' : '' }}"><a
+                                        href="{{ route('emp.report_mgt') }}"><i class="icon-layers"></i>Report
+                                        Overview</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown {{ $page_option['main'] === 'patient' ? 'active' : '' }}"><a
+                            href="#"><i class="fas fa-sitemap"></i>Patient Management Reports</a>
                         <ul class="sub-menu">
-                            <li class="{{ $page_option['sub'] === 'doctor_appointment' ? 'active' : '' }}"><a
-                                    href="{{ route('cashier.doc_app') }}">Doctor Appointments</a>
+                            <li class="{{ $page_option['sub'] === 'patient_overview' ? 'active' : '' }}"><a
+                                    href="{{ route('patient_rep.report_mgt') }}"><i class="icon-layers"></i>Top Payments Patients List</a>
                             </li>
-                            <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
-                                href="{{ route('schedule.add_schedule') }}">Lab Appointments</a>
-                            </li>
-                            <li class="{{ $page_option['sub'] === 'add_service' ? 'active' : '' }}"><a
-                                href="{{ route('new.service') }}">Services</a>
-                            </li>
+                            <li class="{{ $page_option['sub'] === 'patient_overview' ? 'active' : '' }}"><a
+                                href="{{ route('patient_rep.report_mgt') }}"><i class="icon-layers"></i>Patients Report Overview</a>
+                        </li>
                         </ul>
                     </li>
-                    <li class="{{ $page_option['sub'] === 'visiting_doc_sal' ? 'active' : '' }}"><a
-                        href="{{ route('report.visiting_doc_sal') }}"><i class="icon-layers"></i>Pay Visiting Doctors</a>
-                </li>
+                        {{-- <li class="dropdown {{ $page_option['main'] === 'appointment' ? 'active' : '' }}"><a
+                                href="#"><i class="fas fa-sitemap"></i>Appointment Management Report</a>
+                            <ul class="sub-menu">
+                                <li class="{{ $page_option['sub'] === 'appointment_report' ? 'active' : '' }}"><a
+                                        href="{{ route('cashier.doc_app') }}">Appointments Management</a>
+                                </li>
+                        </li> --}}
 
-                </ul>
-            </li>
+                        <li class="{{ $page_option['sub'] === 'visiting_doc_sal' ? 'active' : '' }}"><a
+                                href="{{ route('report.visiting_doc_sal') }}"><i class="icon-layers"></i>Pay Visiting
+                                Doctors</a>
+                        </li>
+
+
+                    </ul>
+                </li>
             @endif
 
 
             @if (Auth::user()->can('attendance_management_create') || Auth::user()->can('attendance_management_view') || Auth::user()->can('attendance_management_update') || Auth::user()->can('attendance_management_delete'))
-            <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Attendance</a>
-                <ul>
-                    <li class="{{ $page_option['sub'] === 'attendance' ? 'active' : '' }}"><a
-                            href="{{ route('employee.attendance') }}"><i class="icon-layers"></i>Attendance</a>
-                    </li>
-                </ul>
-            </li>
+                <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Attendance</a>
+                    <ul>
+                        <li class="{{ $page_option['sub'] === 'attendance' ? 'active' : '' }}"><a
+                                href="{{ route('employee.attendance') }}"><i class="icon-layers"></i>Attendance</a>
+                        </li>
+                    </ul>
+                </li>
             @endif
 
 

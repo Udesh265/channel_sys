@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-sm-2 col-lg-2 col-md-2">
                   <label for="form-control"><h6>Date:</h6></label>
-                  <label for="form-control">{{ display_date }}</label>
+                  <label for="form-control">{{ display_date | myDate }}</label>
                 </div>
               </div>
             </div>
@@ -74,27 +74,27 @@
                 <tbody>
                   <tr>
                     <td scope="row">Charge Per Patient</td>
-                    <td>{{ doctor_fee }}</td>
+                    <td>{{ doctor_fee |currency}}</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td scope="row">Channeling Charge</td>
-                    <td>{{ channel_charge }}</td>
+                    <td>{{ channel_charge | currency}}</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td scope="row">Total Appointments balance</td>
-                    <td>{{ total_appointment_amount }}</td>
+                    <td>{{ total_appointment_amount | currency }}</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td scope="row">Total Channeling Charges</td>
                     <td></td>
-                    <td class="text-danger"> - {{ total_channling_charge }}</td>
+                    <td class="text-danger"> - {{ total_channling_charge | currency}}</td>
                   </tr>
                   <tr>
                     <td scope="row"><h6>Net Salary</h6></td>
-                    <td ><h5>{{ net_salary }}.LKR</h5></td>
+                    <td ><h5>{{ net_salary | currency }}.LKR</h5></td>
                     <td></td>
                   </tr>
                 </tbody>

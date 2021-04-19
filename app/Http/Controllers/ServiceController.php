@@ -29,4 +29,5 @@ class ServiceController extends Controller
         return view('page.appointment.cashier.new_service', compact('page_name', 'breadcrums', 'page_option'));
 
     }
+
 }
