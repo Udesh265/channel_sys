@@ -39,7 +39,7 @@
           >
             <h4 class="card-title">Top Payments Patient List</h4>
           </div>
-          <div class="card-body">
+          <div id="printme" class="card-body">
             <div class="row">
               <div class="col-2">
                 From :
@@ -133,11 +133,13 @@
               </tbody>
             </table>
           </div>
+        <button @click="print()">print report</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -145,14 +147,21 @@ export default {
     this.get_today_new_patients_count();
     this.get_monthly_new_patients_count();
     this.get_online_patients_count();
+
+    this.top_appointments_list();
   },
-  mounted() {},
+  mounted() {
+    //   this.top_appointments_list();
+  },
   data() {
     return {
       today_new_patients: "",
       monthly_new_patients_count: "",
       online_patients_count: "",
+
       top_paid_patient_list:{},
+
+      top_paid_appointments_list:{},
 
       form: new Form({
         t_from: "",
@@ -215,6 +224,24 @@ export default {
     },
     reset_patient: function(){
         this.form.reset();
+    },
+
+    top_appointments_list:function(){
+
+        axios.get("/api/reports/top_appointments_list")
+         .then((response) => {
+          if (response.status == 200) {
+            this.top_paid_appointments_list = response.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+
+    },
+        print:function(){
+          this.$htmlToPaper("printme");
     }
 
   },

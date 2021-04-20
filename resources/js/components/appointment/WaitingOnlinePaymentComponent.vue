@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div v-if="patient_id == !null">
+    <div v-if="patient_id != ''">
       <div class="row mt-3">
         <div class="col-12">
           <div class="card">

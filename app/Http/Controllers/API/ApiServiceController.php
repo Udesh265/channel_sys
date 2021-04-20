@@ -45,8 +45,8 @@ class ApiServiceController extends Controller
             [
                 'name' => ['required'],
                 'age' => ['digits_between:1,3'],
-                'mobile' => ['min:10', 'required', 'numeric','unique:patients'],
-                'email' => ['required', 'email','unique:patients'],
+                'mobile' => ['min:10', 'required', 'numeric'],
+                'email' => ['required', 'email'],
 
             ],
         );

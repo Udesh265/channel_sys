@@ -24,6 +24,14 @@ Vue.use(VueApexCharts)
 
 Vue.component('apexchart', VueApexCharts)
 
+// Vue Barcode
+import Barcode from "vue-barcode";
+Vue.component("vue-barcode", Barcode);
+
+// vCard QR Code Generator
+import vCard from "vue-vcard";
+Vue.component("vue-vcard", vCard);
+
 //File64
 import File64 from 'vue-file64';
 Vue.component('file-dialog', File64);
@@ -151,6 +159,9 @@ Vue.component('visiting-doc-salary-component',require('./components/report/PayVi
 
 Vue.component('employee-report-component',require('./components/report/EmployeeManagementReportComponent.vue').default);
 Vue.component('patient-report-component',require('./components/report/PatientManagementReportComponent.vue').default);
+Vue.component('appointment-mgt-component',require('./components/report/TopAppointmentListReportComponent.vue').default);
+
+
 
 
 

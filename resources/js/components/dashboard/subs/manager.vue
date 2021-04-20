@@ -25,7 +25,7 @@
             class="card-body text-danger border-bottom border-danger border-w-5"
           >
             <h2 class="text-center">{{ total_services_count }}</h2>
-            <h6 class="text-center">Waiting Appointments (LKR)</h6>
+            <h6 class="text-center">Waiting Appointments</h6>
           </div>
         </div>
       </div>

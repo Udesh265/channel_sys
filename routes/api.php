@@ -169,7 +169,13 @@ Route::group(['prefix' => 'laboraty'], function () {
     Route::get('get_monthly_new_patients_count','API\ApiReportController@get_monthly_new_patients_count');
     Route::get('get_online_patients_count','API\ApiReportController@get_online_patients_count');
     Route::post('get_top_paid_patient_list','API\ApiReportController@get_top_paid_patient_list');
+    Route::get('top_appointments_list','API\ApiReportController@top_appointments_list');
 
+    Route::get('get_today_new_appointment_count','API\ApiReportController@get_today_new_appointment_count');
+
+    Route::get('total_online_appointment_count','API\ApiReportController@total_online_appointment_count');
+
+    Route::get('total_onvisit_appointment_count','API\ApiReportController@total_onvisit_appointment_count');
 
 
 

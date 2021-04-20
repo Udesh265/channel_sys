@@ -31,5 +31,18 @@ class ReportController extends Controller
         return view('page.report.patient_mgt_report', compact('page_name', 'breadcrums', 'page_option'));
     }
 
+    public function top_appointment_report()
+    {
+
+        $page_option = ['main' => 'appointment', 'sub' => 'top_appointment'];
+        $page_name = "Top Appointments List Report ";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'patient report', 'url' => '#'],
+        ];
+
+        return view('page.report.appointment_mgt_report', compact('page_name', 'breadcrums', 'page_option'));
+    }
+
 
 }

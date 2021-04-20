@@ -81,6 +81,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('employee_report/report','ReportController@emp_report_overview')->name('emp.report_mgt');
 
     Route::get('patient_report/report','ReportController@patient_report_overview')->name('patient_rep.report_mgt');
+    Route::get('appointment_report/top_app','ReportController@top_appointment_report')->name('appoint.top_app');
+
+    Route::get('idcard/{id}', 'EmployeeController@showIdCard')->name('employee.idcard.show');
+
 
 
 

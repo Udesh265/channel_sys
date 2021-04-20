@@ -38,7 +38,7 @@
           >
             <h4 class="card-title">Employee Management Overview</h4>
           </div>
-          <div class="card-body">
+          <div id="printme" class="card-body">
             <div class="row">
               <div class="col-3">
                 From :
@@ -124,6 +124,7 @@
               </tbody>
             </table>
           </div>
+          <button @click="print()">print report</button>
         </div>
       </div>
     </div>
@@ -251,6 +252,10 @@ export default {
      this.selected_emp_list = filtered_list;
 
     },
+
+    print:function(){
+          this.$htmlToPaper("printme");
+    }
   },
 };
 </script>

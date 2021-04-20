@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use App\JobType;
 use Illuminate\Http\Request;
 
@@ -34,6 +35,13 @@ class EmployeeController extends Controller
         ];
 
         return view('page.employee.manage_emp', compact('page_name', 'breadcrums', 'page_option'));
+
+    }
+
+    public function showIdCard($id)
+    {
+        $employee = Employee::findOrFail($id);
+        return view('page.idCard', compact('employee'));
 
     }
 

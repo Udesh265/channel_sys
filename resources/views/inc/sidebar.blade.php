@@ -214,7 +214,7 @@
                                         href="{{ route('cashier.doc_app') }}">Doctor Appointments</a>
                                 </li>
                                 <li class="{{ $page_option['sub'] === 'add_schedule' ? 'active' : '' }}"><a
-                                        href="{{ route('schedule.add_schedule') }}">Lab Appointments</a>
+                                        href="{{ route('cashier.doc_app') }}">Lab Appointments</a>
                                 </li>
                                 <li class="{{ $page_option['sub'] === 'add_service' ? 'active' : '' }}"><a
                                         href="{{ route('new.service') }}">Services</a>
@@ -259,18 +259,18 @@
                             <li class="{{ $page_option['sub'] === 'patient_overview' ? 'active' : '' }}"><a
                                     href="{{ route('patient_rep.report_mgt') }}"><i class="icon-layers"></i>Top Payments Patients List</a>
                             </li>
-                            <li class="{{ $page_option['sub'] === 'patient_overview' ? 'active' : '' }}"><a
-                                href="{{ route('patient_rep.report_mgt') }}"><i class="icon-layers"></i>Patients Report Overview</a>
+                            <li class="{{ $page_option['sub'] === '' ? 'active' : '' }}"><a
+                                href="{{ route('patient_rep.report_mgt') }}"><i class="icon-layers"></i>Patient Overview</a>
                         </li>
                         </ul>
                     </li>
-                        {{-- <li class="dropdown {{ $page_option['main'] === 'appointment' ? 'active' : '' }}"><a
+                        <li class="dropdown {{ $page_option['main'] === 'appointment' ? 'active' : '' }}"><a
                                 href="#"><i class="fas fa-sitemap"></i>Appointment Management Report</a>
                             <ul class="sub-menu">
-                                <li class="{{ $page_option['sub'] === 'appointment_report' ? 'active' : '' }}"><a
-                                        href="{{ route('cashier.doc_app') }}">Appointments Management</a>
+                                <li class="{{ $page_option['sub'] === 'top_appointment' ? 'active' : '' }}"><a
+                                        href="{{ route('appoint.top_app') }}">Top Appointments list</a>
                                 </li>
-                        </li> --}}
+                        </li>
 
                         <li class="{{ $page_option['sub'] === 'visiting_doc_sal' ? 'active' : '' }}"><a
                                 href="{{ route('report.visiting_doc_sal') }}"><i class="icon-layers"></i>Pay Visiting

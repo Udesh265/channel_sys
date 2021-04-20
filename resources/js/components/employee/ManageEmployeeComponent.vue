@@ -51,6 +51,12 @@
                     <a style="cursor: pointer" @click="emp_del(emp.id)"
                       ><i class="fa fa-trash text-danger mx-1"></i
                     ></a>
+                    <a
+                      target="_blank"
+                      :href="'/idcard/' + emp.id"
+                    >
+                      <i class="fa fa-id-card-alt icon-button text-success"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>
