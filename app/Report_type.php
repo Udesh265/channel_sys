@@ -17,4 +17,8 @@ class Report_type extends Model
     public function lab_app(){
         return $this.hasOne(Lab_test_appointment::class);
     }
+
+    public function labAppointment(){
+        return $this->hasMany(Lab_test_appointment::class);
+    }
 }

@@ -51,6 +51,7 @@ class ApiServiceController extends Controller
             ],
         );
 
+
         $services = $request->selected_service_list;
 
         $patient_data = Patient::create([
@@ -82,13 +83,14 @@ class ApiServiceController extends Controller
 
         $payment_id = $payment_data->id;
 
-        $serviceList_data = [];
+        // $serviceList_data = [];
 
         foreach($services as $service) {
-            $serviceList_data[] = ['service_name' => $service['name'], 'service_fee' => $service['fee'], 'payment_id' => $payment_id];
+            $serviceList_data = ['service_name' => $service['name'], 'service_fee' => $service['fee'],'service_id'=>$service['id'] ,'payment_id' => $payment_id];
+
+            $data = ServiceList::create($serviceList_data);
         }
 
-        $data = ServiceList::insert($serviceList_data);
 
         if (is_null($data)) return response()->json(['msg' => 'Failed to add rolling back'], 400);
 

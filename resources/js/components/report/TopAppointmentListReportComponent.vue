@@ -130,12 +130,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(app, index) in top_paid_appointments_list" :key="index">
+                <!-- <tr v-for="(app, index) in top_paid_appointments_list" :key="index">
                   <td>{{ app.schedule.employee.first_name }}</td>
                   <td>{{ app.schedule.employee.mobile }}</td>
                   <td v-if=" app.schedule.doctor" >{{ app.schedule.doctor.speciality.name }}</td>
                   <td>{{ app.appointment.qty }}</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>

@@ -11,5 +11,10 @@ class ServiceList extends Model
         'payment_id',
         'service_name',
         'service_fee',
+        'service_id',
     ];
+
+    public function service() {
+        return $this->belongsTo(Service::class);
+    }
 }

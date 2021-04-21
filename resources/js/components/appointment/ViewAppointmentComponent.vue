@@ -1,35 +1,5 @@
 <template>
   <div>
-    <!-- <div class="row">
-      <div class="col-12 col-sm-6 col-xl-4 mt-3">
-        <div class="card">
-          <div class="card-body text-info border-bottom border-info border-w-5">
-            <h2 class="text-center">{{ appointment_data }}</h2>
-            <h6 class="text-center">Total Doctors Appointments</h6>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-xl-4 mt-3">
-        <div class="card">
-          <div
-            class="card-body text-success border-bottom border-success border-w-5"
-          >
-            <h2 class="text-center">{{ total_app_amount | currency }}</h2>
-            <h6 class="text-center">Total Paid Amount (LKR)</h6>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-xl-4 mt-3">
-        <div class="card">
-          <div
-            class="card-body text-danger border-bottom border-danger border-w-5"
-          >
-            <h2 class="text-center">{{ panding_amount | currency }}</h2>
-            <h6 class="text-center">Waiting Appointments (LKR)</h6>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="row">
       <div class="col-12 mt-3">
         <div class="card">

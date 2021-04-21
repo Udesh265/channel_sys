@@ -12,4 +12,10 @@ class Service extends Model
         'fee',
         'status'
     ];
+
+    public function serviceList() {
+        return $this->hasMany(ServiceList::class);
+    }
+
+
 }

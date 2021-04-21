@@ -245,7 +245,7 @@
                 <li class="dropdown"><a href="#"><i class="icon-home mr-1"></i> Reports </a>
                     <ul>
                         <li class="dropdown {{ $page_option['main'] === 'employee_report' ? 'active' : '' }}"><a
-                                href="#"><i class="fas fa-sitemap"></i>Employee Management Reports</a>
+                                href="#"><i class="fas fa-layers"></i>Employee Management Reports</a>
                             <ul class="sub-menu">
                                 <li class="{{ $page_option['sub'] === 'report_overview' ? 'active' : '' }}"><a
                                         href="{{ route('emp.report_mgt') }}"><i class="icon-layers"></i>Report
@@ -254,7 +254,7 @@
                             </ul>
                         </li>
                         <li class="dropdown {{ $page_option['main'] === 'patient' ? 'active' : '' }}"><a
-                            href="#"><i class="fas fa-sitemap"></i>Patient Management Reports</a>
+                            href="#"><i class="fas fa-layers"></i>Patient Management Reports</a>
                         <ul class="sub-menu">
                             <li class="{{ $page_option['sub'] === 'patient_overview' ? 'active' : '' }}"><a
                                     href="{{ route('patient_rep.report_mgt') }}"><i class="icon-layers"></i>Top Payments Patients List</a>
@@ -265,25 +265,46 @@
                         </ul>
                     </li>
                         <li class="dropdown {{ $page_option['main'] === 'appointment' ? 'active' : '' }}"><a
-                                href="#"><i class="fas fa-sitemap"></i>Appointment Management Report</a>
+                                href="#"><i class="fas fa-layers"></i>Doctors Appointment Management Report</a>
                             <ul class="sub-menu">
                                 <li class="{{ $page_option['sub'] === 'top_appointment' ? 'active' : '' }}"><a
                                         href="{{ route('appoint.top_app') }}">Top Appointments list</a>
                                 </li>
                         </li>
-
-                        <li class="{{ $page_option['sub'] === 'visiting_doc_sal' ? 'active' : '' }}"><a
-                                href="{{ route('report.visiting_doc_sal') }}"><i class="icon-layers"></i>Pay Visiting
-                                Doctors</a>
+                    </ul>
+                        <li class="dropdown {{ $page_option['main'] === 'lab_appointment' ? 'active' : '' }}"><a
+                            href="#"><i class="fas fa-layers"></i>Lab Appointment Management Report</a>
+                        <ul class="sub-menu">
+                            <li class="{{ $page_option['sub'] === 'top_lab_appointment' ? 'active' : '' }}"><a
+                                    href="{{ route('appoint.lab_app') }}">Top Lab services list</a>
+                            </li>
+                            <li class="{{ $page_option['sub'] === 'lab_app_appointment_list' ? 'active' : '' }}"><a
+                                href="{{ route('appoint.lab_app_list') }}">Lab Appointment list</a>
                         </li>
+                    </li>
+                </li></ul>
+                    <li class="dropdown {{ $page_option['main'] === 'appointment' ? 'active' : '' }}"><a
+                        href="#"><i class="fas fa-layers"></i>Services Appointment Management Report</a>
+                    <ul class="sub-menu">
+                        <li class="{{ $page_option['sub'] === 'top_service' ? 'active' : '' }}"><a
+                                href="{{ route('service.top') }}">Top services list</a>
+                        </li>
+                </li>
+                    </ul>
+                <li class="{{ $page_option['sub'] === 'income' ? 'active' : '' }}"><a
+                    href="{{ route('report.income') }}"><i class="icon-layers"></i> Income Statement Report</a>
+            </li>
 
-
+            <li class="{{ $page_option['sub'] === 'visiting_doc_sal' ? 'active' : '' }}"><a
+                    href="{{ route('report.visiting_doc_sal') }}"><i class="icon-layers"></i>Pay Visiting
+                    Doctors</a>
+            </li>
                     </ul>
                 </li>
             @endif
 
 
-            @if (Auth::user()->can('attendance_management_create') || Auth::user()->can('attendance_management_view') || Auth::user()->can('attendance_management_update') || Auth::user()->can('attendance_management_delete'))
+            {{-- @if (Auth::user()->can('attendance_management_create') || Auth::user()->can('attendance_management_view') || Auth::user()->can('attendance_management_update') || Auth::user()->can('attendance_management_delete'))
                 <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i>Attendance</a>
                     <ul>
                         <li class="{{ $page_option['sub'] === 'attendance' ? 'active' : '' }}"><a
@@ -291,7 +312,7 @@
                         </li>
                     </ul>
                 </li>
-            @endif
+            @endif --}}
 
 
 

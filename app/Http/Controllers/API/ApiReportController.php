@@ -9,8 +9,12 @@ use App\Http\Controllers\Controller;
 use App\JobType;
 use App\Patient;
 use App\Payment;
+use App\Report_type;
 use App\Schedule;
+use App\Service;
+use App\ServiceList;
 use App\User;
+use App\VisitingDoctorSalary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -129,8 +133,8 @@ class ApiReportController extends Controller
         //     array_push($new_list, $temp_array);
         // }
 
-        // $list = AddSpeciality::withCount('shedules')->get();
-        $list = Appointment::withCount('schedule')->get();
+        $list = AddSpeciality::withCount('shedules')->get();
+        // $list = Appointment::withCount('schedule')->get();
 
         return $list;
 
@@ -171,5 +175,52 @@ class ApiReportController extends Controller
         }
 
         return $s_count;
+    }
+
+    public function get_doc_appointment_amount(Request $request){
+
+        // $data = Appointment::with(['payment' => function($query) {
+        //     return $query->whereDate('created_at',Carbon::today())->whereNotNull('created_at');
+        // }])->get();
+
+        $from = Carbon::parse($request->t_from);
+        $to = Carbon::parse($request->t_to);
+
+        $data = Payment::whereBetween('created_at', [$from, $to])->whereIn('type',['On-Visit','Online'])->where('payment_status','Confirm')->sum('amount');
+
+        return response()->json($data,200);
+
+    }
+    public function get_service_amount(Request $request){
+
+        $from = Carbon::parse($request->t_from);
+        $to = Carbon::parse($request->t_to);
+
+        $data = Payment::whereBetween('created_at', [$from, $to])->whereIn('type',['Services','Cash'])->where('payment_status','Confirm')->sum('amount');
+
+        return response()->json($data,200);
+    }
+    public function get_doctors_salary_amount(Request $request){
+
+        $from = Carbon::parse($request->t_from);
+        $to = Carbon::parse($request->t_to);
+
+        $data = VisitingDoctorSalary::whereBetween('created_at', [$from, $to])->where('status','paid')->sum('amount');
+
+        return response()->json($data,200);
+    }
+
+
+    public function get_top_service_list(){
+
+        $data = Service::withCount('serviceList')->orderBy('service_list_count','desc')->get();
+
+        return response()->json($data,200);
+    }
+    public function get_top_lab_report_list(){
+
+        $data = Report_type::withCount('labAppointment')->orderBy('lab_appointment_count','desc')->get();
+
+        return response()->json($data,200);
     }
 }

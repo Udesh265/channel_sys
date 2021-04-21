@@ -160,6 +160,16 @@ Vue.component('visiting-doc-salary-component',require('./components/report/PayVi
 Vue.component('employee-report-component',require('./components/report/EmployeeManagementReportComponent.vue').default);
 Vue.component('patient-report-component',require('./components/report/PatientManagementReportComponent.vue').default);
 Vue.component('appointment-mgt-component',require('./components/report/TopAppointmentListReportComponent.vue').default);
+Vue.component('top-lab-appointment-report-component',require('./components/report/TopLabAppointmentListComponent.vue').default);
+
+Vue.component('lab-appointment-list-report-component',require('./components/report/LabAppointmentList.vue').default);
+Vue.component('income-statement-report-component',require('./components/report/IncomeStatementReport.vue').default);
+Vue.component('top-service-report-component',require('./components/report/TopServiceListComponent.vue').default);
+
+
+
+
+
 
 
 

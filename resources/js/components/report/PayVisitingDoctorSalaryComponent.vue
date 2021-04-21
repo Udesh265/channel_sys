@@ -267,6 +267,7 @@ export default {
             this.form.reset();
             this.search_value = '';
 
+
           }
         })
         .catch((error) => {

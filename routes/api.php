@@ -178,6 +178,20 @@ Route::group(['prefix' => 'laboraty'], function () {
     Route::get('total_onvisit_appointment_count','API\ApiReportController@total_onvisit_appointment_count');
 
 
+    Route::post('get_doc_appointment_amount','API\ApiReportController@get_doc_appointment_amount');
+    Route::post('get_service_amount','API\ApiReportController@get_service_amount');
+    Route::post('get_doctors_salary_amount','API\ApiReportController@get_doctors_salary_amount');
+
+    Route::post('get_top_service_list','API\ApiReportController@get_top_service_list');
+    Route::post('get_top_lab_report_list','API\ApiReportController@get_top_lab_report_list');
+
+
+
+
+
+
+
+
 
 
 

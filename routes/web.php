@@ -82,8 +82,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('patient_report/report','ReportController@patient_report_overview')->name('patient_rep.report_mgt');
     Route::get('appointment_report/top_app','ReportController@top_appointment_report')->name('appoint.top_app');
+    Route::get('lab_appointment_report/top_app','ReportController@top_lab_appointment_report')->name('appoint.lab_app');
+    Route::get('lab_appointment_report/lab_app_list','ReportController@lab_appointment_list_report')->name('appoint.lab_app_list');
+    Route::get('income/report','ReportController@income_statement_report')->name('report.income');
+    Route::get('service/top','ReportController@service_top')->name('service.top');
+
 
     Route::get('idcard/{id}', 'EmployeeController@showIdCard')->name('employee.idcard.show');
+
 
 
 

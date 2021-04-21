@@ -39,7 +39,7 @@
             z-index: 5;
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
-            background-color: #fff7;
+            background-color: #fc036f;
         }
 
         .bottom {
@@ -73,7 +73,7 @@
 
         .bottom .desi {
             font-size: 12px;
-            color: grey;
+            color: #fc036f;
             font-weight: normal;
         }
 
@@ -105,7 +105,8 @@
             height: 375px;
             width: 250px;
             border-radius: 10px;
-            background-color: #fff7;
+            background-color: #01421f;
+
             /* background-color: #8338ec; */
 
         }
@@ -179,18 +180,18 @@
         <div class="padding">
             <div class="font">
                 <div class="top">
-                    {{-- <img src="{{$emp->image->path}}"> --}}
+                    <img src="{{$employee->user->photo->path}}">
                 </div>
                 <div class="bottom">
-                    <p>{{ $emp->first_name }}</p>
-                    <p class="desi">{{ $employee->employee_category->name }}</p>
+                    <p>{{ $employee->first_name }}</p>
+                    {{-- <p class="desi">{{ $employee->employee_category->name }}</p> --}}
                     <div class="barcode">
-                        <vue-vcard first-name="{{ $employee->name }}" {{-- last-name=""
-                            org-name="{{App\Setting::where('variable', '=', 'setting_organizationName')->first()->value}}"
-                            org-title="{{$employee->employee_category->name}}"
-                            work-email="{{App\Setting::where('variable', '=', 'setting_contactEmail')->first()->value}}"
-                            work-phone="{{App\Setting::where('variable', '=', 'setting_phoneOne')->first()->value}}" --}}
-                            home-phone="{{ $employee->phone_one }}" @if ($employee->email != null) home-email="{{ $employee->email }}" @endif />
+                        <vue-vcard style="width:100%; height:auto;"
+                        first-name="{{$employee->first_name}}"
+                        work-email="{{$employee->email}}"
+                        work-phone="{{ $employee->mobile  }}"
+                        >
+
                     </div>
                     <br>
                 </div>
@@ -199,16 +200,14 @@
         <div class="back">
             <h1 class="Details">Information</h1>
             <hr class="hr">
-            {{-- <div class="details-info">
+            <div class="details-info">
                 <p><b>Email : </b></p>
-                <p>{{App\Setting::where('variable', '=', 'setting_contactEmail')->first()->value}}</p>
+                <p>{{ $employee->email }}</p>
                 <p><b>Mobile No: </b></p>
-                <p>{{$employee->phone_one}}@if ($employee->phone_two != null) / {{$employee->phone_two}} @endif</p>
-                <p><b>Office Address:</b></p>
-                <p>{{App\Setting::where('variable', '=', 'setting_organizationAddress')->first()->value}}</p>
-            </div> --}}
+                <p>{{ $employee->mobile  }}</p>
+            </div>
             <div class="logo">
-                <vue-barcode width="3" value="{{ $emp->barcode }}" format="CODE39" />
+                <vue-barcode width="3" value="{{ $employee->barcode }}" format="CODE39" />
             </div>
 
 
