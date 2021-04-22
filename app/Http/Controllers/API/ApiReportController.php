@@ -115,7 +115,7 @@ class ApiReportController extends Controller
         $order = $request->orderBy;
 
         $list = AddSpeciality::with(['doctors' => function ($query) use ($from, $to, $order) {
-            return $query->withCount(['appointments' => function ($query) use ($from, $to, $order) {
+            return $query->with('employee')->withCount(['appointments' => function ($query) use ($from, $to, $order) {
                 return $query->whereBetween('created_at', [$from, $to])->orderBy('appointments_count', $order);
             }]);
         }])->get();

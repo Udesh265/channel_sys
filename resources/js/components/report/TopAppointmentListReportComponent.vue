@@ -37,7 +37,7 @@
           <div
             class="card-header d-flex justify-content-between align-items-center"
           >
-            <h4 class="card-title">Top Appointments Doctors List</h4>
+            <h4 class="card-title">Top Appointments Speciality List</h4>
           </div>
           <div id="printme" class="card-body">
             <div class="row">
@@ -102,20 +102,53 @@
             <table class="table mt-2">
               <thead>
                 <tr>
-                  <th>Doctor Name</th>
-                  <th>Docotr Speciality</th>
-                  <th>Appointment Quntity</th>
+                  <th>#</th>
+                  <th>Speciality Name</th>
+                  <th>Appointment Quantity</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(app, index) in top_paid_appointments_list" :key="index">
-                  <td>{{ app.schedule.employee.first_name }}</td>
-                  <td>{{ app.schedule.employee.mobile }}</td>
-                  <td v-if=" app.schedule.doctor" >{{ app.schedule.doctor.speciality.name }}</td>
-                  <td>{{ app.appointment.qty }}</td>
+                <tr v-for="(app,index) in top_paid_appointments_list_sorted" :key="index">
+                  <td>{{ app.speciality_id }}</td>
+                  <td>{{ app.speciality_name }}</td>
+                  <td>{{ app.appointment_count}}</td>
                 </tr>
               </tbody>
             </table>
+
+            <!-- <div v-for="(app,index) in top_paid_appointments_list_sorted" :key="index">
+
+            <table class="table mt-2">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Speciality Name</th>
+                  <th>Appointment Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ app.speciality_id }}</td>
+                  <td>{{ app.speciality_name }}</td>
+                  <td>{{ app.appointment_count}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table mt-2">
+              <thead>
+                <tr>
+                  <th>Doctor Name</th>
+                  <th>Appointment Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(doc,index) in app.doctors" :key="index">
+                  <td>{{ doc.employee.first_name }}</td>
+                  <td>{{ doc.appointments_count }}</td>
+                </tr>
+              </tbody>
+            </table>
+            </div> -->
           </div>
           <button @click="print()">print report</button>
         </div>
@@ -208,6 +241,15 @@ export default {
           this.$htmlToPaper("printme");
     }
   },
+  computed: {
+      top_paid_appointments_list_sorted() {
+          if(this.top_paid_appointments_list) {
+            return  _.orderBy(this.top_paid_appointments_list, ['appointment_count'], [this.form.orderBy]);
+          }
+
+          return {};
+      }
+  }
 };
 </script>
 
