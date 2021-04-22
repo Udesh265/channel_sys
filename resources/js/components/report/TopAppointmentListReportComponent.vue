@@ -61,20 +61,7 @@
                   id=""
                 />
               </div>
-              <div class="col-2">
-                Type :
-                <select v-model="form.type" class="form-control">
-                  <option value="Online">Online Patient</option>
-                  <option value="On-Visit">On-visit Patient</option>
-                </select>
-              </div>
-              <div class="col-2">
-                Status :
-                <select v-model="form.status" class="form-control">
-                  <option value="Confirm">Confirm Payments</option>
-                  <option value="Pending">Pending Payments</option>
-                </select>
-              </div>
+
               <div class="col-2">
                 OrderBy :
                 <select v-model="form.orderBy" class="form-control">
@@ -85,14 +72,8 @@
               <div class="col-1">
                 .
                 <button
-                  v-if="
-                    this.form.t_from != '' &&
-                    this.form.t_to != '' &&
-                    this.form.type != '' &&
-                    this.status != '' &&
-                    this.form.orderBy != ''
-                  "
-                  @click="get_top_paid_patient_list"
+
+                  @click="top_appointments_list"
                   class="form-control btn btn-success"
                   name=""
                   id=""
@@ -106,8 +87,6 @@
                   v-if="
                     this.form.t_from != '' &&
                     this.form.t_to != '' &&
-                    this.form.type != '' &&
-                    this.status != '' &&
                     this.form.orderBy != ''
                   "
                   @click="reset_patient()"
@@ -124,18 +103,17 @@
               <thead>
                 <tr>
                   <th>Doctor Name</th>
-                  <th>Mobile</th>
                   <th>Docotr Speciality</th>
                   <th>Appointment Quntity</th>
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr v-for="(app, index) in top_paid_appointments_list" :key="index">
+                <tr v-for="(app, index) in top_paid_appointments_list" :key="index">
                   <td>{{ app.schedule.employee.first_name }}</td>
                   <td>{{ app.schedule.employee.mobile }}</td>
                   <td v-if=" app.schedule.doctor" >{{ app.schedule.doctor.speciality.name }}</td>
                   <td>{{ app.appointment.qty }}</td>
-                </tr> -->
+                </tr>
               </tbody>
             </table>
           </div>
@@ -153,7 +131,7 @@ export default {
     this.get_total_online_appointment_count();
     this.get_total_onvisit_appointment_count();
 
-    this.top_appointments_list();
+    // this.top_appointments_list();
   },
   mounted() {
     //   this.top_appointments_list();
@@ -216,8 +194,7 @@ export default {
 
 
     top_appointments_list: function () {
-      axios
-        .get("/api/reports/top_appointments_list")
+      this.form.post("/api/reports/top_appointments_list")
         .then((response) => {
           if (response.status == 200) {
             this.top_paid_appointments_list = response.data;

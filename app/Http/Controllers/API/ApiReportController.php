@@ -106,14 +106,41 @@ class ApiReportController extends Controller
 
     }
 
-    public function top_appointments_list()
+    public function top_appointments_list(Request $request)
     {
 
-        $list = AddSpeciality::with(['doctors' => function($query){
-         return $query->withCount('appointments');
+        $from = Carbon::parse($request->t_from);
+        $to = Carbon::parse($request->t_to);
+
+        $order = $request->orderBy;
+
+        $list = AddSpeciality::with(['doctors' => function ($query) use ($from, $to, $order) {
+            return $query->withCount(['appointments' => function ($query) use ($from, $to, $order) {
+                return $query->whereBetween('created_at', [$from, $to])->orderBy('appointments_count', $order);
+            }]);
         }])->get();
 
-        return response()->json($list, 200);
+        $new_list = [];
+        foreach ($list as $item) {
+
+            $count = 0;
+
+            foreach ($item->doctors as $doc) {
+                $count += $doc->appointments_count;
+            }
+
+            $temp_object = (object) [
+                'speciality_id' => $item->id,
+                'speciality_name' => $item->name,
+                'appointment_count' => $count,
+                'doctors' => $item->doctors
+            ];
+
+            array_push($new_list, $temp_object);
+        }
+
+
+        return response()->json($new_list, 200);
     }
 
     public function get_today_new_appointment_count()
@@ -152,7 +179,8 @@ class ApiReportController extends Controller
         return $s_count;
     }
 
-    public function get_doc_appointment_amount(Request $request){
+    public function get_doc_appointment_amount(Request $request)
+    {
 
         // $data = Appointment::with(['payment' => function($query) {
         //     return $query->whereDate('created_at',Carbon::today())->whereNotNull('created_at');
@@ -161,55 +189,59 @@ class ApiReportController extends Controller
         $from = Carbon::parse($request->t_from);
         $to = Carbon::parse($request->t_to);
 
-        $data = Payment::whereBetween('created_at', [$from, $to])->whereIn('type',['On-Visit','Online'])->where('payment_status','Confirm')->sum('amount');
+        $data = Payment::whereBetween('created_at', [$from, $to])->whereIn('type', ['On-Visit', 'Online'])->where('payment_status', 'Confirm')->sum('amount');
 
-        return response()->json($data,200);
-
+        return response()->json($data, 200);
     }
-    public function get_service_amount(Request $request){
+    public function get_service_amount(Request $request)
+    {
 
         $from = Carbon::parse($request->t_from);
         $to = Carbon::parse($request->t_to);
 
-        $data = Payment::whereBetween('created_at', [$from, $to])->whereIn('type',['Services','Cash'])->where('payment_status','Confirm')->sum('amount');
+        $data = Payment::whereBetween('created_at', [$from, $to])->whereIn('type', ['Services', 'Cash'])->where('payment_status', 'Confirm')->sum('amount');
 
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
-    public function get_doctors_salary_amount(Request $request){
+    public function get_doctors_salary_amount(Request $request)
+    {
 
         $from = Carbon::parse($request->t_from);
         $to = Carbon::parse($request->t_to);
 
-        $data = VisitingDoctorSalary::whereBetween('created_at', [$from, $to])->where('status','paid')->sum('amount');
+        $data = VisitingDoctorSalary::whereBetween('created_at', [$from, $to])->where('status', 'paid')->sum('amount');
 
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
 
 
-    public function get_top_service_list(){
+    public function get_top_service_list()
+    {
 
-        $data = Service::withCount('serviceList')->orderBy('service_list_count','desc')->get();
+        $data = Service::withCount('serviceList')->orderBy('service_list_count', 'desc')->get();
 
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
-    public function get_top_lab_report_list(){
+    public function get_top_lab_report_list()
+    {
 
-        $data = Report_type::withCount('labAppointment')->orderBy('lab_appointment_count','desc')->get();
+        $data = Report_type::withCount('labAppointment')->orderBy('lab_appointment_count', 'desc')->get();
 
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
-    public function get_service_list(Request $request){
+    public function get_service_list(Request $request)
+    {
 
         $from = $request->t_from;
         $to = $request->t_to;
         $type = $request->type;
 
         // $data = ServiceList::whereBetween('created_at', [$from, $to])->where('service_name',$type)->get();
-        $data = Service::with(['serviceList' => function($query) use ($from, $to){
+        $data = Service::with(['serviceList' => function ($query) use ($from, $to) {
             return $query->whereBetween('created_at', [$from, $to]);
         }])->whereHas('serviceList')->find($type);
 
 
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
 }
