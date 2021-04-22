@@ -165,6 +165,8 @@ Vue.component('top-lab-appointment-report-component',require('./components/repor
 Vue.component('lab-appointment-list-report-component',require('./components/report/LabAppointmentList.vue').default);
 Vue.component('income-statement-report-component',require('./components/report/IncomeStatementReport.vue').default);
 Vue.component('top-service-report-component',require('./components/report/TopServiceListComponent.vue').default);
+Vue.component('service-list-component',require('./components/report/ServiceListComponent.vue').default);
+
 
 
 

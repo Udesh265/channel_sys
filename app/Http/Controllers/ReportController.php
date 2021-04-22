@@ -91,6 +91,18 @@ class ReportController extends Controller
 
         return view('page.report.top_service_list', compact('page_name', 'breadcrums', 'page_option'));
     }
+    public function service_list()
+    {
+
+        $page_option = ['main' => 'incomereport', 'sub' => 'service_list'];
+        $page_name = "Services List ";
+        $breadcrums = [
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'service_list', 'url' => '#'],
+        ];
+
+        return view('page.report.service_list', compact('page_name', 'breadcrums', 'page_option'));
+    }
 
 
 

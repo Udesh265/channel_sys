@@ -109,34 +109,7 @@ class ApiReportController extends Controller
     public function top_appointments_list()
     {
 
-        // $list = Appointment::select('schedule_id')->selectRaw('count(schedule_id) as qty')->groupBy('schedule_id')->orderBy('qty', 'DESC')->get();
 
-        // // return $list;
-
-        // $new_list = [];
-
-        // foreach ($list as $l) {
-
-        //     // $schedule = Schedule::with(['doctor' => function ($query) {
-        //     //     return $query->with('speciality');
-        //     // }])->with('employee')->whereId($l->schedule_id)->first();
-
-        //     $schedule = Schedule::with(['doctor' => function ($query) {
-        //         return $query->with('speciality');
-        //     }])->with('employee')->whereId($l->schedule_id)->first();
-
-        //     $temp_array = (object) [
-        //         'appointment' => $l,
-        //         'schedule' => $schedule
-        //     ];
-
-        //     array_push($new_list, $temp_array);
-        // }
-
-        $list = AddSpeciality::withCount('shedules')->get();
-        // $list = Appointment::withCount('schedule')->get();
-
-        return $list;
 
         return response()->json($new_list, 200);
     }
@@ -220,6 +193,20 @@ class ApiReportController extends Controller
     public function get_top_lab_report_list(){
 
         $data = Report_type::withCount('labAppointment')->orderBy('lab_appointment_count','desc')->get();
+
+        return response()->json($data,200);
+    }
+    public function get_service_list(Request $request){
+
+        $from = $request->t_from;
+        $to = $request->t_to;
+        $type = $request->type;
+
+        // $data = ServiceList::whereBetween('created_at', [$from, $to])->where('service_name',$type)->get();
+        $data = Service::with(['serviceList' => function($query) use ($from, $to){
+            return $query->whereBetween('created_at', [$from, $to]);
+        }])->whereHas('serviceList')->find($type);
+
 
         return response()->json($data,200);
     }

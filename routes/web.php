@@ -87,6 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('income/report','ReportController@income_statement_report')->name('report.income');
     Route::get('service/top','ReportController@service_top')->name('service.top');
 
+    Route::get('service/list','ReportController@service_list')->name('service.list');
+
 
     Route::get('idcard/{id}', 'EmployeeController@showIdCard')->name('employee.idcard.show');
 

@@ -16,10 +16,4 @@ class AddSpeciality extends Model
         return $this->hasMany(Doctor::class);
     }
 
-    public function shedules()
-    {
-        return $this->hasManyThrough(Schedule::class, Employee::class,'add_speciality_id','employee_id');
-    }
-
-
 }

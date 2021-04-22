@@ -289,6 +289,9 @@
                         <li class="{{ $page_option['sub'] === 'top_service' ? 'active' : '' }}"><a
                                 href="{{ route('service.top') }}">Top services list</a>
                         </li>
+                        <li class="{{ $page_option['sub'] === 'service_list' ? 'active' : '' }}"><a
+                                href="{{ route('service.list') }}">Services list</a>
+                        </li>
                 </li>
                     </ul>
                 <li class="{{ $page_option['sub'] === 'income' ? 'active' : '' }}"><a

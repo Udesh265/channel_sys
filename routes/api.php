@@ -185,6 +185,8 @@ Route::group(['prefix' => 'laboraty'], function () {
     Route::post('get_top_service_list','API\ApiReportController@get_top_service_list');
     Route::post('get_top_lab_report_list','API\ApiReportController@get_top_lab_report_list');
 
+    Route::post('get_service_list','API\ApiReportController@get_service_list');
+
 
 
 
