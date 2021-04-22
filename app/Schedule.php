@@ -13,6 +13,7 @@ class Schedule extends Model
         "employee_id",
         "startDate",
         "room_id",
+        "doctor_id",
     ];
 
     public function employee() {
@@ -27,7 +28,16 @@ class Schedule extends Model
             return $this->belongsTo(Doctor::class,'employee_id');
     }
 
+    public function assigned_doctor(){
+
+        return $this->belongsTo(Doctor::class, 'doctor_id');
+    }
+
     public function appointment(){
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function appointments(){
         return $this->hasMany(Schedule::class);
     }
 

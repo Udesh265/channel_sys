@@ -109,9 +109,11 @@ class ApiReportController extends Controller
     public function top_appointments_list()
     {
 
+        $list = AddSpeciality::with(['doctors' => function($query){
+         return $query->withCount('appointments');
+        }])->get();
 
-
-        return response()->json($new_list, 200);
+        return response()->json($list, 200);
     }
 
     public function get_today_new_appointment_count()

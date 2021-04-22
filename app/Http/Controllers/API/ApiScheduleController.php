@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Doctor;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Room;
@@ -78,11 +79,16 @@ class ApiScheduleController extends Controller
 
         $newVal = "{$validate_data['startDate']} {$validate_data['time']}";
 
+        $doc_id = Employee::find($validate_data['employee_id'])->doctor->id;
+
         $schedule = Schedule::create([
             'employee_id' => $validate_data['employee_id'],
             'startDate' => $newVal,
             'room_id' => $validate_data['room_id'],
+            'doctor_id' => $doc_id,
+
         ]);
+
 
         if (is_null($schedule)) return response()->json(['msg' => 'Failed to create schedule!'], 400);
 

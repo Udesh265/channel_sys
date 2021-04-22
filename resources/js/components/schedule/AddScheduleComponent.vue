@@ -171,7 +171,8 @@ export default {
         employee_id: "",
         startDate: "",
         time: "",
-        room_id:""
+        room_id:"",
+        doctor_id:""
       }),
 
       showDate: new Date(),

@@ -25,5 +25,15 @@ class Doctor extends Model
         return $this->belongsTo(Employee::class);
     }
 
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function appointments()
+    {
+        return $this->hasManyThrough(Appointment::class, Schedule::class, 'doctor_id');
+    }
+
 
 }
